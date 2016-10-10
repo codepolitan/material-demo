@@ -1,6 +1,6 @@
 'use strict';
 
-import	Emitter from 'material/lib/module/emitter';
+import Emitter from 'material/lib/module/emitter';
 
 import Component from 'material/lib/component';
 import defaults from './options';
@@ -9,158 +9,170 @@ import defaults from './options';
 import Layout from 'material/lib/layout';
 import View from 'material/lib/view';
 import List from 'material/lib/list';
-import Form from 'material/lib/form';
 import Button from 'material/lib/control/button';
 
+// demo
 import button from './view/button';
 import checkbox from './view/checkbox';
 import switchc from './view/switch';
+import field from './view/field';
 
+var demos = {
+  button,
+  checkbox,
+  switch: switchc,
+  field
+};
 
 /**
  * @class
  */
 class Demo extends Emitter {
 
-	/**
-	 * @constructor
-	 * @param  {Object} options - The application options
-	 * @return {Object} this
-	 */
-	constructor(options) {
-		super();
+  /**
+   * @constructor
+   * @param  {Object} options - The application options
+   * @return {Object} this
+   */
+  constructor(options) {
+    super();
 
-		//console.log('ready', document.body);
-		this.options = [ defaults, options ].reduce(Object.assign, {});
+    //console.log('ready', document.body);
+    this.options = [defaults, options].reduce(Object.assign, {});
 
-		this.layout = new Layout(this.options.layout).insert(document.body);
-		this.initNaviView();
-		this.initMainView();
-		this.initSideView();
+    this.layout = new Layout(this.options.layout).insert(document.body);
+    this.initNaviView();
+    this.initMainView();
+    this.initSideView();
 
-		button(this.body);
+    this.initDemo(this.body);
 
-		//this.controller = new Controller();
-	}
+    //this.controller = new Controller();
+  }
 
-	/**
-	 * [initNaviView description]
-	 * @return {Object} this - This class instance
-	 */
-	initNaviView() {
-		var navi = this.layout.navi;
-		var head = this.layout.c.head;
+  initDemo(body) {
 
-		var toolbar = new Component({
-			class: 'ui-toolbar'
-		}).insert(head);
+    demos.button(body);
+  }
 
-		let button = new Button({
-			icon: 'mdi-navigation-menu',
-			type: 'action',
-			label: null
-		}).insert(toolbar);
+  /**
+   * [initNaviView description]
+   * @return {Object} this - This class instance
+   */
+  initNaviView() {
+    var navi = this.layout.navi;
+    var head = this.layout.c.head;
 
-		console.log(button);
+    var toolbar = new Component({
+      class: 'ui-toolbar'
+    }).insert(head);
 
-		button.on('press', function(e) {
-			console.log('press', e);
-			navi.toggle(e);
-		});
+    let button = new Button({
+      icon: 'mdi-navigation-menu',
+      type: 'action',
+      label: null
+    }).insert(toolbar);
 
-		//console.log('instance', typeof button);
+    button.on('press', function(e) {
+      console.log('press', e);
+      navi.toggle(e);
+    });
 
-		this.initNaviList();
-	}
+    //console.log('instance', typeof button);
 
-	/**
-	 * [initMapView description]
-	 * @return {instance} Map view instance
-	 */
-	initMapView() {
-		var mapView = new Map({
-			component: ['head', 'body'],
-			container: this.layout.main.c.body,
-		});
+    this.initNaviList();
+  }
 
-		return mapView;
-	}
+  /**
+   * [initMapView description]
+   * @return {instance} Map view instance
+   */
+  initMapView() {
+    var mapView = new Map({
+      component: ['head', 'body'],
+      container: this.layout.main.c.body,
+    });
 
-	/**
-	 * Init Navigation view
-	 * @return {Object} this - This class instance
-	 */
-	initNaviList() {
+    return mapView;
+  }
 
-		var listView = new List({
-			component: ['head', 'body'],
-			container: this.layout.navi.c.body,
-			render:(info) => {
-				//console.log('render', info);
-				var item;
+  /**
+   * Init Navigation view
+   * @return {Object} this - This class instance
+   */
+  initNaviList() {
 
-				if (info.type === 'separator') {
-					item = new Component({
-						class: 'ui-separator'
-					});
-				} else {
-					var item = new Button({
-						label: info.name,
-						icon: info.icon,
-						css: 'icon-text'
-					}).on('press', () => {
-						
-						this.body.empty();
-						var name = item.label.text().toLowerCase();
-						eval('var demo = ' + name);
-						console.log('demo', name);
-						demo(this.body);
-					});
-				}
+    var listView = new List({
+      component: ['head', 'body'],
+      container: this.layout.navi.c.body,
+      render: (info) => {
+        //console.log('render', info);
+        var item;
 
-				return item;
-			}
-		});
+        if (info.type === 'separator') {
+          item = new Component({
+            class: 'ui-separator'
+          });
+        } else {
+          var item = new Button({
+            label: info.name,
+            icon: info.icon,
+            css: 'icon-text'
+          }).on('press', () => {
+            var name = item.label.text().toLowerCase();
+            this.updateDemoView(name);
+          });
+        }
 
-		listView.set('list', this.options.components);
+        return item;
+      }
+    });
 
-		listView.on('selected', function(item) {
-			console.log('item selected', item);
-		});
+    listView.set('list', this.options.components);
 
-		return this;
-	}
+    listView.on('selected', function(item) {
+      console.log('item selected', item);
+    });
 
-	/**
-	 * initSideView
-	 * @return {instance} The class instance
-	 */
-	initSideView() {
-		//console.log('initSideView contact', contactInfo, contactTemplate);
+    return this;
+  }
 
-		
+  updateDemoView(name) {
+    //console.log('updateDemoView', name);
+    this.body.empty();
 
-  		return this;
-	}
+    if (demos[name]) {
+      demos[name](this.body);
+    }
+  }
 
-	/**
-	 * [initTest description]
-	 * @return {instance} The class instance
-	 */
-	initMainView() {
-		//return;
-		var mainbody = this.layout.main;
-		var fieldIdx = 0;
+  /**
+   * initSideView
+   * @return {instance} The class instance
+   */
+  initSideView() {
+    //console.log('initSideView contact', contactInfo, contactTemplate);
 
-		var view = new View({
-			comp: ['body']
-		}).insert(mainbody);
+    return this;
+  }
 
-		var body = this.body = view.c.body;
+  /**
+   * [initTest description]
+   * @return {instance} The class instance
+   */
+  initMainView() {
+    //return;
+    var mainbody = this.layout.main;
+    var fieldIdx = 0;
 
-		
-		return this;
-	}
+    var view = new View({
+      comp: ['body']
+    }).insert(mainbody);
+
+    var body = this.body = view.c.body;
+
+    return this;
+  }
 
 }
 

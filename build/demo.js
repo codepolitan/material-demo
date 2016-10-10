@@ -27,10 +27,6 @@ var _list = require('material/lib/list');
 
 var _list2 = _interopRequireDefault(_list);
 
-var _form = require('material/lib/form');
-
-var _form2 = _interopRequireDefault(_form);
-
 var _button = require('material/lib/control/button');
 
 var _button2 = _interopRequireDefault(_button);
@@ -47,6 +43,10 @@ var _switch = require('./view/switch');
 
 var _switch2 = _interopRequireDefault(_switch);
 
+var _field = require('./view/field');
+
+var _field2 = _interopRequireDefault(_field);
+
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
@@ -58,179 +58,199 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
 // import Container from 'material/lib/container';
 
 
+// demo
+
+
+var demos = {
+  button: _button4.default,
+  checkbox: _checkbox2.default,
+  switch: _switch2.default,
+  field: _field2.default
+};
+
 /**
  * @class
  */
 
 var Demo = function (_Emitter) {
-	_inherits(Demo, _Emitter);
+  _inherits(Demo, _Emitter);
 
-	/**
-  * @constructor
-  * @param  {Object} options - The application options
-  * @return {Object} this
-  */
-
-	function Demo(options) {
-		_classCallCheck(this, Demo);
-
-		//console.log('ready', document.body);
-
-		var _this = _possibleConstructorReturn(this, Object.getPrototypeOf(Demo).call(this));
-
-		_this.options = [_options2.default, options].reduce(Object.assign, {});
-
-		_this.layout = new _layout2.default(_this.options.layout).insert(document.body);
-		_this.initNaviView();
-		_this.initMainView();
-		_this.initSideView();
-
-		(0, _button4.default)(_this.body);
-
-		//this.controller = new Controller();
-		return _this;
-	}
-
-	/**
-  * [initNaviView description]
-  * @return {Object} this - This class instance
-  */
-
-
-	_createClass(Demo, [{
-		key: 'initNaviView',
-		value: function initNaviView() {
-			var navi = this.layout.navi;
-			var head = this.layout.c.head;
-
-			var toolbar = new _component2.default({
-				class: 'ui-toolbar'
-			}).insert(head);
-
-			var button = new _button2.default({
-				icon: 'mdi-navigation-menu',
-				type: 'action',
-				label: null
-			}).insert(toolbar);
-
-			console.log(button);
-
-			button.on('press', function (e) {
-				console.log('press', e);
-				navi.toggle(e);
-			});
-
-			//console.log('instance', typeof button);
-
-			this.initNaviList();
-		}
-
-		/**
-   * [initMapView description]
-   * @return {instance} Map view instance
+  /**
+   * @constructor
+   * @param  {Object} options - The application options
+   * @return {Object} this
    */
 
-	}, {
-		key: 'initMapView',
-		value: function initMapView() {
-			var mapView = new Map({
-				component: ['head', 'body'],
-				container: this.layout.main.c.body
-			});
+  function Demo(options) {
+    _classCallCheck(this, Demo);
 
-			return mapView;
-		}
+    //console.log('ready', document.body);
 
-		/**
-   * Init Navigation view
-   * @return {Object} this - This class instance
-   */
+    var _this = _possibleConstructorReturn(this, Object.getPrototypeOf(Demo).call(this));
 
-	}, {
-		key: 'initNaviList',
-		value: function initNaviList() {
-			var _this2 = this;
+    _this.options = [_options2.default, options].reduce(Object.assign, {});
 
-			var listView = new _list2.default({
-				component: ['head', 'body'],
-				container: this.layout.navi.c.body,
-				render: function render(info) {
-					//console.log('render', info);
-					var item;
+    _this.layout = new _layout2.default(_this.options.layout).insert(document.body);
+    _this.initNaviView();
+    _this.initMainView();
+    _this.initSideView();
 
-					if (info.type === 'separator') {
-						item = new _component2.default({
-							class: 'ui-separator'
-						});
-					} else {
-						var item = new _button2.default({
-							label: info.name,
-							icon: info.icon,
-							css: 'icon-text'
-						}).on('press', function () {
+    _this.initDemo(_this.body);
 
-							_this2.body.empty();
-							var name = item.label.text().toLowerCase();
-							eval('var demo = ' + name);
-							console.log('demo', name);
-							demo(_this2.body);
-						});
-					}
+    //this.controller = new Controller();
+    return _this;
+  }
 
-					return item;
-				}
-			});
+  _createClass(Demo, [{
+    key: 'initDemo',
+    value: function initDemo(body) {
 
-			listView.set('list', this.options.components);
+      demos.button(body);
+    }
 
-			listView.on('selected', function (item) {
-				console.log('item selected', item);
-			});
+    /**
+     * [initNaviView description]
+     * @return {Object} this - This class instance
+     */
 
-			return this;
-		}
+  }, {
+    key: 'initNaviView',
+    value: function initNaviView() {
+      var navi = this.layout.navi;
+      var head = this.layout.c.head;
 
-		/**
-   * initSideView
-   * @return {instance} The class instance
-   */
+      var toolbar = new _component2.default({
+        class: 'ui-toolbar'
+      }).insert(head);
 
-	}, {
-		key: 'initSideView',
-		value: function initSideView() {
-			//console.log('initSideView contact', contactInfo, contactTemplate);
+      var button = new _button2.default({
+        icon: 'mdi-navigation-menu',
+        type: 'action',
+        label: null
+      }).insert(toolbar);
 
-			return this;
-		}
+      button.on('press', function (e) {
+        console.log('press', e);
+        navi.toggle(e);
+      });
 
-		/**
-   * [initTest description]
-   * @return {instance} The class instance
-   */
+      //console.log('instance', typeof button);
 
-	}, {
-		key: 'initMainView',
-		value: function initMainView() {
-			//return;
-			var mainbody = this.layout.main;
-			var fieldIdx = 0;
+      this.initNaviList();
+    }
 
-			var view = new _view2.default({
-				comp: ['body']
-			}).insert(mainbody);
+    /**
+     * [initMapView description]
+     * @return {instance} Map view instance
+     */
 
-			var body = this.body = view.c.body;
+  }, {
+    key: 'initMapView',
+    value: function initMapView() {
+      var mapView = new Map({
+        component: ['head', 'body'],
+        container: this.layout.main.c.body
+      });
 
-			return this;
-		}
-	}]);
+      return mapView;
+    }
 
-	return Demo;
+    /**
+     * Init Navigation view
+     * @return {Object} this - This class instance
+     */
+
+  }, {
+    key: 'initNaviList',
+    value: function initNaviList() {
+      var _this2 = this;
+
+      var listView = new _list2.default({
+        component: ['head', 'body'],
+        container: this.layout.navi.c.body,
+        render: function render(info) {
+          //console.log('render', info);
+          var item;
+
+          if (info.type === 'separator') {
+            item = new _component2.default({
+              class: 'ui-separator'
+            });
+          } else {
+            var item = new _button2.default({
+              label: info.name,
+              icon: info.icon,
+              css: 'icon-text'
+            }).on('press', function () {
+              var name = item.label.text().toLowerCase();
+              _this2.updateDemoView(name);
+            });
+          }
+
+          return item;
+        }
+      });
+
+      listView.set('list', this.options.components);
+
+      listView.on('selected', function (item) {
+        console.log('item selected', item);
+      });
+
+      return this;
+    }
+  }, {
+    key: 'updateDemoView',
+    value: function updateDemoView(name) {
+      //console.log('updateDemoView', name);
+      this.body.empty();
+
+      if (demos[name]) {
+        demos[name](this.body);
+      }
+    }
+
+    /**
+     * initSideView
+     * @return {instance} The class instance
+     */
+
+  }, {
+    key: 'initSideView',
+    value: function initSideView() {
+      //console.log('initSideView contact', contactInfo, contactTemplate);
+
+      return this;
+    }
+
+    /**
+     * [initTest description]
+     * @return {instance} The class instance
+     */
+
+  }, {
+    key: 'initMainView',
+    value: function initMainView() {
+      //return;
+      var mainbody = this.layout.main;
+      var fieldIdx = 0;
+
+      var view = new _view2.default({
+        comp: ['body']
+      }).insert(mainbody);
+
+      var body = this.body = view.c.body;
+
+      return this;
+    }
+  }]);
+
+  return Demo;
 }(_emitter2.default);
 
 module.exports = Demo;
 
-},{"./options":3,"./view/button":4,"./view/checkbox":5,"./view/switch":6,"material/lib/component":9,"material/lib/control/button":20,"material/lib/form":25,"material/lib/layout":27,"material/lib/list":31,"material/lib/module/emitter":37,"material/lib/view":40}],2:[function(require,module,exports){
+},{"./options":3,"./view/button":4,"./view/checkbox":5,"./view/field":6,"./view/switch":7,"material/lib/component":10,"material/lib/control/button":21,"material/lib/layout":25,"material/lib/list":29,"material/lib/module/emitter":35,"material/lib/view":38}],2:[function(require,module,exports){
 'use strict';
 
 var domready = require('material/lib/module/domready');
@@ -241,7 +261,7 @@ domready(function () {
 	new Demo();
 });
 
-},{"./app.js":1,"material/lib/module/domready":36}],3:[function(require,module,exports){
+},{"./app.js":1,"material/lib/module/domready":34}],3:[function(require,module,exports){
 'use strict';
 
 /**
@@ -249,24 +269,24 @@ domready(function () {
  * @type {Object} The Element default options
  */
 var options = {
-    layout: {
-        component: ['head', 'body'],
-        node: {
-            _name: 'standard',
-            _list: ['navi', 'main', 'side'],
-            navi: {
-                opts: {
-                    component: ['head', 'body']
-                },
-                size: 320,
-                theme: 'dark'
-            },
-            main: {
-                flex: '1'
-            }
-        }
-    },
-    components: [{ name: 'Button', icon: 'mdi-content-inbox' }, { name: 'Checkbox', icon: 'mdi-action-done' }, { name: 'Layout', icon: 'mdi-action-query-builder' }, { name: 'Switch', icon: 'mdi-action-done' }, { type: 'separator' }, { name: 'Draft', icon: 'mdi-content-draft' }, { name: 'Sent', icon: 'mdi-content-send' }]
+  layout: {
+    component: ['head', 'body'],
+    node: {
+      _name: 'standard',
+      _list: ['navi', 'main', 'side'],
+      navi: {
+        opts: {
+          component: ['head', 'body']
+        },
+        size: 320,
+        theme: 'dark'
+      },
+      main: {
+        flex: '1'
+      }
+    }
+  },
+  components: [{ name: 'Button', icon: 'mdi-content-inbox' }, { name: 'Checkbox', icon: 'mdi-action-done' }, { name: 'Field', icon: 'mdi-action-query-builder' }, { name: 'Switch', icon: 'mdi-action-done' }, { type: 'separator' }, { name: 'Draft', icon: 'mdi-content-draft' }, { name: 'Sent', icon: 'mdi-content-send' }]
 };
 
 module.exports = options;
@@ -284,9 +304,65 @@ var _button = require('material/lib/control/button.js');
 
 var _button2 = _interopRequireDefault(_button);
 
-var _slider = require('material/lib/control/slider.js');
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
-var _slider2 = _interopRequireDefault(_slider);
+/**
+ * [initTest description]
+ * @return {[type]} [description]
+ */
+module.exports = function (body) {
+
+  new _button2.default({
+    //type: 'action',
+    label: 'Flat'
+  }).insert(body);
+
+  new _button2.default({
+    label: 'Raised',
+    type: 'raised',
+    primary: true
+  }).on('press', function (e) {
+    console.log('press', e);
+    fieldIdx++;
+    new Field({
+      label: 'field' + fieldIdx,
+      name: 'field'
+    }).insert(body);
+  }).insert(body);
+
+  new _button2.default({
+    icon: 'mdi-content-inbox',
+    label: 'Inbox',
+    css: 'icon-text'
+  }).insert(body);
+
+  new _button2.default({
+    type: 'action',
+    primary: true,
+    css: 'is-primary'
+  }).on('press', function () {
+    console.log('switch state', switchControl.toggle());
+  }).insert(body);
+
+  //console.log('---', primaryButton.style());
+
+  new _button2.default({
+    icon: 'mdi-content-send',
+    type: 'action'
+  }).insert(body);
+};
+// controls
+
+},{"material/lib/component.js":10,"material/lib/control/button.js":21}],5:[function(require,module,exports){
+'use strict';
+
+var _component = require('material/lib/component.js');
+
+var _component2 = _interopRequireDefault(_component);
+
+var _checkbox = require('material/lib/control/checkbox.js');
+
+var _checkbox2 = _interopRequireDefault(_checkbox);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -294,76 +370,39 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
  * [initTest description]
  * @return {[type]} [description]
  */
-
-// controls
 module.exports = function (body) {
+  new _component2.default({
+    class: 'ui-separator'
+  }).insert(body);
 
-	new _button2.default({
-		//type: 'action',
-		label: 'Flat'
-	}).insert(body);
+  new _checkbox2.default({
+    label: 'Checkbox'
+  }).on('change', function (value) {
+    console.log('checked', value);
+  }).insert(body);
 
-	new _button2.default({
-		label: 'Raised',
-		type: 'raised',
-		primary: true
-	}).on('press', function (e) {
-		console.log('press', e);
-		fieldIdx++;
-		new Field({
-			label: 'field' + fieldIdx,
-			name: 'field'
-		}).insert(body);
-	}).insert(body);
+  new _checkbox2.default({
+    label: 'Checkbox checked',
+    value: true
+  }).on('change', function (value) {
+    console.log('checked', value);
+  }).insert(body);
 
-	new _button2.default({
-		icon: 'mdi-content-inbox',
-		label: 'Inbox',
-		css: 'icon-text'
-	}).insert(body);
-
-	new _button2.default({
-		type: 'action',
-		primary: true,
-		css: 'is-primary'
-	}).on('press', function () {
-		console.log('switch state', switchControl.toggle());
-	}).insert(body);
-
-	//console.log('---', primaryButton.style());
-
-	new _button2.default({
-		icon: 'mdi-content-send',
-		type: 'action'
-	}).insert(body);
-
-	new _slider2.default({}).insert(body);
+  new _checkbox2.default({
+    label: 'Checkbox disabled',
+    disabled: true
+  }).on('change', function (value) {
+    console.log('checked', value);
+  }).insert(body);
 };
+// controls
 
-},{"material/lib/component.js":9,"material/lib/control/button.js":20,"material/lib/control/slider.js":22}],5:[function(require,module,exports){
+},{"material/lib/component.js":10,"material/lib/control/checkbox.js":22}],6:[function(require,module,exports){
 'use strict';
-
-// view
-
-var _view = require('material/lib/view.js');
-
-var _view2 = _interopRequireDefault(_view);
 
 var _component = require('material/lib/component.js');
 
 var _component2 = _interopRequireDefault(_component);
-
-var _button = require('material/lib/control/button.js');
-
-var _button2 = _interopRequireDefault(_button);
-
-var _switch = require('material/lib/control/switch.js');
-
-var _switch2 = _interopRequireDefault(_switch);
-
-var _checkbox = require('material/lib/control/checkbox.js');
-
-var _checkbox2 = _interopRequireDefault(_checkbox);
 
 var _textfield = require('material/lib/control/textfield.js');
 
@@ -375,78 +414,30 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
  * [initTest description]
  * @return {[type]} [description]
  */
-
-// controls
 var checkbox = function checkbox(body) {
-	//return;
-	// var mainbody = layout.main;
-	// var fieldIdx = 0;
 
-	// var view = new View({
-	// 	comp: ['body']
-	// }).insert(mainbody);
+  new _component2.default({
+    class: 'ui-separator'
+  }).insert(body);
 
-	// var body = view.c.body;
-
-	var switchControl = new _switch2.default({
-		label: 'Switch'
-	}).on('change', function (value) {
-		//console.log('checked', value);
-	}).insert(body);
-
-	new _switch2.default({
-		label: 'Disabled',
-		disabled: true
-	}).insert(body);
-
-	new _component2.default({
-		class: 'ui-separator'
-	}).insert(body);
-
-	new _checkbox2.default({
-		label: 'Checkbox'
-	}).on('change', function (value) {
-		console.log('checked', value);
-	}).insert(body);
-
-	new _checkbox2.default({
-		label: 'Checkbox checked',
-		value: true
-	}).on('change', function (value) {
-		console.log('checked', value);
-	}).insert(body);
-
-	new _checkbox2.default({
-		label: 'Checkbox disabled',
-		disabled: true
-	}).on('change', function (value) {
-		console.log('checked', value);
-	}).insert(body);
-
-	new _textfield2.default({
-		label: 'material',
-		name: 'field'
-	}).insert(body);
+  new _textfield2.default({
+    label: 'material',
+    name: 'field'
+  }).insert(body);
 };
+// controls
+
 
 module.exports = checkbox;
 
-},{"material/lib/component.js":9,"material/lib/control/button.js":20,"material/lib/control/checkbox.js":21,"material/lib/control/switch.js":23,"material/lib/control/textfield.js":24,"material/lib/view.js":40}],6:[function(require,module,exports){
+},{"material/lib/component.js":10,"material/lib/control/textfield.js":24}],7:[function(require,module,exports){
 'use strict';
 
-// view
+// switch
 
-var _component = require('material/lib/component.js');
+var _switch = require('material/lib/control/switch.js');
 
-var _component2 = _interopRequireDefault(_component);
-
-var _button = require('material/lib/control/button.js');
-
-var _button2 = _interopRequireDefault(_button);
-
-var _slider = require('material/lib/control/slider.js');
-
-var _slider2 = _interopRequireDefault(_slider);
+var _switch2 = _interopRequireDefault(_switch);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -454,53 +445,21 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
  * [initTest description]
  * @return {[type]} [description]
  */
-
-// controls
 module.exports = function (body) {
 
-	new _button2.default({
-		//type: 'action',
-		label: 'Flat'
-	}).insert(body);
+  var switchControl = new _switch2.default({
+    label: 'Switch'
+  }).on('change', function (value) {
+    //console.log('checked', value);
+  }).insert(body);
 
-	new _button2.default({
-		label: 'Raised',
-		type: 'raised',
-		primary: true
-	}).on('press', function (e) {
-		console.log('press', e);
-		fieldIdx++;
-		new Field({
-			label: 'field' + fieldIdx,
-			name: 'field'
-		}).insert(body);
-	}).insert(body);
-
-	new _button2.default({
-		icon: 'mdi-content-inbox',
-		label: 'Inbox',
-		css: 'icon-text'
-	}).insert(body);
-
-	new _button2.default({
-		type: 'action',
-		primary: true,
-		css: 'is-primary'
-	}).on('press', function () {
-		console.log('switch state', switchControl.toggle());
-	}).insert(body);
-
-	//console.log('---', primaryButton.style());
-
-	new _button2.default({
-		icon: 'mdi-content-send',
-		type: 'action'
-	}).insert(body);
-
-	new _slider2.default({}).insert(body);
+  new _switch2.default({
+    label: 'Disabled',
+    disabled: true
+  }).insert(body);
 };
 
-},{"material/lib/component.js":9,"material/lib/control/button.js":20,"material/lib/control/slider.js":22}],7:[function(require,module,exports){
+},{"material/lib/control/switch.js":23}],8:[function(require,module,exports){
 // shim for using process in browser
 
 var process = module.exports = {};
@@ -593,7 +552,7 @@ process.chdir = function (dir) {
 };
 process.umask = function() { return 0; };
 
-},{}],8:[function(require,module,exports){
+},{}],9:[function(require,module,exports){
 'use strict';
 
 function _typeof(obj) { return obj && typeof Symbol !== "undefined" && obj.constructor === Symbol ? "symbol" : typeof obj; }
@@ -1175,7 +1134,7 @@ function _typeof(obj) { return obj && typeof Symbol !== "undefined" && obj.const
 	module.exports = DragDrop;
 })();
 
-},{}],9:[function(require,module,exports){
+},{}],10:[function(require,module,exports){
 'use strict';
 
 var _createClass = (function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; })();
@@ -1226,21 +1185,21 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
 var defaults = require('./component/options');
 
 /**
-* Base class for all ui components
-* @class
-* @namespace Material
-* @param {Object} options - The component options
-* @return {Object} The class Instance
-*/
+ * Base class for all ui components
+ * @class
+ * @namespace Material
+ * @param {Object} options - The component options
+ * @return {Object} The class Instance
+ */
 
 var Component = (function (_Emitter) {
   _inherits(Component, _Emitter);
 
   /**
-  * Constructor
-  * @param  {Object} options - Component options
-  * @return {Object} Class instance
-  */
+   * Constructor
+   * @param  {Object} options - Component options
+   * @return {Object} Class instance 
+   */
 
   function Component(options) {
     var _ret;
@@ -1262,9 +1221,9 @@ var Component = (function (_Emitter) {
   }
 
   /**
-  * Initialized component
-  * @return {Object} The class instance
-  */
+   * Initialized component
+   * @return {Object} The class instance
+   */
 
   _createClass(Component, [{
     key: 'init',
@@ -1289,9 +1248,9 @@ var Component = (function (_Emitter) {
     }
 
     /**
-    * Build Method
-    * @return {Object} This class instance
-    */
+     * Build Method
+     * @return {Object} This class instance
+     */
 
   }, {
     key: 'build',
@@ -1331,9 +1290,9 @@ var Component = (function (_Emitter) {
     }
 
     /**
-    * Get the name of the component
-    * @return {string} name - The name of the Class instance
-    */
+     * Get the name of the component
+     * @return {string} name - The name of the Class instance
+     */
 
   }, {
     key: 'getName',
@@ -1342,10 +1301,10 @@ var Component = (function (_Emitter) {
     }
 
     /**
-    * Init component class
-    * @return {Object} This Class instance
-    *
-    */
+     * Init component class
+     * @return {Object} This Class instance
+     *
+     */
 
   }, {
     key: 'initClass',
@@ -1379,9 +1338,9 @@ var Component = (function (_Emitter) {
     }
 
     /**
-    * Set atrributes
-    * @return {Object} this
-    */
+     * Set atrributes
+     * @return {Object} this
+     */
 
   }, {
     key: 'initAttributes',
@@ -1412,7 +1371,7 @@ var Component = (function (_Emitter) {
 
 module.exports = Component;
 
-},{"./component/attribute":10,"./component/element":11,"./component/events":12,"./component/options":13,"./component/storage":14,"./component/style":15,"./module/bind":33,"./module/controller":34,"./module/emitter":37}],10:[function(require,module,exports){
+},{"./component/attribute":11,"./component/element":12,"./component/events":13,"./component/options":14,"./component/storage":15,"./component/style":16,"./module/bind":31,"./module/controller":32,"./module/emitter":35}],11:[function(require,module,exports){
 'use strict';
 
 /**
@@ -1518,7 +1477,7 @@ module.exports = {
     }
 };
 
-},{}],11:[function(require,module,exports){
+},{}],12:[function(require,module,exports){
 'use strict';
 
 var _morpheus = require('morpheus');
@@ -1708,7 +1667,7 @@ module.exports = {
 	}
 };
 
-},{"../module/insertion":38,"morpheus":42}],12:[function(require,module,exports){
+},{"../module/insertion":36,"morpheus":40}],13:[function(require,module,exports){
 'use strict';
 
 module.exports = {
@@ -1775,7 +1734,7 @@ module.exports = {
 	}
 };
 
-},{}],13:[function(require,module,exports){
+},{}],14:[function(require,module,exports){
 'use strict';
 
 /**
@@ -1791,7 +1750,7 @@ var options = {
 
 module.exports = options;
 
-},{}],14:[function(require,module,exports){
+},{}],15:[function(require,module,exports){
 'use strict';
 
 /**
@@ -1827,7 +1786,7 @@ module.exports = {
 	}
 };
 
-},{}],15:[function(require,module,exports){
+},{}],16:[function(require,module,exports){
 'use strict';
 
 /**
@@ -1947,7 +1906,7 @@ module.exports = {
     }
 };
 
-},{"../module/utils":39}],16:[function(require,module,exports){
+},{"../module/utils":37}],17:[function(require,module,exports){
 'use strict';
 
 var _createClass = (function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; })();
@@ -2084,7 +2043,7 @@ var Container = (function (_Component) {
 
 module.exports = Container;
 
-},{"./component":9,"./container/display":17,"./container/options":18}],17:[function(require,module,exports){
+},{"./component":10,"./container/display":18,"./container/options":19}],18:[function(require,module,exports){
 'use strict';
 
 /**
@@ -2092,156 +2051,156 @@ module.exports = Container;
  */
 module.exports = {
 
-	/**
-  * [_initDisplay description]
-  * @return {Object} The class instance
-  */
+  /**
+   * [_initDisplay description]
+   * @return {Object} The class instance
+   */
 
-	_initDisplay: function _initDisplay() {
-		this._modifier = 'width';
+  _initDisplay: function _initDisplay() {
+    this._modifier = 'width';
 
-		var direction = '';
+    var direction = '';
 
-		//var direction = this.container.element.style('flex-direction');
+    //var direction = this.container.element.style('flex-direction');
 
-		if (direction === 'column') this._modifier = 'height';
+    if (direction === 'column') this._modifier = 'height';
 
-		var modifier = this._modifier;
+    var modifier = this._modifier;
 
-		if (!this[modifier]) this[modifier] = 220;
+    if (!this[modifier]) this[modifier] = 220;
 
-		this.device = this.device || 'desktop';
-		//this.underlay.hide();
-		this.display = {};
+    this.device = this.device || 'desktop';
+    //this.underlay.hide();
+    this.display = {};
 
-		return this.display;
-	},
+    return this.display;
+  },
 
-	/**
-  * [getDisplay description]
-  * @return {Object} The class instance
-  */
-	getDisplay: function getDisplay() {
+  /**
+   * [getDisplay description]
+   * @return {Object} The class instance
+   */
+  getDisplay: function getDisplay() {
 
-		return this._display;
-	},
+    return this._display;
+  },
 
-	/**
-  * [getDisplay description]
-  * @return {Object} The class instance
-  */
-	setDisplay: function setDisplay(display) {
+  /**
+   * [getDisplay description]
+   * @return {Object} The class instance
+   */
+  setDisplay: function setDisplay(display) {
 
-		this._display = display;
+    this._display = display;
 
-		return this;
-	},
+    return this;
+  },
 
-	/**
-  * [toggle description]
-  * @return {Object} The class instance
-  */
-	toggle: function toggle() {
-		console.log('toggle');
-		if (this._display === 'normalized') {
-			this.minimize();
-		} else {
-			this.normalize();
-		}
+  /**
+   * [toggle description]
+   * @return {Object} The class instance
+   */
+  toggle: function toggle() {
+    console.log('toggle');
+    if (this._display === 'normalized') {
+      this.minimize();
+    } else {
+      this.normalize();
+    }
 
-		return this._display;
-	},
+    return this._display;
+  },
 
-	/**
-  * [minimize description]
-  * @return {Object} The class instance
-  */
-	minimize: function minimize() {
-		var _this = this;
+  /**
+   * [minimize description]
+   * @return {Object} The class instance
+   */
+  minimize: function minimize() {
+    var _this = this;
 
-		console.log('minimize');
-		if (!this.display) {
-			this._initDisplay();
-		}
+    console.log('minimize');
+    if (!this.display) {
+      this._initDisplay();
+    }
 
-		this.emit('minimize');
+    this.emit('minimize');
 
-		var prop = {
-			//stop: () => {},
-			duration: 200,
-			easing: 'ease-out',
-			complete: function complete() {
-				_this.emit('display', 'minimized');
-			}
-		};
+    var prop = {
+      //stop: () => {},
+      duration: 200,
+      easing: 'ease-out',
+      complete: function complete() {
+        _this.emit('display', 'minimized');
+      }
+    };
 
-		prop[this._modifier] = 0;
+    prop[this._modifier] = 0;
 
-		if (this.animation) this.animation.stop();
+    if (this.animation) this.animation.stop();
 
-		this.animation = this.animate(prop);
+    this.animation = this.animate(prop);
 
-		this._display = 'minimized';
+    this._display = 'minimized';
 
-		this.emit('display', 'minimized');
+    this.emit('display', 'minimized');
 
-		return this;
-	},
+    return this;
+  },
 
-	/**
-  * [normalize description]
-  * @return {Object} The class instance
-  */
-	normalize: function normalize() {
-		var _this2 = this;
+  /**
+   * [normalize description]
+   * @return {Object} The class instance
+   */
+  normalize: function normalize() {
+    var _this2 = this;
 
-		if (!this.display) {
-			this._initDisplay();
-		}
+    if (!this.display) {
+      this._initDisplay();
+    }
 
-		this.emit('normalize');
+    this.emit('normalize');
 
-		var size = this[this._modifier];
+    var size = this[this._modifier];
 
-		var option = {
-			//stop: () => {},
-			duration: 200,
-			easing: 'ease-out',
-			complete: function complete() {
-				_this2.emit('display', 'normalized');
-			}
-		};
+    var option = {
+      //stop: () => {},
+      duration: 200,
+      easing: 'ease-out',
+      complete: function complete() {
+        _this2.emit('display', 'normalized');
+      }
+    };
 
-		var property = {};
-		property[this._modifier] = size;
+    var property = {};
+    property[this._modifier] = size;
 
-		if (this.animation) this.animation.stop();
+    if (this.animation) this.animation.stop();
 
-		this.animation = this.animate(property, option);
-		this._display = 'normalized';
-		this.emit('display', this._display);
+    this.animation = this.animate(property, option);
+    this._display = 'normalized';
+    this.emit('display', this._display);
 
-		return this;
-	},
+    return this;
+  },
 
-	/**
-  * [normalize description]
-  * @return {Object} The class instance
-  */
-	maximize: function maximize() {
+  /**
+   * [normalize description]
+   * @return {Object} The class instance
+   */
+  maximize: function maximize() {
 
-		this.style('display', null);
-		this.addClass('state-focus');
+    this.style('display', null);
+    this.addClass('state-focus');
 
-		this._display = 'normalized';
+    this._display = 'normalized';
 
-		this.emit('display', this._display);
+    this.emit('display', this._display);
 
-		return this;
-	}
+    return this;
+  }
 };
 
-},{}],18:[function(require,module,exports){
+},{}],19:[function(require,module,exports){
 'use strict';
 
 /**
@@ -2259,7 +2218,7 @@ module.exports = {
 	}
 };
 
-},{}],19:[function(require,module,exports){
+},{}],20:[function(require,module,exports){
 'use strict';
 
 var _createClass = (function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; })();
@@ -2402,7 +2361,7 @@ var Control = (function (_Component) {
 
 module.exports = Control;
 
-},{"./component":9}],20:[function(require,module,exports){
+},{"./component":10}],21:[function(require,module,exports){
 'use strict';
 
 var _createClass = (function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; })();
@@ -2774,7 +2733,7 @@ var Button = (function (_Component) {
 
 module.exports = Button;
 
-},{"../component":9}],21:[function(require,module,exports){
+},{"../component":10}],22:[function(require,module,exports){
 'use strict';
 
 var _createClass = (function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; })();
@@ -3017,234 +2976,7 @@ var Checkbox = (function (_Control) {
 
 module.exports = Checkbox;
 
-},{"../component":9,"../control":19}],22:[function(require,module,exports){
-'use strict';
-
-var _createClass = (function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; })();
-
-var _get = function get(object, property, receiver) { if (object === null) object = Function.prototype; var desc = Object.getOwnPropertyDescriptor(object, property); if (desc === undefined) { var parent = Object.getPrototypeOf(object); if (parent === null) { return undefined; } else { return get(parent, property, receiver); } } else if ("value" in desc) { return desc.value; } else { var getter = desc.get; if (getter === undefined) { return undefined; } return getter.call(receiver); } };
-
-var _control = require('../control');
-
-var _control2 = _interopRequireDefault(_control);
-
-var _component = require('../component');
-
-var _component2 = _interopRequireDefault(_component);
-
-var _dragdrop = require('material/dist/vendor/dragdrop');
-
-var _dragdrop2 = _interopRequireDefault(_dragdrop);
-
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-
-function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
-
-function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
-
-function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
-
-var defaults = {
-	name: 'slider',
-	// base: 'field',
-	prefix: 'ui',
-	label: null,
-	checked: false,
-	error: false,
-	value: false
-};
-
-/**
- * Switch class
- * @class
- * @extends Control
- */
-// bind: {
-// 	'control.click': 'toggle',
-// 	'label.click': 'toggle',
-// 	// for accessibility purpose
-// 	//'input.click': 'toggle',
-// 	'input.focus': '_onInputFocus',
-// 	'input.blur': '_onInputBlur'
-// }
-
-var Slider = (function (_Control) {
-	_inherits(Slider, _Control);
-
-	function Slider() {
-		_classCallCheck(this, Slider);
-
-		return _possibleConstructorReturn(this, Object.getPrototypeOf(Slider).apply(this, arguments));
-	}
-
-	_createClass(Slider, [{
-		key: 'init',
-
-		/**
-   * Constructor
-   * @param  {Object} options The class options
-   * @return {Object} This class instance
-   */
-		value: function init(options) {
-			_get(Object.getPrototypeOf(Slider.prototype), 'init', this).call(this, options);
-			this.options = [defaults, options].reduce(Object.assign, {});
-
-			this.name = this.options.name;
-			this.value = this.options.value;
-
-			return this;
-		}
-
-		/**
-   * build method
-   * @return {Object} The class instance
-   */
-
-	}, {
-		key: 'build',
-		value: function build() {
-			_get(Object.getPrototypeOf(Slider.prototype), 'build', this).call(this);
-
-			var text = this.options.label || this.options.text;
-
-			if (this.options.disabled) {
-				this.addClass('is-disabled');
-			}
-
-			this.initInput();
-			this.initControl();
-			// this.wrapper = new Component({
-			// 	tag: 'div.switch-wrapper'
-			// }).insert(this.element);
-
-			if (this.options.label !== null) {
-				this.label = new _component2.default({
-					tag: 'span.slider-label'
-				}).insert(this.element);
-				this.label.text(text);
-			}
-
-			if (this.value) {
-				this.check();
-			}
-		}
-
-		/**
-   * [initControl description]
-   * @return {[type]} [description]
-   */
-
-	}, {
-		key: 'initControl',
-		value: function initControl() {
-			this.control = new _component2.default({
-				tag: 'span.slider-control'
-			}).insert(this.element);
-
-			this.track = new _component2.default({
-				tag: 'span.slider-track'
-			}).insert(this.control);
-
-			this.knob = new _component2.default({
-				tag: 'span.slider-knob'
-			}).insert(this.track);
-
-			_dragdrop2.default.bind(this.knob.element, {
-				//anchor: anotherElement,
-				boundingBox: 'offsetParent',
-				dragstart: function dragstart(ev) {
-					console.log('dragstart', ev);
-				},
-				dragend: function dragend(ev) {},
-				drag: function drag() {}
-			});
-		}
-
-		/**
-   * [initInput description]
-   * @return {[type]} [description]
-   */
-
-	}, {
-		key: 'initInput',
-		value: function initInput() {
-			this.input = new _component2.default({
-				tag: 'input',
-				type: 'checkbox'
-			}).insert(this.element);
-
-			if (this.options.disabled) {
-				this.input.setAttribute('disabled', 'disabled');
-			}
-
-			if (this.value) {
-				this.input.setAttribute('checked', 'checked');
-			}
-		}
-
-		/**
-   * Setter
-   * @param {string} prop
-   * @param {string} value
-   * @return {Object} The class instance
-   */
-
-	}, {
-		key: 'set',
-		value: function set(prop, value) {
-
-			switch (prop) {
-				case 'value':
-					this.setValue(value);
-					break;
-				default:
-					this.setValue(value);
-			}
-
-			return this;
-		}
-
-		/**
-   * set switch value
-   * @param {boolean} value [description]
-   */
-
-	}, {
-		key: 'setValue',
-		value: function setValue(value) {
-			if (value) {
-				this.check();
-			} else {
-				this.unCheck();
-			}
-		}
-
-		/**
-   * [toggle description]
-   * @return {Object} The class instance
-   */
-
-	}, {
-		key: 'toggle',
-		value: function toggle() {
-			if (this.disabled) return;
-
-			if (this.value) {
-				this.unCheck(true);
-			} else {
-				this.check();
-			}
-
-			return this;
-		}
-	}]);
-
-	return Slider;
-})(_control2.default);
-
-module.exports = Slider;
-
-},{"../component":9,"../control":19,"material/dist/vendor/dragdrop":8}],23:[function(require,module,exports){
+},{"../component":10,"../control":20}],23:[function(require,module,exports){
 'use strict';
 
 var _createClass = (function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; })();
@@ -3482,7 +3214,7 @@ var Switch = (function (_Control) {
 
 module.exports = Switch;
 
-},{"../component":9,"../control":19}],24:[function(require,module,exports){
+},{"../component":10,"../control":20}],24:[function(require,module,exports){
 'use strict';
 
 var _createClass = (function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; })();
@@ -3742,725 +3474,7 @@ var Field = (function (_Control) {
 
 module.exports = Field;
 
-},{"../component":9,"../control":19}],25:[function(require,module,exports){
-'use strict';
-
-var _createClass = (function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; })();
-
-var _get = function get(object, property, receiver) { if (object === null) object = Function.prototype; var desc = Object.getOwnPropertyDescriptor(object, property); if (desc === undefined) { var parent = Object.getPrototypeOf(object); if (parent === null) { return undefined; } else { return get(parent, property, receiver); } } else if ("value" in desc) { return desc.value; } else { var getter = desc.get; if (getter === undefined) { return undefined; } return getter.call(receiver); } };
-
-var _view = require('./view');
-
-var _view2 = _interopRequireDefault(_view);
-
-var _options = require('./container/options');
-
-var _options2 = _interopRequireDefault(_options);
-
-var _component = require('./component');
-
-var _component2 = _interopRequireDefault(_component);
-
-var _textfield = require('./control/textfield');
-
-var _textfield2 = _interopRequireDefault(_textfield);
-
-var _fieldset = require('./form/fieldset');
-
-var _fieldset2 = _interopRequireDefault(_fieldset);
-
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-
-function _typeof(obj) { return obj && typeof Symbol !== "undefined" && obj.constructor === Symbol ? "symbol" : typeof obj; }
-
-function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
-
-function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
-
-function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
-
-/**
- * Form class
- *
- * @class
- * @extends {Component}
- * @return {Class} This class instance
- */
-
-var Form = (function (_View) {
-	_inherits(Form, _View);
-
-	function Form() {
-		_classCallCheck(this, Form);
-
-		return _possibleConstructorReturn(this, Object.getPrototypeOf(Form).apply(this, arguments));
-	}
-
-	_createClass(Form, [{
-		key: 'init',
-
-		/**
-   * Initialize View
-   * @return {void}
-   */
-		value: function init(options) {
-			//need to remove the options template to have a reference
-			this.template = options.template;
-
-			this.name = 'form';
-
-			_get(Object.getPrototypeOf(Form.prototype), 'init', this).call(this, options);
-
-			this.options = [_options2.default, options].reduce(Object.assign, {});
-
-			if (this.options.template) {
-				delete this.options.template;
-			}
-
-			// for backward compatibility
-			this.info = this.info = {};
-
-			Object.assign(this, _fieldset2.default);
-
-			this.field = {};
-		}
-
-		/**
-   * [_initForm description]
-   * @return {Object} This class instance
-   */
-
-	}, {
-		key: 'build',
-		value: function build() {
-			_get(Object.getPrototypeOf(Form.prototype), 'build', this).call(this);
-
-			this.form = new _component2.default({
-				tag: 'form'
-				//method: 'post'
-			}).insert(this.c.body.element);
-
-			return this;
-		}
-
-		/**
-   * [_onSubmit description]
-   * @return {void}
-   */
-
-	}, {
-		key: '_onSubmit',
-		value: function _onSubmit(e) {
-			e.preventDefault();
-		}
-
-		/**
-   * Initialize Detail View
-   * @param  {Object} doc   Document
-   * @param  {Object} model
-   * @return {void}
-   */
-
-	}, {
-		key: '_setForm',
-		value: function _setForm(doc, model, params) {
-			params = params || {};
-
-			var opts = this.options;
-
-			if (this.control && this.control.what) {
-				this.control.what.set('text', doc.type);
-			}
-
-			this.list = {};
-
-			this.mask = opts.mask;
-			this.type = this.options.type;
-
-			// if (!params.top) {
-			// 	this.form.styles(this.form.getSize());
-			// }
-
-			//this.form.empty();
-
-			if (doc.status) {
-				this.form.setAttribute('data-status', doc.status);
-			}
-
-			if (!doc) {
-				return;
-			}
-
-			//this.readonly = this.readonly || opts.readOnly;
-
-			this._initTemplate(doc, model);
-		}
-
-		/**
-   * Initialize form model
-   * @return {void}
-   */
-
-	}, {
-		key: '_initTemplate',
-		value: function _initTemplate(doc, template) {
-
-			var comps = {};
-			var spec = {};
-			var defs = {};
-
-			template = template || this.template;
-
-			if (!template && !template.components) {
-				return false;
-			}
-
-			//clone the array
-			comps = template.components.slice();
-			defs = template;
-			spec = template;
-
-			this._processComponents(comps, spec, defs);
-		}
-
-		/**
-   * [_processComponents description]
-   * @param  {Array} comps [description]
-   * @param  {Object} spec  [description]
-   * @param  {Object} defs  [description]
-   */
-
-	}, {
-		key: '_processComponents',
-		value: function _processComponents(comps, spec, defs) {
-			if (this.readonly === undefined && spec && spec._mode === 'readonly' || this.readonly || defs._mode === 'readonly') {
-				this.readonly = true;
-			} else {
-				this.readonly = false;
-			}
-
-			for (var i = 0; i < comps.length; i++) {
-				var component = comps[i];
-
-				var group = spec[component] || defs[component];
-
-				if (!group) {
-					continue;
-				}
-
-				if (group.type === 'fieldset') {
-					this._initFieldset(group, this.form);
-				}
-			}
-
-			this.focuskey = defs.focus;
-		}
-
-		/**
-   * [_initFields description]
-   * @param  {Array} keys    [description]
-   * @param  {HTMLElement} element [description]
-   */
-
-	}, {
-		key: '_initFields',
-		value: function _initFields(keys, element) {
-			var info = this.info;
-
-			var group = this._initGroup(element);
-
-			for (var i = 0, len = keys.length; i < len; i++) {
-				var key = keys[i];
-
-				this._initField(key, info, group);
-
-				// if (key.type === 'button' && key.name === 'deleteNode') {
-				// 	this._initDeleteButton(key, doc, group);
-				// }
-			}
-		}
-
-		/**
-   * Process field object
-   * @param  {Object} object   [description]
-   * @param  {Element} element [description]
-   */
-
-	}, {
-		key: '_initObjectField',
-		value: function _initObjectField(object, element) {
-			var info = this.info;
-			var list = object._list || [];
-
-			var group = this._initGroup(element);
-
-			for (var i = 0; i < list.length; i++) {
-				var name = list[i];
-				var key = object[name];
-
-				this._initField(key, info, group);
-			}
-		}
-
-		/**
-   * Instanciate group of field
-   * @param  {Element} element
-   * @return {Element} the group element
-   */
-
-	}, {
-		key: '_initGroup',
-		value: function _initGroup(element) {
-
-			var group = new _component2.default({
-				tag: 'div',
-				class: 'group'
-			}).insert(element);
-
-			group.text(element.legend);
-
-			return group;
-		}
-
-		/**
-   * Initialize Field for the given key according the data and the model
-   * @param  {string} key   [description]
-   * @param  {Object} info  [description]
-   * @param  {string} group [description]
-   */
-
-	}, {
-		key: '_initField',
-		value: function _initField(key, info, group) {
-
-			key = key || {};
-
-			var type = key.type;
-			var method;
-
-			type = type || 'Input';
-
-			// if (typeof type === 'string') {
-			// 	method = pascalCase(type);
-			// }
-
-			if (this['_init' + method]) {
-				this['_init' + method](key, info, group);
-			} else {
-				this._initInput(key, info, group);
-			}
-		}
-
-		/**
-   * Initialize input
-   * @param  {key} key [description]
-   * @param  {Object} info
-   * @param  {Element} group
-   * @return {void}
-   */
-
-	}, {
-		key: '_initInput',
-		value: function _initInput(key, info, group) {
-			key = key || {};
-			key.name = key.name || '';
-
-			//var n = key.name.split(/\./);
-
-			var value = this.getValueFromKey(key.name, info);
-
-			if (!value && key.default) {
-				value = key.default;
-				this.updateDocKey(key.name, key.default);
-			}
-
-			if ((typeof value === 'undefined' ? 'undefined' : _typeof(value)) === 'object') {
-				value = JSON.stringify(value);
-				value = value.replace(/[&\/\\"{}\[\]]/g, '');
-				value = value.replace(/[,]/g, ', ');
-				value = value.replace(/[:]/g, ': ');
-			}
-
-			var _name = key.name.replace('.', '-');
-
-			var type = key.type || 'text';
-
-			var input = new _textfield2.default({
-				class: 'field-' + _name,
-				type: type,
-				name: key.name,
-				label: key.name,
-				text: key.text,
-				value: value,
-				error: true
-			}).insert(group);
-
-			if (key.kind) {
-				input.addClass('kind-' + key.kind);
-			}
-
-			this.field[key.name] = input;
-
-			if (key.klss) {
-				input.addClass(key.klss);
-			}
-
-			input.input.on('keyup', function () {
-				//self._onInputKeyUp(input, ev);
-			});
-
-			input.input.on('blur', function () {
-				//self._onInputBlur(input);
-			});
-		}
-
-		/**
-   * Update this.info for the given key name (three levels)
-   * @param  {string} name The name of the key in dot notation
-   * @param  {Mixin} value The related key value
-   * @return {Mixin} Value
-   */
-
-	}, {
-		key: 'updateDocKey',
-		value: function updateDocKey(name, value) {
-			var keys = name.split(/\./);
-
-			if (keys.length === 1) {
-				this.info[keys[0]] = value;
-			}
-
-			if (keys.length === 2) {
-				if (!this.info[keys[0]]) {
-					this.info[keys[0]] = {};
-				}
-
-				this.info[keys[0]][keys[1]] = value;
-			}
-			if (keys.length === 3) {
-				if (!this.info[keys[0]]) {
-					this.info[keys[0]] = {};
-				}
-				if (!this.info[keys[0]][keys[1]]) {
-					this.info[keys[0]][keys[1]] = {};
-				}
-
-				this.info[keys[0]][keys[1]][keys[2]] = value;
-			}
-
-			if (keys.length === 4) {
-				if (!this.info[keys[0]]) {
-					this.info[keys[0]] = {};
-				}
-				if (!this.info[keys[0]][keys[1]]) {
-					this.info[keys[0]][keys[1]] = {};
-				}
-				if (!this.info[keys[0]][keys[1]][keys[2]]) {
-					this.info[keys[0]][keys[1]][keys[2]] = {};
-				}
-
-				this.info[keys[0]][keys[1]][keys[2]][keys[3]] = value;
-			}
-
-			return value;
-		}
-
-		/**
-   * Get Value for the given key
-   * @param  {string} name defined in dot notation
-   * @param  {Object} info
-   * @return {Mixin} The Value of the given key
-   */
-
-	}, {
-		key: 'getValueFromKey',
-		value: function getValueFromKey(name, info) {
-			var keys = name.split(/\./);
-			var value = null;
-
-			if (!name || !info) {
-				return;
-			}
-
-			if (keys.length === 1) {
-				value = info[keys[0]];
-			}
-			if (keys.length === 2 && info[keys[0]]) {
-				if (info[keys[0]]) {
-					value = info[keys[0]][keys[1]];
-				}
-			}
-			if (keys.length === 3) {
-				if (info[keys[0]]) {
-					if (info[keys[0]][keys[1]]) {
-						value = info[keys[0]][keys[1]][keys[2]];
-					}
-				}
-			}
-
-			return value;
-		}
-
-		/**
-   * Getter
-   *
-   * @param {string} prop
-   * @param {string} value
-   * @return {Object|void}
-   */
-
-	}, {
-		key: 'get',
-		value: function get(prop, value) {
-			switch (prop) {
-				case 'key':
-					return this.getValueFromKey(value, this.info);
-				case 'info':
-					return this.getInfo();
-				case 'unsaved':
-					return this.original;
-				case 'type':
-					return this.type;
-				case 'options':
-					return this.options;
-				default:
-					//default will replace the old method see up
-					return this.getValueFromKey(prop, this.info);
-				/*case 'model':
-    	return this.getSelectedModel();*/
-			}
-		}
-
-		/**
-   * [add description]
-   * @param {string} type
-   */
-
-	}, {
-		key: 'addIndo',
-		value: function addIndo() {
-
-			this._setInfo({
-				type: this.options.type
-			});
-		}
-
-		/**
-   * Set Detail view with the given information and model
-   * @param {Object} doc   [description]
-   * @param {Object} opts [description]
-   */
-
-	}, {
-		key: 'setInfo',
-		value: function setInfo(doc, opts) {
-
-			opts = opts || {};
-
-			if (this.mode === 'edit') {
-				return;
-			}
-
-			if (!doc && !opts.mask) {
-				this.clear();
-				return;
-			}
-
-			this.original = doc;
-			this.originalMask = opts.mask;
-
-			//this.destroyCkeInstance();
-
-			//In test for real time editing
-			if (this.info) {
-				this.emit('unset', [this.info._id, this]);
-			}
-
-			if (this.control && this.control.add && doc && doc._id) {
-				this.control.add.setState(null);
-			}
-
-			this.readonly = undefined;
-
-			if (opts.readonly !== undefined) {
-				this.readonly = opts.readonly;
-			}
-
-			this._setInfo(doc, opts.mask);
-
-			var id = null;
-			if (doc) {
-				id = doc._id;
-			}
-			this.emit('set', [id, this]);
-			this.emit('settings', ['infoId', id]);
-
-			//mnml.view.ctrl.focus(this);
-		}
-
-		/**
-   * Set Detail view with the given information and model
-   * @param {Object} doc   [description]
-   * @param {Object} mask [description]
-   * @param {Object} opts [description]
-   */
-
-	}, {
-		key: '_setInfo',
-		value: function _setInfo(doc, mask, opts) {
-
-			if (this.form) {
-				this.form.style('display', 'block');
-			}
-
-			var name = doc.name || doc.title;
-
-			if (this.control && this.control.title) {
-				this.control.title.text(name);
-			}
-
-			/*if (this.options.container)
-   	this.options.container.focus();*/
-
-			this.info = null;
-			this.info = doc; // Object.clone(doc);
-			this.relatedListEvents = false;
-
-			this._setForm(this.info, mask, opts);
-
-			// if (this.container) {
-			// 	this.container.emit('resize');
-			// }
-		}
-
-		/**
-   * Set view accorrding the given mode
-   * @param {string} mode edit or not
-   */
-
-	}, {
-		key: 'setMode',
-		value: function setMode(mode) {
-			this.emit('mode', [this, mode]);
-
-			this.mode = mode;
-		}
-
-		/**
-   * [getType description]
-   * @return {string} [description]
-   */
-
-	}, {
-		key: 'getType',
-		value: function getType() {
-			return this.type;
-		}
-
-		/**
-   * [getInfo description]
-   * @return {Object} [description]
-   */
-
-	}, {
-		key: 'getInfo',
-		value: function getInfo() {
-			return this.info || null;
-		}
-	}]);
-
-	return Form;
-})(_view2.default);
-
-module.exports = Form;
-
-},{"./component":9,"./container/options":18,"./control/textfield":24,"./form/fieldset":26,"./view":40}],26:[function(require,module,exports){
-'use strict';
-
-var Component = require('../component');
-
-/**
- * Module fieldset
- * @module form/fieldset
- */
-var fieldset = {
-
-	/**
-  * Initialize form fieldset
-  * @return {void}
-  */
-
-	_initFieldset: function _initFieldset(fieldset, form) {
-		var legend = null;
-
-		var component = new Component({
-			'class': 'form-fieldset'
-		}).insert(form);
-
-		if (fieldset.name) component.addClass('fieldset-' + fieldset.name);
-
-		if (fieldset.klss) component.addClass(fieldset.klss);
-
-		if (fieldset.state === 'closed') component.addClass('closed');
-
-		if (fieldset.text) {
-			legend = new Component({
-				'class': 'fieldset-legend'
-
-			}).insert(component);
-
-			legend.text(fieldset.text);
-			legend.setAttribute('data-name', fieldset.text);
-
-			var caret = new Component({
-				'class': 'icon-font mdi_navigation_chevron_right'
-			}).insert(legend, 'top');
-		}
-
-		if (fieldset.buttons) {
-			this._initButtons(fieldset.buttons, this.doc, legend);
-		}
-
-		// if (legend)
-		// 	element.store('legend', legend);
-
-		// if (typeOf(fieldset.menu) == 'object') {
-		// 	this._initFieldsetMenu(fieldset.menu, legend);
-		// } else if (typeOf(fieldset.menu) == 'array') {
-		// 	for (var i = 0; i < fieldset.menu.length; i++) {
-		// 		var menu = fieldset.menu[i];
-		// 		this._initFieldsetMenu(menu, legend);
-		// 	}
-		// }
-
-		if (fieldset.field) {
-			this._initObjectField(fieldset.field, component);
-		} else if (fieldset.fields) {
-			this._initFields(fieldset.fields, component);
-		}
-	}
-
-	// /**
-	//  * Initialize form fieldset menu if exists
-	//  * @return {void}
-	//  */
-	// _initFieldsetMenu(menu, legend) {
-	// 	var self = this;
-
-	// 	var addBtn = new ButtonControl(menu)
-	// 	.insert(legend);
-
-	// 	addBtn.on(menu.emit, function(){
-	// 		self.fireEvent(menu.emit, self);
-	// 	});
-
-	// }
-
-};
-
-module.exports = fieldset;
-
-},{"../component":9}],27:[function(require,module,exports){
+},{"../component":10,"../control":20}],25:[function(require,module,exports){
 'use strict';
 
 var _createClass = (function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; })();
@@ -4650,7 +3664,7 @@ var Layout = (function (_Container) {
 
 module.exports = Layout;
 
-},{"./container":16,"./layout/container":28,"./layout/options":29,"./layout/resizer":30}],28:[function(require,module,exports){
+},{"./container":17,"./layout/container":26,"./layout/options":27,"./layout/resizer":28}],26:[function(require,module,exports){
 'use strict';
 
 var Container = require('../container');
@@ -4824,7 +3838,7 @@ var container = {
 
 module.exports = container;
 
-},{"../container":16}],29:[function(require,module,exports){
+},{"../container":17}],27:[function(require,module,exports){
 'use strict';
 
 /**
@@ -4866,7 +3880,7 @@ module.exports = {
 	}
 };
 
-},{}],30:[function(require,module,exports){
+},{}],28:[function(require,module,exports){
 'use strict';
 
 var Component = require("../component");
@@ -5044,7 +4058,7 @@ var resize = {
 
 module.exports = resize;
 
-},{"../component":9,"material/dist/vendor/dragdrop":8}],31:[function(require,module,exports){
+},{"../component":10,"material/dist/vendor/dragdrop":9}],29:[function(require,module,exports){
 'use strict';
 
 var _createClass = (function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; })();
@@ -5276,7 +4290,7 @@ var List = (function (_View) {
 
 module.exports = List;
 
-},{"./list/options":32,"./module/emitter":37,"material/lib/view":40}],32:[function(require,module,exports){
+},{"./list/options":30,"./module/emitter":35,"material/lib/view":38}],30:[function(require,module,exports){
 'use strict';
 
 /**
@@ -5289,7 +4303,7 @@ module.exports = {
 	comp: ['body']
 };
 
-},{}],33:[function(require,module,exports){
+},{}],31:[function(require,module,exports){
 'use strict';
 
 function _typeof(obj) { return obj && typeof Symbol !== "undefined" && obj.constructor === Symbol ? "symbol" : typeof obj; }
@@ -5465,7 +4479,7 @@ module.exports = {
 
 };
 
-},{}],34:[function(require,module,exports){
+},{}],32:[function(require,module,exports){
 'use strict';
 
 var _createClass = (function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; })();
@@ -5559,7 +4573,7 @@ var Controller = (function () {
 
 module.exports = Controller;
 
-},{}],35:[function(require,module,exports){
+},{}],33:[function(require,module,exports){
 (function (process,global){
 'use strict';
 
@@ -5707,7 +4721,7 @@ module.exports = defer;
 
 }).call(this,require('_process'),typeof global !== "undefined" ? global : typeof self !== "undefined" ? self : typeof window !== "undefined" ? window : {})
 
-},{"_process":7}],36:[function(require,module,exports){
+},{"_process":8}],34:[function(require,module,exports){
 'use strict';
 
 function _typeof(obj) { return obj && typeof Symbol !== "undefined" && obj.constructor === Symbol ? "symbol" : typeof obj; }
@@ -5740,7 +4754,7 @@ function _typeof(obj) { return obj && typeof Symbol !== "undefined" && obj.const
   };
 });
 
-},{}],37:[function(require,module,exports){
+},{}],35:[function(require,module,exports){
 'use strict';
 
 var _createClass = (function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; })();
@@ -5861,7 +4875,7 @@ Emitter.EMIT_SYNC = {};
 
 module.exports = Emitter;
 
-},{"./defer":35}],38:[function(require,module,exports){
+},{"./defer":33}],36:[function(require,module,exports){
 'use strict';
 
 /**
@@ -5948,7 +4962,7 @@ module.exports = {
   }
 };
 
-},{}],39:[function(require,module,exports){
+},{}],37:[function(require,module,exports){
 'use strict';
 
 /**
@@ -6041,7 +5055,7 @@ exports._isLiteralObject = _isLiteralObject;
 exports._each = _each;
 exports._indexOf = _indexOf;
 
-},{}],40:[function(require,module,exports){
+},{}],38:[function(require,module,exports){
 'use strict';
 
 var _createClass = (function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; })();
@@ -6185,7 +5199,7 @@ var View = (function (_Container) {
 
 module.exports = View;
 
-},{"./container":16,"./view/options":41}],41:[function(require,module,exports){
+},{"./container":17,"./view/options":39}],39:[function(require,module,exports){
 'use strict';
 
 module.exports = {
@@ -6195,7 +5209,7 @@ module.exports = {
 	component: ['body']
 };
 
-},{}],42:[function(require,module,exports){
+},{}],40:[function(require,module,exports){
 /*!
   * Morpheus - A Brilliant Animator
   * https://github.com/ded/morpheus - (c) Dustin Diaz 2011
