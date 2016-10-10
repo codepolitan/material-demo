@@ -2,6 +2,7 @@
 
 // switch
 import Switch from 'material/lib/control/switch.js';
+import Button from 'material/lib/control/button.js';
 
 /**
  * [initTest description]
@@ -18,5 +19,14 @@ module.exports = function(body) {
   new Switch({
     label: 'Disabled',
     disabled: true
+  }).insert(body);
+
+
+  new Button({
+    primary: true,
+    type: 'raised',
+    label: 'Switch',
+  }).on('press', function() {
+    console.log('switch state', switchControl.toggle());
   }).insert(body);
 };

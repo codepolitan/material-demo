@@ -322,26 +322,19 @@ module.exports = function (body) {
     type: 'raised',
     primary: true
   }).on('press', function (e) {
-    console.log('press', e);
-    fieldIdx++;
-    new Field({
-      label: 'field' + fieldIdx,
-      name: 'field'
-    }).insert(body);
+    // console.log('press', e);
+    // fieldIdx++;
+    // new Field({
+    //   label: 'field' + fieldIdx,
+    //   name: 'field'
+    // }).insert(body);
+
   }).insert(body);
 
   new _button2.default({
     icon: 'mdi-content-inbox',
     label: 'Inbox',
     css: 'icon-text'
-  }).insert(body);
-
-  new _button2.default({
-    type: 'action',
-    primary: true,
-    css: 'is-primary'
-  }).on('press', function () {
-    console.log('switch state', switchControl.toggle());
   }).insert(body);
 
   //console.log('---', primaryButton.style());
@@ -439,6 +432,10 @@ var _switch = require('material/lib/control/switch.js');
 
 var _switch2 = _interopRequireDefault(_switch);
 
+var _button = require('material/lib/control/button.js');
+
+var _button2 = _interopRequireDefault(_button);
+
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 /**
@@ -457,9 +454,17 @@ module.exports = function (body) {
     label: 'Disabled',
     disabled: true
   }).insert(body);
+
+  new _button2.default({
+    primary: true,
+    type: 'raised',
+    label: 'Switch'
+  }).on('press', function () {
+    console.log('switch state', switchControl.toggle());
+  }).insert(body);
 };
 
-},{"material/lib/control/switch.js":23}],8:[function(require,module,exports){
+},{"material/lib/control/button.js":21,"material/lib/control/switch.js":23}],8:[function(require,module,exports){
 // shim for using process in browser
 
 var process = module.exports = {};
