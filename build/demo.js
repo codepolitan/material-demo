@@ -357,18 +357,24 @@ var _checkbox = require('material/lib/control/checkbox.js');
 
 var _checkbox2 = _interopRequireDefault(_checkbox);
 
+var _button = require('material/lib/control/button.js');
+
+var _button2 = _interopRequireDefault(_button);
+
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 /**
  * [initTest description]
  * @return {[type]} [description]
  */
+
+// controls
 module.exports = function (body) {
   new _component2.default({
     class: 'ui-separator'
   }).insert(body);
 
-  new _checkbox2.default({
+  var checkbox = new _checkbox2.default({
     label: 'Checkbox'
   }).on('change', function (value) {
     console.log('checked', value);
@@ -387,10 +393,17 @@ module.exports = function (body) {
   }).on('change', function (value) {
     console.log('checked', value);
   }).insert(body);
-};
-// controls
 
-},{"material/lib/component.js":10,"material/lib/control/checkbox.js":22}],6:[function(require,module,exports){
+  new _button2.default({
+    primary: true,
+    type: 'raised',
+    label: 'Toggle'
+  }).on('press', function () {
+    console.log('switch state', checkbox.toggle());
+  }).insert(body);
+};
+
+},{"material/lib/component.js":10,"material/lib/control/button.js":21,"material/lib/control/checkbox.js":22}],6:[function(require,module,exports){
 'use strict';
 
 var _component = require('material/lib/component.js');
@@ -458,7 +471,7 @@ module.exports = function (body) {
   new _button2.default({
     primary: true,
     type: 'raised',
-    label: 'Switch'
+    label: 'toggle'
   }).on('press', function () {
     console.log('switch state', switchControl.toggle());
   }).insert(body);

@@ -25,7 +25,7 @@ module.exports = function(body) {
   new Button({
     primary: true,
     type: 'raised',
-    label: 'Switch',
+    label: 'toggle',
   }).on('press', function() {
     console.log('switch state', switchControl.toggle());
   }).insert(body);

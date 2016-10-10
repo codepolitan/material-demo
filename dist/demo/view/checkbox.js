@@ -3,7 +3,7 @@
 import Component from 'material/lib/component.js';
 // controls
 import Checkbox from 'material/lib/control/checkbox.js';
-
+import Button from 'material/lib/control/button.js';
 
 /**
  * [initTest description]
@@ -14,7 +14,7 @@ module.exports = function(body) {
     class: 'ui-separator',
   }).insert(body);
 
-  new Checkbox({
+  var checkbox = new Checkbox({
     label: 'Checkbox',
   }).on('change', function(value) {
     console.log('checked', value);
@@ -32,5 +32,13 @@ module.exports = function(body) {
     disabled: true,
   }).on('change', function(value) {
     console.log('checked', value);
+  }).insert(body);
+
+  new Button({
+    primary: true,
+    type: 'raised',
+    label: 'Toggle',
+  }).on('press', function() {
+    console.log('switch state', checkbox.toggle());
   }).insert(body);
 };
