@@ -1,33 +1,46 @@
 'use strict';
 
-import Emitter from 'material/lib/module/emitter';
+import Emitter from 'material / src /
+module/emitter';
 
-import Component from 'material/lib/component';
+import Component from 'material/src/component';
+import Item from 'material/src/list/item';
 import defaults from './options';
 
-// import Container from 'material/lib/container';
-import Layout from 'material/lib/layout';
-import View from 'material/lib/view';
-import List from 'material/lib/list';
-import Button from 'material/lib/control/button';
+// import Container from 'material/src/container';
+import Layout from 'material/src/layout';
+import View from 'material/src/view';
+import Button from 'material/src/control/button';
 
 // demo
+import typography from './view/typography';
 import button from './view/button';
+import button2 from './view/button2';
 import checkbox from './view/checkbox';
 import switchc from './view/switch';
 import field from './view/field';
+import slider from './view/slider';
+import list from './view/list';
+import form from './view/form';
+import tree from './view/tree';
 
 var demos = {
+  typography,
   button,
+  button2,
   checkbox,
   switch: switchc,
-  field
+  field,
+  slider,
+  list,
+  form,
+  tree
 };
 
 /**
  * @class
  */
-class Demo extends Emitter {
+class Demo {
 
   /**
    * @constructor
@@ -35,19 +48,18 @@ class Demo extends Emitter {
    * @return {Object} this
    */
   constructor(options) {
-    super();
-
-    //console.log('ready', document.body);
     this.options = [defaults, options].reduce(Object.assign, {});
 
-    this.layout = new Layout(this.options.layout).insert(document.body);
+    //console.log('ready', document.body);
+    this.init(options);
+
+    // this.initDemo(this.layout.component.main);
+    // this.controller = new Controller();
+  }
+
+  init(options) {
+    this.initLayout();
     this.initNaviView();
-    this.initMainView();
-    this.initSideView();
-
-    this.initDemo(this.body);
-
-    //this.controller = new Controller();
   }
 
   initDemo(body) {
@@ -55,32 +67,67 @@ class Demo extends Emitter {
     demos.button(body);
   }
 
+  initLayout() {
+    this.options.layout.element = document.body;
+    this.layout = new Layout(this.options.layout);
+
+    console.log('layout', this.layout);
+
+  }
+
   /**
    * [initNaviView description]
    * @return {Object} this - This class instance
    */
   initNaviView() {
-    var navi = this.layout.navi;
-    var head = this.layout.c.head;
+    var navi = this.layout.component.navi;
 
-    var toolbar = new Component({
-      class: 'ui-toolbar'
-    }).insert(head);
-
-    let button = new Button({
-      icon: 'mdi-navigation-menu',
-      type: 'action',
-      label: null
-    }).insert(toolbar);
-
-    button.on('press', function(e) {
-      console.log('press', e);
+    this.layout.component.mainmenu.on('press', function(e) {
       navi.toggle(e);
     });
 
-    //console.log('instance', typeof button);
-
     this.initNaviList();
+  }
+
+  /**
+   * Init Navigation view
+   * @return {Object} this - This class instance
+   */
+  initNaviList() {
+
+    var listView = this.layout.component.navi;
+
+    console.log('list object', listView);
+    var object = {
+      render: (info) => {
+        //console.log('render', info);
+        var item;
+
+        if (info.type === 'separator') {
+          item = new Component({
+            class: 'ui-separator'
+          });
+        } else {
+          var item = new Item({
+            name: info.name,
+            text: info.name
+          });
+        }
+
+        return item;
+      },
+      select: (item, ev) => {
+        console.log('select', item);
+        var name = item.innerText.toLowerCase();
+        this.updateDemoView(name);
+      }
+    }
+
+    Object.assign(listView, object);
+
+    listView.set('list', this.options.components);
+
+    return this;
   }
 
   /**
@@ -96,84 +143,17 @@ class Demo extends Emitter {
     return mapView;
   }
 
-  /**
-   * Init Navigation view
-   * @return {Object} this - This class instance
-   */
-  initNaviList() {
-
-    var listView = new List({
-      component: ['head', 'body'],
-      container: this.layout.navi.c.body,
-      render: (info) => {
-        //console.log('render', info);
-        var item;
-
-        if (info.type === 'separator') {
-          item = new Component({
-            class: 'ui-separator'
-          });
-        } else {
-          var item = new Button({
-            label: info.name,
-            icon: info.icon,
-            css: 'icon-text'
-          }).on('press', () => {
-            var name = item.label.text().toLowerCase();
-            this.updateDemoView(name);
-          });
-        }
-
-        return item;
-      }
-    });
-
-    listView.set('list', this.options.components);
-
-    listView.on('selected', function(item) {
-      console.log('item selected', item);
-    });
-
-    return this;
-  }
 
   updateDemoView(name) {
     //console.log('updateDemoView', name);
-    this.body.empty();
+    this.layout.component.main.empty();
 
     if (demos[name]) {
-      demos[name](this.body);
+      demos[name](this.layout.component.main);
+    } else {
+      console.info('demo view ' + name + ' not found!');
     }
   }
-
-  /**
-   * initSideView
-   * @return {instance} The class instance
-   */
-  initSideView() {
-    //console.log('initSideView contact', contactInfo, contactTemplate);
-
-    return this;
-  }
-
-  /**
-   * [initTest description]
-   * @return {instance} The class instance
-   */
-  initMainView() {
-    //return;
-    var mainbody = this.layout.main;
-    var fieldIdx = 0;
-
-    var view = new View({
-      comp: ['body']
-    }).insert(mainbody);
-
-    var body = this.body = view.c.body;
-
-    return this;
-  }
-
 }
 
 module.exports = Demo;

@@ -1,4 +1,3 @@
-
 /**
  * material demo
  * @type {[type]}
@@ -7,7 +6,7 @@
 var express = require('express');
 var app = express();
 
-var port = 3000;
+var port = 3001;
 
 app.use(express.compress());
 //app.use('/', express.static(__dirname + '/dist'));
@@ -21,6 +20,7 @@ app.use('/vendor', express.static(__dirname + '/dist/report'));
 app.use('/skin', express.static(__dirname + '/dist/skin'));
 app.use('/build', express.static(__dirname + '/build'));
 app.use('/docs', express.static(__dirname + '/node_modules/material/docs'));
+app.use('/doc', express.static(__dirname + '/node_modules/material/doc'));
 
 console.info('dist', __dirname + '/dist');
 

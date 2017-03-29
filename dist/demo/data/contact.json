@@ -1,0 +1,30 @@
+{
+  "_id": "7783922916e5e1540ca94044ad0270cf",
+  "_rev": "4-41a5eb67fb2b27d0fb32e9c701e53456",
+  "created_date": "2014-05-11T13:26:27.606Z",
+  "created_by": "jvial",
+  "modified_date": "2014-05-11T13:26:38.245Z",
+  "modified_by": "jvial",
+  "type": "contact",
+  "firstname": "Jerome",
+  "lastname": "Vial",
+  "salutation": "Monsieur",
+  "email": "jerome@floor.ch",
+  "name": "Vial Jerome",
+  "place": {
+    "address": "Cardinal Mermillod 9",
+    "zipcode": "1700",
+    "name": "Fribourg",
+    "coord": {
+      "lat": "3.13",
+      "long": "4.22"
+    }
+  },
+  "nodes": [
+    "42d8640238b75593557e148f7845ec80"
+  ],
+  "language": "F",
+  "kind": "individual",
+  "active": true,
+  "vip": 1
+}

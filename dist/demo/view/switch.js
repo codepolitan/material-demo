@@ -1,8 +1,11 @@
 'use strict';
 
 // switch
-import Switch from 'material/lib/control/switch.js';
-import Button from 'material/lib/control/button.js';
+import Layout from 'material/src/layout.js';
+import Container from 'material/src/container.js';
+
+import Switch from 'material/src/control/switch.js';
+import Button from 'material/src/control/button.js';
 
 /**
  * [initTest description]
@@ -10,23 +13,51 @@ import Button from 'material/lib/control/button.js';
  */
 module.exports = function(body) {
 
-  var switchControl = new Switch({
-    label: 'Switch',
-  }).on('change', function(value) {
-    //console.log('checked', value);
+  var layout = new Layout({
+    components: [{
+      name: 'container',
+      component: Container,
+      components: [{
+        name: 'default',
+        component: Switch,
+        options: {
+          label: 'Switch',
+        }
+      }, {
+        name: 'disabled',
+        component: Switch,
+        options: {
+          label: 'Disabled',
+          disabled: true
+        }
+      }]
+    }]
   }).insert(body);
 
-  new Switch({
-    label: 'Disabled',
-    disabled: true
-  }).insert(body);
+  console.log('layout', layout);
+  new Button({
+    //primary: true,
+    //type: 'raised',
+    label: 'toggle',
+  }).on('press', function() {
+    layout.component.default.toggle();
+    console.log('switch state', layout.component.default.get());
+  }).insert(layout.component.container);
 
 
   new Button({
-    primary: true,
-    type: 'raised',
-    label: 'toggle',
+    //primary: true,
+    //type: 'raised',
+    label: 'enable',
   }).on('press', function() {
-    console.log('switch state', switchControl.toggle());
-  }).insert(body);
+    layout.component.disabled.enable();
+  }).insert(layout.component.container);
+
+  new Button({
+    //primary: true,
+    //type: 'raised',
+    label: 'disable',
+  }).on('press', function() {
+    layout.component.disabled.disable();
+  }).insert(layout.component.container);
 };

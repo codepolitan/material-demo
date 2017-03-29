@@ -1,25 +1,48 @@
 'use strict';
 
-import Component from 'material/lib/component.js';
+import Layout from 'material/src/layout.js';
+import Component from 'material/src/component.js';
+import Container from 'material/src/container.js';
 // controls
-import Field from 'material/lib/control/textfield.js';
+import Field from 'material/src/control/textfield.js';
+import Text from 'material/src/text.js';
 
 /**
  * [initTest description]
  * @return {[type]} [description]
  */
-var checkbox = function(body) {
-
-  new Component({
-    class: 'ui-separator',
-  }).insert(body);
-
-  new Field({
-    label: 'material',
-    name: 'field'
-  }).insert(body);
-
-
+module.exports = function(body) {
+  new Layout({
+    container: body,
+    component: Container,
+    display: 'flex',
+    direction: 'vertical',
+    components: [{
+      name: 'header',
+      direction: 'vertical',
+      components: [{
+  type: 'headline',
+  component: Text,
+  text: 'Text fields'
+}
+]
+    }, {
+      component: Container,
+      name: 'TextFields',
+      direction: 'vertical',
+      components: [{
+        name: 'title',
+        component: Field,
+        text: 'Adresse',
+      }, {
+        text: 'Address',
+        name: 'place.address',
+        component: Field,
+      }, {
+        text: 'Address 2',
+        name: 'place.info',
+        component: Field,
+      }]
+    }]
+  });
 };
-
-module.exports = checkbox;

@@ -1,6 +1,115 @@
-.container-main {
-	background-color: white;
-	.ui-view {
-		
-	}
+@import "./flex.less";
+@border: rgba(163, 163, 163, .5);
+@navi-max-width: 320px;
+@navi-width: 200px;
+@side-min-width: 100px;
+@list-min-width: 80px;
+@list-width: 300px;
+// layout base
+.layout-demo {
+  overflow: hidden;
+  padding: 0;
+  margin: 0;
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  > .component-head {
+    z-index: 3;
+    .flex(none);
+    .display(flex);
+    .flex-direction(row);
+    .flex-wrap(nowrap);
+    background-color: #4285F4;
+    //box-shadow: 0 0 4px rgba(0, 0, 0, 0.14),0 4px 8px rgba(0, 0, 0, 0.28);
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.14);
+    padding: 10px 16px;
+    // -webkit-box-shadow: 0 1px 8px rgba(0, 0, 0, 0.3);
+    // box-shadow: 0 1px 8px rgba(0, 0, 0, 0.3);
+    // &:before {
+    //  box-shadow: 0 0 4px rgba(0, 0, 0, 0.14),0 4px 8px rgba(0, 0, 0, 0.28);
+    //  content: "";
+    //  height: 56px;
+    //  left: -2%;
+    //  position: fixed;
+    //  width: 104%;
+    //  will-change: top,left;
+    // }
+    .text-apptitle {
+      font-size: 1.3rem;
+      font-weight: 300;
+      display: inline-block;
+      color: rgba(255, 255, 255, .95);
+      padding: 6px 0 6px;
+    }
+    .material-switch {
+      display: inline-block;
+    }
+  }
+  >.component-body {
+    //position: relative;
+    .material-list.list-navi {
+      width: 200px;
+      background-color: #EEE;
+      padding: 16px 0 16px 0;
+      border-right: 1px solid @border;
+      .material-item {
+        left: 0;
+        padding: 8px 16px;
+      }
+    }
+    >.component-main {
+      position: relative;
+      //padding: 16px;
+      background-color: rgba(255, 255, 255, 1);
+      overflow: scroll;
+      >.material-container {
+        padding: 16px;
+        overflow: scroll;
+      }
+      >.material-layout {
+        >.material-container {
+          padding: 16px;
+        }
+      }
+      >.material-form.material-layout {
+        padding: 0;
+        margin: 0;
+        position: absolute;
+        top: 0;
+        bottom: 0;
+        left: 0;
+        right: 0;
+        >.material-component {
+          overflow: scroll;
+          padding: 16px;
+        }
+        >.material-component.component-foot {
+          padding: 12px 16px;
+          background-color: rgba(0, 0, 0, .02);
+          >.component-toolbar {
+            text-align: right;
+          }
+        }
+      }
+      >.container-buttons-container {
+        padding: 16px;
+      }
+    }
+  }
+}
+
+@media only screen and (max-width: 640px) {
+  .layout-demo {
+    >.component-body {
+      .list-navi {
+        z-index: 2;
+        position: absolute;
+        top: 0;
+        bottom: 0;
+        left: 0;
+      }
+    }
+  }
 }
