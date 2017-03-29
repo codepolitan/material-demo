@@ -1,23 +1,18 @@
 {
-  "_id": "7783922916e5e1540ca94044ad0270cf",
-  "_rev": "4-41a5eb67fb2b27d0fb32e9c701e53456",
-  "created_date": "2014-05-11T13:26:27.606Z",
-  "created_by": "jvial",
-  "modified_date": "2014-05-11T13:26:38.245Z",
-  "modified_by": "jvial",
   "type": "contact",
-  "firstname": "Jerome",
-  "lastname": "Vial",
-  "salutation": "Monsieur",
-  "email": "jerome@floor.ch",
-  "name": "Vial Jerome",
+  "firstname": "Nikola",
+  "lastname": "Tesla",
+  "title": "M",
+  "email": "nikola.tesla@electriccity.io",
+  "name": "Nikola Tesla",
   "place": {
-    "address": "Cardinal Mermillod 9",
-    "zipcode": "1700",
-    "name": "Fribourg",
+    "address": "Electric St.",
+    "zipcode": "53211",
+    "name": "Smiljan",
+    "country": "Croatia",
     "coord": {
-      "lat": "3.13",
-      "long": "4.22"
+      "lat": "44.5630945",
+      "long": "15.3012061"
     }
   },
   "nodes": [
@@ -28,3 +23,6 @@
   "active": true,
   "vip": 1
 }
+
+
+https: //www.google.it/maps/place/Memorijalni+centar+%22Nikola+Tesla%22/@44.5639965,15.2943826,14z/data=!4m13!1m7!3m6!1s0x47622acbe4e4460d:0x835af4145dfc4024!2sSmiljan,+Croatia!3b1!8m2!3d44.5637924!4d15.320403!3m4!1s0x0:0x8509b1b6eafe0042!8m2!3d44.5603904!4d15.3078014?hl=en
