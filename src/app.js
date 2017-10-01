@@ -10,7 +10,7 @@ import Divider from 'material/src/divider'
 import defaults from './options'
 
 // import Container from 'material/src/container';
-import Layout from 'material/src/layout2'
+import Layout from 'material/src/layout'
 import layout from './layout'
 import Cookies from './vendor/cookies'
 

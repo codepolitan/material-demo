@@ -1,6 +1,6 @@
 'use strict'
 
-import Layout from 'material/src/layout2.js'
+import Layout from 'material/src/layout.js'
 import Menu from 'material/src/menu.js'
 
 import Component from 'material/src/component.js'
@@ -13,7 +13,7 @@ import Text from 'material/src/text.js'
  * [initTest description]
  * @return {[type]} [description]
  */
-export default function(body) {
+export default function (body) {
   var list = [{
     name: 'Undo'
   }, {

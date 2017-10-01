@@ -1,6 +1,6 @@
 'use strict'
 
-import Layout from 'material/src/layout2.js'
+import Layout from 'material/src/layout.js'
 import Component from 'material/src/component.js'
 import Container from 'material/src/container.js'
 import Button from 'material/src/button.js'
