@@ -1,0 +1,178 @@
+.component-demo,
+.layout-demo {
+  overflow: hidden;
+  padding: 0;
+  margin: 0;
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+}
+.component-demo > .component-head,
+.layout-demo > .component-head {
+  z-index: 3;
+  -webkit-box-flex: none;
+  -moz-box-flex: none;
+  -webkit-flex: none 1 0%;
+  -moz-flex: none 1 0%;
+  -ms-flex: none 1 0%;
+  flex: none 1 0%;
+  display: -moz-box;
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -moz-flex;
+  display: -ms-flexbox;
+  display: -ms-flex;
+  display: flex;
+  -webkit-box-orient: horizontal;
+  -moz-box-orient: horizontal;
+  -webkit-box-direction: normal;
+  -moz-box-direction: normal;
+  -webkit-flex-direction: row;
+  -moz-flex-direction: row;
+  -ms-flex-direction: row;
+  flex-direction: row;
+  -webkit-box-lines: single;
+  -moz-box-lines: single;
+  -webkit-flex-wrap: nowrap;
+  -moz-flex-wrap: nowrap;
+  -ms-flex-wrap: nowrap;
+  flex-wrap: nowrap;
+  background-color: #4285F4;
+  background-color: rgba(0, 0, 0, 0.7);
+  background-color: #607D8B;
+  padding: 10px 16px;
+  box-shadow: 0 0 4px rgba(0, 0, 0, 0.14), 0 4px 8px rgba(0, 0, 0, 0.28);
+}
+.component-demo > .component-head .text-app-title,
+.layout-demo > .component-head .text-app-title {
+  font-size: 1.5rem;
+  font-weight: 300;
+  display: inline-block;
+  color: rgba(255, 255, 255, 0.95);
+  padding: 6px 0 6px;
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+}
+.component-demo > .component-head .material-button .button-icon,
+.layout-demo > .component-head .material-button .button-icon {
+  fill: rgba(255, 255, 255, 0.95);
+}
+.component-demo > .component-head .material-switch,
+.layout-demo > .component-head .material-switch {
+  display: inline-block;
+}
+.component-demo > .material-drawer,
+.layout-demo > .material-drawer {
+  z-index: 26;
+  position: fixed;
+  top: 0;
+  left: 0;
+  bottom: 0;
+  background-color: #FFFFFF;
+  box-shadow: 0px 8px 10px -5px rgba(0, 0, 0, 0.2), 0px 16px 24px 2px rgba(0, 0, 0, 0.14), 0px 6px 30px 5px rgba(0, 0, 0, 0.12);
+}
+.component-demo > .material-drawer .component-navi-head,
+.layout-demo > .material-drawer .component-navi-head {
+  background-color: rgba(0, 0, 0, 0.8);
+  padding: 100px 16px 16px;
+}
+.component-demo > .material-drawer .component-navi-head .material-text,
+.layout-demo > .material-drawer .component-navi-head .material-text {
+  display: inline-block;
+  color: rgba(255, 255, 255, 0.95);
+  padding: 6px 0 6px;
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+}
+.component-demo > .material-drawer .material-list.list-navi,
+.layout-demo > .material-drawer .material-list.list-navi {
+  -webkit-transition: 0.2s;
+  -moz-transition: 0.2s;
+  -ms-transition: 0.2s;
+  -o-transition: 0.2s;
+}
+.component-demo > .material-drawer .material-list.list-navi .material-item,
+.layout-demo > .material-drawer .material-list.list-navi .material-item {
+  left: 0;
+  padding: 8px 16px;
+}
+.component-demo > .component-body > .component-main,
+.layout-demo > .component-body > .component-main {
+  position: relative;
+  background-color: #ffffff;
+  overflow: scroll;
+}
+.component-demo > .component-body > .component-main .material-calendar,
+.layout-demo > .component-body > .component-main .material-calendar {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+}
+.component-demo > .component-body > .component-main .container-hero,
+.layout-demo > .component-body > .component-main .container-hero {
+  min-height: 360px;
+  background-color: rgba(0, 0, 0, 0.05);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-flow: row nowrap;
+  height: 360px;
+}
+.component-demo > .component-body > .component-main > .layout-slider > .container-hero > .material-slider,
+.layout-demo > .component-body > .component-main > .layout-slider > .container-hero > .material-slider {
+  width: 60%;
+}
+.component-demo > .component-body > .component-main > .layout-ripple > .material-container > .material-component,
+.layout-demo > .component-body > .component-main > .layout-ripple > .material-container > .material-component {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+}
+.component-demo > .component-body > .component-main > .material-container,
+.layout-demo > .component-body > .component-main > .material-container {
+  padding: 16px;
+  overflow: scroll;
+}
+.component-demo > .component-body > .component-main > .material-layout > .material-container,
+.layout-demo > .component-body > .component-main > .material-layout > .material-container {
+  padding: 16px;
+}
+.component-demo > .component-body > .component-main .layout-demo-button .material-button,
+.layout-demo > .component-body > .component-main .layout-demo-button .material-button {
+  margin: 16px;
+}
+.component-demo > .component-body > .component-main > .material-form.material-layout,
+.layout-demo > .component-body > .component-main > .material-form.material-layout {
+  padding: 0;
+  margin: 0;
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+}
+.component-demo > .component-body > .component-main > .material-form.material-layout > .material-component,
+.layout-demo > .component-body > .component-main > .material-form.material-layout > .material-component {
+  overflow: scroll;
+  padding: 16px;
+}
+.component-demo > .component-body > .component-main > .material-form.material-layout > .material-component.component-foot,
+.layout-demo > .component-body > .component-main > .material-form.material-layout > .material-component.component-foot {
+  padding: 12px 16px;
+  background-color: rgba(0, 0, 0, 0.02);
+}
+.component-demo > .component-body > .component-main > .material-form.material-layout > .material-component.component-foot > .component-toolbar,
+.layout-demo > .component-body > .component-main > .material-form.material-layout > .material-component.component-foot > .component-toolbar {
+  text-align: right;
+}
+.component-demo > .component-body > .component-main > .container-buttons-container,
+.layout-demo > .component-body > .component-main > .container-buttons-container {
+  padding: 16px;
+}

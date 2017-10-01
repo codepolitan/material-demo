@@ -1,0 +1,25 @@
+{
+  "type": "contact",
+  "firstname": "Nikola",
+  "lastname": "Tesla",
+  "title": "M",
+  "email": "nikola.tesla@electriccity.io",
+  "name": "Nikola Tesla",
+  "place": {
+    "address": "Electric St.",
+    "zipcode": "53211",
+    "name": "Smiljan",
+    "country": "Croatia",
+    "coord": {
+      "lat": "44.5630945",
+      "long": "15.3012061"
+    }
+  },
+  "nodes": [
+    "42d8640238b75593557e148f7845ec80"
+  ],
+  "language": "Cr",
+  "kind": "individual",
+  "active": true,
+  "vip": 1
+}

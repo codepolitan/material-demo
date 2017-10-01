@@ -1,0 +1,115 @@
+.layout-demo {
+  overflow: hidden;
+  padding: 0;
+  margin: 0;
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+}
+.layout-demo > .component-head {
+  z-index: 3;
+  -webkit-box-flex: none;
+  -moz-box-flex: none;
+  -webkit-flex: none 1 0%;
+  -moz-flex: none 1 0%;
+  -ms-flex: none 1 0%;
+  flex: none 1 0%;
+  display: -moz-box;
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -moz-flex;
+  display: -ms-flexbox;
+  display: -ms-flex;
+  display: flex;
+  -webkit-box-orient: horizontal;
+  -moz-box-orient: horizontal;
+  -webkit-box-direction: normal;
+  -moz-box-direction: normal;
+  -webkit-flex-direction: row;
+  -moz-flex-direction: row;
+  -ms-flex-direction: row;
+  flex-direction: row;
+  -webkit-box-lines: single;
+  -moz-box-lines: single;
+  -webkit-flex-wrap: nowrap;
+  -moz-flex-wrap: nowrap;
+  -ms-flex-wrap: nowrap;
+  flex-wrap: nowrap;
+  background-color: #4285F4;
+  background-color: rgba(0, 0, 0, 0.8);
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.14);
+  padding: 10px 16px;
+}
+.layout-demo > .component-head .text-apptitle {
+  font-size: 1.5rem;
+  font-weight: 300;
+  display: inline-block;
+  color: rgba(255, 255, 255, 0.95);
+  padding: 6px 0 6px;
+}
+.layout-demo > .component-head .material-switch {
+  display: inline-block;
+}
+.layout-demo > .component-body .material-list.list-navi {
+  width: 200px;
+  background-color: #EEE;
+  padding: 16px 0 16px 0;
+  border-right: 1px solid rgba(163, 163, 163, 0.5);
+  -webkit-transition: 0.2s;
+  -moz-transition: 0.2s;
+  -ms-transition: 0.2s;
+  -o-transition: 0.2s;
+}
+.layout-demo > .component-body .material-list.list-navi .material-item {
+  left: 0;
+  padding: 8px 16px;
+}
+.layout-demo > .component-body > .component-main {
+  position: relative;
+  background-color: #ffffff;
+  overflow: scroll;
+}
+.layout-demo > .component-body > .component-main > .material-container {
+  padding: 16px;
+  overflow: scroll;
+}
+.layout-demo > .component-body > .component-main > .material-layout > .material-container {
+  padding: 16px;
+}
+.layout-demo > .component-body > .component-main .layout-demo-button .material-button {
+  margin: 16px;
+}
+.layout-demo > .component-body > .component-main > .material-form.material-layout {
+  padding: 0;
+  margin: 0;
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+}
+.layout-demo > .component-body > .component-main > .material-form.material-layout > .material-component {
+  overflow: scroll;
+  padding: 16px;
+}
+.layout-demo > .component-body > .component-main > .material-form.material-layout > .material-component.component-foot {
+  padding: 12px 16px;
+  background-color: rgba(0, 0, 0, 0.02);
+}
+.layout-demo > .component-body > .component-main > .material-form.material-layout > .material-component.component-foot > .component-toolbar {
+  text-align: right;
+}
+.layout-demo > .component-body > .component-main > .container-buttons-container {
+  padding: 16px;
+}
+@media only screen and (max-width: 640px) {
+  .layout-demo > .component-body .list-navi {
+    z-index: 2;
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    left: 0;
+  }
+}
