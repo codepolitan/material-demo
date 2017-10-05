@@ -1,12 +1,12 @@
 import {
-  Button,
-  Component,
+  button,
+  component,
   Card,
 
   Checkbox,
-  Container,
+  container,
   Dialog,
-  Divider,
+  divider,
   Drawer,
   Form,
   Image,
@@ -26,28 +26,28 @@ import iconMore from './icon/more.svg'
 import iconApps from './icon/apps.svg'
 
 document.addEventListener('DOMContentLoaded', function() {
-  var schema = [Container, 'demo', { display: 'flex', direction: 'horizontal' },
-    [Component, 'head', { display: 'flex', direction: 'horizontal' },
+  var schema = [container, 'demo', { display: 'flex', direction: 'horizontal' },
+    [component, 'head', { display: 'flex', direction: 'horizontal' },
       [Toolbar, 'toolbar', { flex: 1, display: 'flex', direction: 'horizontal' },
-        [Button, 'menu-navi', { icon: iconMenu, type: 'action' }],
+        [button, 'menu-navi', { icon: iconMenu, type: 'action' }],
         [Text, 'app-title', { text: 'Material Components' }]
       ],
       [Toolbar, 'desk', { display: 'flex', direction: 'horizontal' },
-        [Button, 'menu-more', { icon: iconMore, type: 'action' }]
+        [button, 'menu-more', { icon: iconMore, type: 'action' }]
       ]
     ],
     [Drawer, 'navi', { css: 'drawer-temporary', type: 'temporary', size: '280px' },
-      [Component, 'navi-head', { theme: 'dark' }],
+      [component, 'navi-head', { theme: 'dark' }],
       [List, 'navi-list', { theme: 'dark' }]
     ],
-    [Component, 'body', { display: 'flex', direction: 'horizontal', flex: '1' },
+    [component, 'body', { display: 'flex', direction: 'horizontal', flex: '1' },
       [List, 'main-list', { flex: '1' }]
     ]
   ]
 
   var layout = new Layout2(schema, document.body)
   // var layout = new Layout({
-  //   component: Component,
+  //   component: component,
   //   name: 'demo',
   //   display: 'flex',
   //   direction: 'vertical',
@@ -59,13 +59,13 @@ document.addEventListener('DOMContentLoaded', function() {
   //       display: 'flex',
   //       direction: 'horizontal',
   //       name: 'toolbar',
-  //       component: Component,
+  //       component: component,
   //       options: {
   //         css: 'material-toolbar'
   //       },
   //       components: [{
   //         name: 'menu-navi',
-  //         component: Button,
+  //         component: button,
   //         options: {
   //           icon: iconMenu,
   //           type: 'action',
@@ -79,13 +79,13 @@ document.addEventListener('DOMContentLoaded', function() {
   //       }]
   //     }, {
   //       name: 'desk',
-  //       component: Component,
+  //       component: component,
   //       options: {
   //         css: 'material-toolbar'
   //       },
   //       components: [{
   //         name: 'more',
-  //         component: Button,
+  //         component: button,
   //         options: {
   //           icon: iconMore,
   //           type: 'action',
@@ -104,7 +104,7 @@ document.addEventListener('DOMContentLoaded', function() {
   //     },
   //     components: [{
   //       name: 'navi-head',
-  //       component: Component,
+  //       component: component,
   //       options: {
   //         theme: 'dark'
   //       },

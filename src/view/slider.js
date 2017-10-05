@@ -1,22 +1,22 @@
 'use strict'
 
-import { Layout, Container, Slider, Component } from 'material'
+import { Layout, container, Slider, component } from 'material'
 
 /**
  * [initTest description]
  * @return {[type]} [description]
  */
 export default function(body) {
-  new Layout([Component, 'slider', {},
-    [Container, 'hero', {},
+  new Layout([component, 'slider', {},
+    [container, 'hero', {},
       [Slider, '', { width: '300px' }]
     ],
-    [Container, 'container', {},
+    [container, 'container', {},
       [Slider, 'default', { label: 'Slider', value: 20 }],
       [Slider, 'default', { label: 'Slider discrete', value: 40, type: 'discrete' }],
       [Slider, 'default', { label: 'Diasbled', value: 60, disabled: true }]
     ],
-    [Container, 'container', { css: 'dark-theme' },
+    [container, 'container', { css: 'dark-theme' },
       [Slider, 'default', { label: 'Slider', value: 20 }],
       [Slider, 'default', { label: 'Slider discrete', value: 40, type: 'discrete' }],
       [Slider, 'default', { label: 'Diasbled', value: 60, disabled: true }]

@@ -1,9 +1,9 @@
 'use strict'
 
 // controls
-import Component from 'material/src/component.js'
+import component from 'material/src/component.js'
 import Form from 'material/src/form.js'
-import Button from 'material/src/button.js'
+import button from 'material/src/button.js'
 // import schema from '../data/schema.json';
 import data from '../data/contact.json'
 import Field from 'material/src/textfield'
@@ -16,16 +16,16 @@ import Text from 'material/src/text.js'
  * [initTest description]
  * @return {[type]} [description]
  */
-export default function (body) {
+export default function(body) {
   var form = new Form({
     layout: {
-      component: Component,
+      component: component,
       display: 'flex',
       direction: 'vertical',
       components: [{
         name: 'main',
         flex: 1,
-        component: Component,
+        component: component,
         components: [{
           name: 'contact',
           direction: 'vertical',
@@ -33,7 +33,7 @@ export default function (body) {
           components: [{
             type: 'display1',
             component: Text,
-            text: 'Form Component'
+            text: 'Form component'
           }, {
             type: 'subheading1',
             component: Text,
@@ -134,19 +134,19 @@ export default function (body) {
 
         components: [{
           name: 'toolbar',
-          component: Component,
+          component: component,
           options: {
             class: 'ui-toolbar'
           },
           components: [{
             name: 'cancel',
-            component: Button,
+            component: button,
             options: {
               label: 'Cancel'
             }
           }, {
             name: 'apply',
-            component: Button,
+            component: button,
             options: {
               type: 'raised',
               label: 'Apply'

@@ -3,33 +3,33 @@
 import Switch from 'material/src/switch.js'
 
 import Layout from 'material/src/layout.js'
-import Component from 'material/src/component.js'
-import Container from 'material/src/container.js'
+import component from 'material/src/component.js'
+import container from 'material/src/container.js'
 
 // toolbar
 import Toolbar from 'material/src/toolbar.js'
-import Button from 'material/src/button.js'
+import button from 'material/src/button.js'
 
 /**
  * [initTest description]
  * @return {[type]} [description]
  */
 export default function(body) {
-  var layout = new Layout([Component, 'checkbox-view', {},
-    [Container, 'hero', {},
+  var layout = new Layout([component, 'checkbox-view', {},
+    [container, 'hero', {},
       [Switch, '', { label: 'Switch' }]
     ],
     [Toolbar, 'footer', {},
-      [Button, 'toggleBtn', { label: 'Toggle check' }],
-      [Button, 'enableBtn', { label: 'Enable', checked: true }],
-      [Button, 'disableBtn', { label: 'Disable', disabled: true }]
+      [button, 'toggleBtn', { label: 'Toggle check' }],
+      [button, 'enableBtn', { label: 'Enable', checked: true }],
+      [button, 'disableBtn', { label: 'Disable', disabled: true }]
     ],
-    [Container, 'default-container', {},
+    [container, 'default-container', {},
       [Switch, 'default', { label: 'Switch' }],
       [Switch, 'uncheck', { label: 'Switch', checked: true }],
       [Switch, 'disabled', { label: 'Disabled', disabled: true }]
     ],
-    [Container, 'dark-container', { css: 'dark-theme' },
+    [container, 'dark-container', { css: 'dark-theme' },
       [Switch, '', { label: 'Switch' }],
       [Switch, '', { label: 'Switch', checked: true }],
       [Switch, '', { label: 'Disabled', disabled: true }]

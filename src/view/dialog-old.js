@@ -2,12 +2,12 @@
 
 import Dialog from 'material/src/dialog.js'
 
-import Component from 'material/src/component.js'
-import Container from 'material/src/container.js'
-import Button from 'material/src/button.js'
+import component from 'material/src/component.js'
+import container from 'material/src/container.js'
+import button from 'material/src/button.js'
 import Text from 'material/src/text.js'
 import List from 'material/src/list.js'
-import Item from 'material/src/item.js'
+import item from 'material/src/item.js'
 import event from 'material/src/element/event.js'
 
 import countries from '../data/countries.json'
@@ -19,7 +19,7 @@ import countries from '../data/countries.json'
  * @return {[type]} [description]
  */
 export default function(body) {
-  var container = new Container({
+  var container = container({
     container: body,
     css: 'view-dialog'
   })
@@ -27,7 +27,7 @@ export default function(body) {
   var dialog = new Dialog({
     class: 'simple-dialog',
     layout: {
-      component: Component,
+      component: component,
       name: 'simple-dialog',
       display: 'flex',
       direction: 'vertical',
@@ -53,19 +53,19 @@ export default function(body) {
         }]
       }, {
         name: 'action',
-        component: Component,
+        component: component,
         // display: 'flex',
         // direction: 'horizontal',
         components: [{
           name: 'cancel',
           flex: 'none',
           text: 'Cancel',
-          component: Button
+          component: button
         }, {
           name: 'continue',
           flex: 'none',
           text: 'Continue',
-          component: Button
+          component: button
         }]
       }]
     }
@@ -84,7 +84,7 @@ export default function(body) {
   var dialog2 = new Dialog({
     class: 'simple-dialog',
     layout: {
-      component: Component,
+      component: component,
       name: 'list-dialog',
       display: 'flex',
       direction: 'vertical',
@@ -92,7 +92,7 @@ export default function(body) {
         name: 'head',
         flex: 'none',
 
-        component: Component,
+        component: component,
         components: [{
           name: 'title',
           flex: 'none',
@@ -112,11 +112,11 @@ export default function(body) {
             var item
 
             if (info.type === 'separator') {
-              item = new Component({
+              item = component({
                 css: 'ui-separator'
               })
             } else {
-              var item = new Item({
+              var item = new item({
                 name: info.name,
                 text: info.name
               })
@@ -131,7 +131,7 @@ export default function(body) {
 
       }, {
         name: 'action',
-        component: Component,
+        component: component,
         // display: 'flex',
         flex: 'none',
         direction: 'horizontal',
@@ -139,7 +139,7 @@ export default function(body) {
           name: 'decline',
           flex: 'none',
           text: 'Cancel',
-          component: Button
+          component: button
         }, {
           name: 'accept',
           flex: 'none',
@@ -148,7 +148,7 @@ export default function(body) {
             color: 'secondary',
             disabled: true
           },
-          component: Button
+          component: button
         }]
       }]
     }

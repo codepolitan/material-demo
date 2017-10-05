@@ -4,12 +4,13 @@ import emitter from 'material/src/module/emitter'
 import dom from 'material/src/module/dom'
 import css from 'material/src/module/css'
 import merge from 'material/src/module/merge'
+import build from 'material/src/component/build'
 
-import Item from 'material/src/item'
-import Divider from 'material/src/divider'
+import item from 'material/src/item'
+import divider from 'material/src/divider'
 import defaults from './options'
 
-// import Container from 'material/src/container';
+// import container from 'material/src/container';
 import Layout from 'material/src/layout'
 import layout from './layout'
 import Cookies from './vendor/cookies'
@@ -74,7 +75,7 @@ class App {
   }
 
   build() {
-    this.layout = new Layout(layout, document.body)
+    this.layout = build(layout, document.body)
     console.log('built', this.layout)
   }
 
@@ -96,21 +97,21 @@ class App {
     var object = {
       render: (info) => {
         // console.log('render', info);
-        var item
+        var component
 
         if (info.type === 'separator') {
           // console.log('render', info);
-          item = new Divider({
+          component = divider({
             text: info.name
           })
         } else {
-          item = new Item({
+          component = item({
             name: info.name,
             text: info.name
           })
         }
 
-        return item
+        return component
       },
       select: (item, e, current) => {
         css.remove(current, 'is-selected')

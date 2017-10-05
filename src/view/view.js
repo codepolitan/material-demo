@@ -1,6 +1,6 @@
 'use strict'
 
-import Container from './container'
+import container from './container'
 import defaults from './view/options'
 
 // import Dragging from './view/dragging';
@@ -19,7 +19,7 @@ import defaults from './view/options'
  * @param {Object} Default options for view
  * @since 0.0.4
  */
-class View extends Container {
+class View extends container {
   // mixin: [Emitter, Options, binding,
   //  Toolbar,
   //  ctrl,
@@ -39,7 +39,7 @@ class View extends Container {
    * @return {Object} The class instance
    * @private
    */
-  init (options) {
+  init(options) {
     super.init(options)
 
     this.name = 'view'
@@ -62,7 +62,7 @@ class View extends Container {
    * @private
    *
    */
-  build () {
+  build() {
     super.build()
 
     // if (opts.toolbar)
@@ -80,7 +80,7 @@ class View extends Container {
    * Clear the content of the view
    * @return {Object} This class instance
    */
-  clear () {
+  clear() {
     if (this.content && this.content.empty) {
       this.content.empty()
     }
@@ -91,7 +91,7 @@ class View extends Container {
    * @return {Object} This class instance
    * @private
    */
-  close () {
+  close() {
     this.container.close()
 
     return this

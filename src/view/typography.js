@@ -1,7 +1,7 @@
 'use strict'
 
 import Layout from 'material/src/layout.js'
-import Container from 'material/src/container.js'
+import container from 'material/src/container.js'
 import Text from 'material/src/text.js'
 
 /**
@@ -11,7 +11,7 @@ import Text from 'material/src/text.js'
 export default function(body) {
   console.log('view typographay')
 
-  var layout = [Container, 'main', {},
+  var layout = [container, 'main', {},
     [Text, 'typography', {
       type: 'subheading1',
       text: 'Too many type sizes and styles at once can wreck any layout. A typographic scale has a limited set of type sizes that work well together along with the layout grid.'

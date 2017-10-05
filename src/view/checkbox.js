@@ -1,11 +1,11 @@
 'use strict'
 
 import {
-  Component,
+  component,
   Checkbox,
-  Container,
+  container,
   Toolbar,
-  Button,
+  button,
   Layout
 } from 'material'
 
@@ -14,21 +14,22 @@ import {
  * @return {[type]} [description]
  */
 export default function(body) {
-  var layout = new Layout([Component, 'checkbox-view', {},
-    [Container, 'hero', {},
+  console.log('checkbox', Checkbox)
+  var layout = new Layout([component, 'checkbox-view', {},
+    [container, 'hero', {},
       [Checkbox, '', { label: 'Checkbox' }]
     ],
     [Toolbar, 'footer', {},
-      [Button, 'toggleBtn', { label: 'Toggle check' }],
-      [Button, 'enableBtn', { label: 'Enable', checked: true }],
-      [Button, 'disableBtn', { label: 'Disable', disabled: true }]
+      [button, 'toggleBtn', { label: 'Toggle check' }],
+      [button, 'enableBtn', { label: 'Enable', checked: true }],
+      [button, 'disableBtn', { label: 'Disable', disabled: true }]
     ],
-    [Container, 'default-container', {},
+    [container, 'default-container', {},
       [Checkbox, 'default', { label: 'Checkbox' }],
       [Checkbox, 'uncheck', { label: 'Checkbox', checked: true }],
       [Checkbox, 'disabled', { label: 'Disabled', disabled: true }]
     ],
-    [Container, 'dark-container', { css: 'dark-theme' },
+    [container, 'dark-container', { css: 'dark-theme' },
       [Checkbox, '', { label: 'Checkbox' }],
       [Checkbox, '', { label: 'Checkbox', checked: true }],
       [Checkbox, '', { label: 'Disabled', disabled: true }]

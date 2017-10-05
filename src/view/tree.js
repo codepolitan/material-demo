@@ -2,7 +2,7 @@
 
 // controls
 import List from 'material/src/list.js'
-import Button from 'material/src/button.js'
+import button from 'material/src/button.js'
 import countries from '../data/countries.json'
 
 /**

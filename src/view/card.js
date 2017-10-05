@@ -2,9 +2,9 @@
 
 import Card from 'material/src/card.js'
 
-import Component from 'material/src/component.js'
-import Container from 'material/src/container.js'
-import Button from 'material/src/button.js'
+import component from 'material/src/component.js'
+import container from 'material/src/container.js'
+import button from 'material/src/button.js'
 import Text from 'material/src/text.js'
 // controls
 
@@ -12,14 +12,14 @@ import Text from 'material/src/text.js'
  * [initTest description]
  * @return {[type]} [description]
  */
-export default function (body) {
-  var container = new Container({
+export default function(body) {
+  var container = container({
     css: 'view-card'
   }).insert(body)
 
   var card = new Card({
     layout: {
-      component: Component,
+      component: component,
       name: 'simple-card',
       display: 'flex',
       direction: 'vertical',
@@ -49,16 +49,16 @@ export default function (body) {
         }]
       }, {
         name: 'action',
-        component: Component,
+        component: component,
         direction: 'horizontal',
         components: [{
           flex: 'none',
           text: 'action 1',
-          component: Button
+          component: button
         }, {
           flex: 'none',
           text: 'action 1',
-          component: Button,
+          component: button,
           name: 'main'
         }]
       }]
@@ -67,7 +67,7 @@ export default function (body) {
 
   var card2 = new Card({
     layout: {
-      component: Component,
+      component: component,
       name: 'simple-card-orange',
       display: 'flex',
       direction: 'vertical',
@@ -97,16 +97,16 @@ export default function (body) {
         }]
       }, {
         name: 'action',
-        component: Component,
+        component: component,
         direction: 'horizontal',
         components: [{
           flex: 'none',
           text: 'action 1',
-          component: Button
+          component: button
         }, {
           flex: 'none',
           text: 'action 1',
-          component: Button,
+          component: button,
           name: 'main'
         }]
       }]
@@ -115,7 +115,7 @@ export default function (body) {
 
   var card3 = new Card({
     layout: {
-      component: Component,
+      component: component,
       name: 'little-card-orange',
       display: 'flex',
       direction: 'vertical',
@@ -149,16 +149,16 @@ export default function (body) {
         }]
       }, {
         name: 'action',
-        component: Component,
+        component: component,
         direction: 'horizontal',
         components: [{
           flex: 'none',
           text: 'action 1',
-          component: Button
+          component: button
         }, {
           flex: 'none',
           text: 'action 1',
-          component: Button,
+          component: button,
           name: 'main'
         }]
       }]
@@ -167,7 +167,7 @@ export default function (body) {
 
   var card4 = new Card({
     layout: {
-      component: Component,
+      component: component,
       name: 'head-card-text',
       display: 'flex',
       direction: 'vertical',
@@ -186,12 +186,12 @@ export default function (body) {
         }]
       }, {
         name: 'action',
-        component: Component,
+        component: component,
         direction: 'horizontal',
         components: [{
           flex: 'none',
           text: 'action 1',
-          component: Button
+          component: button
         }]
       }]
     }

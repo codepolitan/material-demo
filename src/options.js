@@ -9,7 +9,7 @@ var options = {
   components: [
     { name: 'Typography' },
     { name: 'Components', type: 'separator' },
-    { name: 'Button' },
+    { name: 'button' },
     { name: 'Card' },
     { name: 'Checkbox' },
     { name: 'Dialog' },

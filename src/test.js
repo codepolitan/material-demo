@@ -1,16 +1,16 @@
 import {
-  Button,
-  Component,
+  button,
+  component,
   Card,
   Checkbox,
   Dialog,
-  Divider,
+  divider,
   Drawer,
   Form,
   Image,
   Layout,
   List,
-  Item,
+  item,
   Menu,
   Slider,
   Switch,
@@ -30,30 +30,30 @@ import iconApps from './icon/apps.svg'
 console.log('log')
 
 document.addEventListener('DOMContentLoaded', function() {
-  var schema = [Component, 'demo', { display: 'flex', direction: 'vertical' },
-    [Component, 'head', { display: 'flex', direction: 'horizontal' },
+  var schema = [component, 'demo', { display: 'flex', direction: 'vertical' },
+    [component, 'head', { display: 'flex', direction: 'horizontal' },
       [Toolbar, 'toolbar', { flex: 1, display: 'flex', direction: 'horizontal' },
-        [Button, 'menu-navi', { icon: iconMenu, type: 'action' }],
+        [button, 'menu-navi', { icon: iconMenu, type: 'action' }],
         [Text, 'app-title', { text: 'Material Components' }]
       ],
       [Toolbar, 'desk', { display: 'flex', direction: 'horizontal' },
-        [Button, 'menu-more', { icon: iconMore, type: 'action' }]
+        [button, 'menu-more', { icon: iconMore, type: 'action' }]
       ]
     ],
     [Drawer, 'navi', { css: 'drawer-temporary', type: 'temporary', size: '280px' },
-      [Component, 'navi-head', { theme: 'dark' },
+      [component, 'navi-head', { theme: 'dark' },
         [Text, 'app-title', { text: 'Material Components' }]
       ],
       [List, 'navi-list', { theme: 'dark' }]
     ],
-    [Component, 'body', { display: 'flex', direction: 'horizontal', flex: '1' },
+    [component, 'body', { display: 'flex', direction: 'horizontal', flex: '1' },
       [List, 'main-list', { flex: '1' }]
     ],
     [Menu, 'more-menu', {},
-      [Item, 'item-find', { text: 'Find' }],
-      [Divider, 'divider-menu', {}],
-      [Item, 'item-copy', { text: 'Copy' }],
-      [Item, 'item-paste', { text: 'Paste' }]
+      [item, 'item-find', { text: 'Find' }],
+      [divider, 'divider-menu', {}],
+      [item, 'item-copy', { text: 'Copy' }],
+      [item, 'item-paste', { text: 'Paste' }]
     ]
   ]
 

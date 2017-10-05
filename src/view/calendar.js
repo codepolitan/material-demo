@@ -1,22 +1,29 @@
 'use strict'
 
-import { Calendar, Component, Dialog, Toolbar, Button, Textfield } from 'material'
+import {
+  Calendar,
+  component,
+  Dialog,
+  Toolbar,
+  button,
+  Textfield
+} from 'material'
 
 import insert from 'material/src/element/insert'
 import event from 'material/src/element/event'
 
-var layout = [Component, 'simple-dialog', { display: 'flex', direction: 'vertical' },
-  [Component, 'body', { display: 'flex', direction: 'vertical', flex: '1' },
+var layout = [component, 'simple-dialog', { display: 'flex', direction: 'vertical' },
+  [component, 'body', { display: 'flex', direction: 'vertical', flex: '1' },
     ['Textfield', 'eventName', { text: 'New Event' }],
     ['Textfield', 'startDate', { name: 'eventName' }]
   ],
-  [Component, 'action', {},
-    [Button, 'cancel', { style: 'compact dense' }],
-    [Button, 'save', { style: 'compact dense', color: 'primary' }]
+  [component, 'action', {},
+    [button, 'cancel', { style: 'compact dense' }],
+    [button, 'save', { style: 'compact dense', color: 'primary' }]
   ]
 ]
 // var layout = {
-//   component: Component,
+//   component: component,
 //   name: 'simple-dialog',
 //   display: 'flex',
 //   direction: 'vertical',
@@ -45,11 +52,11 @@ var layout = [Component, 'simple-dialog', { display: 'flex', direction: 'vertica
 //     }]
 //   }, {
 //     name: 'action',
-//     component: Component,
+//     component: component,
 //     //display: 'flex',
 //     //direction: 'horizontal',
 //     components: [{
-//       component: Button,
+//       component: button,
 //       name: 'cancel',
 //       flex: 'none',
 //       text: 'Cancel',
@@ -57,7 +64,7 @@ var layout = [Component, 'simple-dialog', { display: 'flex', direction: 'vertica
 //         style: 'compact dense',
 //       }
 //     }, {
-//       component: Button,
+//       component: button,
 //       name: 'save',
 //       flex: 'none',
 //       text: 'Save',
@@ -73,15 +80,15 @@ var layout = [Component, 'simple-dialog', { display: 'flex', direction: 'vertica
  * [initTest description]
  * @return {[type]} [description]
  */
-export default function (body) {
+export default function(body) {
   var dialog = new Dialog({ layout: layout })
   insert(dialog, body)
 
-  event.add(dialog.layout.get('save'), 'click', function () {
+  event.add(dialog.layout.get('save'), 'click', function() {
     dialog.close()
   })
 
-  event.add(dialog.layout.get('cancel'), 'click', function () {
+  event.add(dialog.layout.get('cancel'), 'click', function() {
     dialog.close()
   })
 

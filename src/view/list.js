@@ -1,4 +1,4 @@
-import { List, Container, Checkbox, Switch, Layout, Divider /*, Component, Button */ } from 'material'
+import { List, container, Checkbox, Switch, Layout, divider /*, component, button */ } from 'material'
 import insert from 'material/src/element/insert.js'
 import css from 'material/src/module/css.js'
 import countries from '../data/countries.json'
@@ -8,13 +8,13 @@ import countries from '../data/countries.json'
  * @return {[type]} [description]
  */
 export default function(body) {
-  var layout = new Layout([Container, 'view-list', {},
-    [Container, 'default', {},
+  var layout = new Layout([container, 'view-list', {},
+    [container, 'default', {},
       [List, 'first-list', {}],
       [List, 'second-list', {}],
       [List, 'third-list', {}]
     ],
-    [Container, 'dark', { css: 'dark-theme' },
+    [container, 'dark', { css: 'dark-theme' },
       [List, 'first-list-dark', {}],
       [List, 'second-list-dark', {}],
       [List, 'third-list-dark', {}]
@@ -36,7 +36,7 @@ export default function(body) {
       var item
 
       if (info.type === 'divider') {
-        item = new Divider()
+        item = new divider()
       } else {
         item = new Checkbox({
           label: info.name,
@@ -53,7 +53,7 @@ export default function(body) {
       var item
 
       if (info.type === 'divider') {
-        item = new Divider()
+        item = divider()
       } else {
         item = new Switch({
           label: info.name,
