@@ -1,15 +1,17 @@
 'use strict'
 
-import Dialog from 'material/src/dialog.js'
+import {
+  Dialog,
+  Component,
+  Container,
+  Checkbox,
+  Button,
+  Text,
+  List,
+  Item
+} from 'material'
 
-import Component from 'material/src/component.js'
-import Container from 'material/src/container.js'
-import Button from 'material/src/button.js'
-import Text from 'material/src/text.js'
-import List from 'material/src/list.js'
-import Item from 'material/src/item.js'
 import event from 'material/src/element/event.js'
-
 import countries from '../data/countries.json'
 
 // controls
@@ -18,7 +20,7 @@ import countries from '../data/countries.json'
  * [initTest description]
  * @return {[type]} [description]
  */
-export default function(body) {
+export default function (body) {
   var container = new Container({
     container: body,
     css: 'view-dialog'
@@ -41,8 +43,8 @@ export default function(body) {
     ],
     [List, 'list', { flex: '1' }],
     [Component, 'action', { display: 'flex', direction: 'vertical', flex: '1' },
-      [Button, 'cancel', { text: 'cancel', flex: 'none' }],
-      [Button, 'select', { text: 'select', flex: 'none' }]
+      [Button, 'decline', { text: 'decline', flex: 'none' }],
+      [Button, 'accept', { text: 'accept', flex: 'none' }]
     ]
   ]
 
@@ -53,11 +55,11 @@ export default function(body) {
 
   console.log('button continue', dialog.layout.get('continue'))
 
-  dialog.layout.get('continue').on('click', function() {
+  dialog.layout.get('continue').on('click', function () {
     dialog.close()
   })
 
-  dialog.layout.get('cancel').on('click', function() {
+  dialog.layout.get('cancel').on('click', function () {
     dialog.close()
   })
 
@@ -66,11 +68,11 @@ export default function(body) {
     layout: layout2
   }).insert(container)
 
-  dialog2.layout.get('accept').on('click', function() {
+  dialog2.layout.get('accept').on('click', function () {
     dialog2.close()
   })
 
-  dialog2.layout.get('decline').on('click', function() {
+  dialog2.layout.get('decline').on('click', function () {
     dialog2.close()
   })
 
@@ -81,7 +83,7 @@ export default function(body) {
     primary: true,
     type: 'raised',
     label: 'show dialog'
-  }).on('click', function() {
+  }).on('click', function () {
     dialog.show()
   }).insert(container)
 
@@ -89,7 +91,7 @@ export default function(body) {
     color: 'primary',
     type: 'raised',
     label: 'show dialog list'
-  }).on('click', function() {
+  }).on('click', function () {
     dialog2.layout.get('accept').disable(true)
     dialog2.show()
   }).insert(container)
