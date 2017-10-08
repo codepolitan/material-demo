@@ -15,7 +15,7 @@ import css from 'material/src/module/css'
  * [initTest description]
  * @return {[type]} [description]
  */
-export default function(body) {
+export default function (body) {
   var layout = new Layout([Component, 'demo-button', {},
     [Container, 'hero', {},
       [Button, 'first', { text: 'Flat' }],
@@ -58,11 +58,13 @@ export default function(body) {
     ]
   ], body)
 
+  var component = layout.get()
+
   layout.get('default').on('click', (e) => {
     console.log('click', e, layout.get('default'))
   })
 
-  layout.get('darktheme').on('change', function(checked) {
+  layout.get('darktheme').on('change', function (checked) {
     console.log('darktheme', checked, layout.get('containerbutton'))
     if (checked) {
       css.add(layout.get('containerbutton').wrapper, 'dark-theme')
