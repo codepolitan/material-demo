@@ -58,8 +58,8 @@ export default function(body) {
     ]
   ], body)
 
-  layout.get('button2').on('click', (e) => {
-    console.log('click', e, layout.get('button2'))
+  layout.get('default').on('click', (e) => {
+    console.log('click', e, layout.get('default'))
   })
 
   layout.get('darktheme').on('change', function(checked) {
