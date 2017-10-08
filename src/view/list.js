@@ -1,4 +1,13 @@
-import { List, Container, Checkbox, Switch, Layout, Divider /*, Component, Button */ } from 'material'
+import {
+  List,
+  Container,
+  Checkbox,
+  Switch,
+  Layout,
+  Divider
+  /*, Component, Button */
+} from 'material'
+
 import insert from 'material/src/element/insert.js'
 import css from 'material/src/module/css.js'
 import countries from '../data/countries.json'
@@ -7,7 +16,7 @@ import countries from '../data/countries.json'
  * [initTest description]
  * @return {[type]} [description]
  */
-export default function(body) {
+export default function (body) {
   var layout = new Layout([Container, 'view-list', {},
     [Container, 'default', {},
       [List, 'first-list', {}],
@@ -20,8 +29,6 @@ export default function(body) {
       [List, 'third-list-dark', {}]
     ]
   ], body)
-
-  console.log('layout', layout)
 
   var first = layout.get('first-list')
   var second = layout.get('second-list')
