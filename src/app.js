@@ -3,7 +3,6 @@
 import emitter from 'material/src/module/emitter'
 import dom from 'material/src/module/dom'
 import css from 'material/src/module/css'
-import merge from 'material/src/module/merge'
 
 import Item from 'material/src/item'
 import Divider from 'material/src/divider'
@@ -60,7 +59,7 @@ class App {
    * @return {Object} this
    */
   constructor(options) {
-    this.options = merge(defaults, options || {})
+    this.options = Object.assign({}, defaults, options || {})
 
     this.init(options)
     this.build()
