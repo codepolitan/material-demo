@@ -1,17 +1,32 @@
 'use strict'
 
-import Layout from 'material/src/layout.js'
-import Container from 'material/src/container.js'
-import Text from 'material/src/text.js'
+import {
+  Layout,
+  Container,
+  Text
+} from 'material'
 
 /**
  * [initTest description]
  * @return {[type]} [description]
  */
-export default function(body) {
-  console.log('view typographay')
+export default function (body) {
+  var types = [
+    'Display 4',
+    'Display 3',
+    'Display 2',
+    'Display 1',
+    'Headline',
+    'Title',
+    'Subheading 2',
+    'Subheading 1',
+    'Body 2',
+    'Body 1',
+    'Caption',
+    'Button'
+  ]
 
-  var layout = [Container, 'main', {},
+  let list = [
     [Text, 'typography', {
       type: 'subheading1',
       text: 'Too many type sizes and styles at once can wreck any layout. A typographic scale has a limited set of type sizes that work well together along with the layout grid.'
@@ -19,57 +34,14 @@ export default function(body) {
     [Text, 'typography', {
       type: 'subheading1',
       text: 'These sizes and styles were developed to balance content density and reading comfort under typical usage conditions. Type sizes are specified with sp (scaleable pixels) to enable large type modes for accessibility.'
-    }],
-    [Text, '', {
-      type: 'display4',
-      text: 'Display 4'
-    }],
-    [Text, '', {
-      type: 'display3',
-      text: 'Display 3'
-    }],
-    [Text, '', {
-      type: 'display2',
-      text: 'Display 2'
-    }],
-    [Text, '', {
-      type: 'display1',
-      text: 'Display 1'
-    }],
-    [Text, '', {
-      type: 'headline',
-      text: 'Headline'
-    }],
-    [Text, '', {
-      type: 'title',
-      text: 'Title'
-    }],
-    [Text, '', {
-      type: 'subheading2',
-      text: 'Subheading 2'
-    }],
-    [Text, '', {
-      type: 'subheading1',
-      text: 'Subheading 1'
-    }],
-    [Text, '', {
-      type: 'body2',
-      text: 'Body 2'
-    }],
-    [Text, '', {
-      type: 'body1',
-      text: 'Body 1'
-    }],
-    [Text, '', {
-      type: 'caption',
-      text: 'Caption'
-    }],
-    [Text, '', {
-      type: 'button'
     }]
   ]
 
-  console.log('layout', layout)
+  types.map((type) => {
+    return list.push([Text, type, {type: type.toLowerCase().replace(/\s+/g, ''), text: type}])
+  })
+
+  var layout = [Container, 'main', {}].concat(list)
 
   new Layout(layout, body)
 };
