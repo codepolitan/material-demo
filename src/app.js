@@ -58,7 +58,7 @@ class App {
    * @param  {Object} options - The application options
    * @return {Object} this
    */
-  constructor(options) {
+  constructor (options) {
     this.options = Object.assign({}, defaults, options || {})
 
     this.init(options)
@@ -68,25 +68,22 @@ class App {
     this.emit('ready')
   }
 
-  init(options) {
+  init (options) {
     Object.assign(this, emitter)
   }
 
-  build() {
+  build () {
     this.layout = new Layout(layout, document.body)
-    console.log('built', this.layout)
   }
 
-  setup() {
+  setup () {
     var navi = this.layout.get('navi')
 
-    console.log('menu-navi btn', this.layout)
-
-    this.layout.get('menu-navi').on('click', function(e) {
+    this.layout.get('menu-navi').on('click', function (e) {
       navi.toggle(e)
     })
 
-    this.layout.get('menu-navi-head').on('click', function(e) {
+    this.layout.get('menu-navi-head').on('click', function (e) {
       navi.close(e)
     })
 
@@ -140,7 +137,7 @@ class App {
   /**
    *
    */
-  view(name) {
+  view (name) {
     // console.log('updateMainView', name);
     var main = this.layout.get('main')
     dom.empty(main.wrapper)
