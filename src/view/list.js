@@ -10,7 +10,7 @@ import {
 
 import insert from 'material/src/element/insert.js'
 import css from 'material/src/module/css.js'
-import countries from '../data/countries.json'
+import countries from '../data/list.json'
 
 /**
  * [initTest description]
