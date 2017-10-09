@@ -12,7 +12,7 @@ import {
 } from 'material'
 
 import event from 'material/src/element/event.js'
-import countries from '../data/countries.json'
+import countries from '../data/list.json'
 
 // controls
 
