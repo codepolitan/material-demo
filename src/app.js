@@ -90,30 +90,12 @@ class App {
     var menuList = this.layout.get('navi-list')
 
     var object = {
-      render: (info) => {
-        // console.log('render', info);
-        var item
-
-        if (info.type === 'separator') {
-          // console.log('render', info);
-          item = new Divider({
-            text: info.name
-          })
-        } else {
-          item = new Item({
-            name: info.name,
-            text: info.name
-          })
-        }
-
-        return item
-      },
       select: (item, e, current) => {
         css.remove(current, 'is-selected')
         css.add(e.target, 'is-selected')
         var name = item.innerText.toLowerCase()
-        this.view(name)
         navi.close(e)
+        this.view(name)
       }
     }
 
@@ -125,11 +107,21 @@ class App {
       this.layout.get('more-menu').show(e)
     })
 
-    var view = Cookies.get('view')
+    this.on('view', (name) => {
+      var main = this.layout.get('main')
+      dom.empty(main.wrapper)
 
-    if (view) {
-      this.view(view)
-    }
+      if (view[name]) {
+        view[name](main)
+        Cookies.set('view', name)
+      } else {
+        console.info('main view ' + name + ' not found!')
+      }
+    })
+
+    var nameview = Cookies.get('view')
+
+    if (nameview) this.view(nameview)
 
     return this
   }
@@ -139,15 +131,10 @@ class App {
    */
   view (name) {
     // console.log('updateMainView', name);
-    var main = this.layout.get('main')
-    dom.empty(main.wrapper)
 
-    if (view[name]) {
-      view[name](main)
-      Cookies.set('view', name)
-    } else {
-      console.info('main view ' + name + ' not found!')
-    }
+    this.emit('view', name)
+
+    return this
   }
 }
 
