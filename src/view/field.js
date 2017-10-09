@@ -12,7 +12,7 @@ import Textfield from 'material/src/textfield.js'
  * [initTest description]
  * @return {[type]} [description]
  */
-export default function(body) {
+export default function (body) {
   var layout = new Layout([Component, 'checkbox-view', {},
     [Container, 'hero', {},
       [Textfield, '', { label: 'Textfield' }]
@@ -41,10 +41,10 @@ export default function(body) {
   layout.get('enableBtn').on('click', () => {
     layout.get('disabled').enable()
     layout.get('disabled').label('Enabled')
-  }).insert(layout.component.container)
+  }).insert(layout.get('container'))
 
   layout.get('disableBtn').on('click', () => {
     layout.get('disabled').disable()
     layout.get('disabled').label('Disabled')
-  }).insert(layout.component.container)
+  }).insert(layout.get('container'))
 }
