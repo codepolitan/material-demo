@@ -41,8 +41,8 @@ export default function(body) {
     ],
     [List, 'list', { flex: '1' }],
     [Component, 'action', { display: 'flex', direction: 'vertical', flex: '1' },
-      [Button, 'cancel', { text: 'cancel', flex: 'none' }],
-      [Button, 'select', { text: 'select', flex: 'none' }]
+      [Button, 'decline', { text: 'decline', flex: 'none' }],
+      [Button, 'accept', { text: 'accept', flex: 'none' }]
     ]
   ]
 
