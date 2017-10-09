@@ -8,7 +8,7 @@
 var options = {
   components: [
     { name: 'Typography' },
-    { name: 'Components', type: 'separator' },
+    { name: 'Components', type: 'divider' },
     { name: 'Button' },
     { name: 'Card' },
     { name: 'Checkbox' },
@@ -17,11 +17,11 @@ var options = {
     { name: 'Field' },
     { name: 'Slider' },
     { name: 'Menu' },
-    { name: 'Views', type: 'separator' },
+    { name: 'Views', type: 'divider' },
     { name: 'List' },
     { name: 'Form' },
     { name: 'Calendar' },
-    { type: 'separator' },
+    { type: 'divider' },
     { name: 'ripple' }
   ]
 }
