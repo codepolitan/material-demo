@@ -3,13 +3,13 @@
 // controls
 import List from 'material/src/list.js'
 import Button from 'material/src/button.js'
-import countries from '../data/countries.json'
+import countries from '../data/list.json'
 
 /**
  * [initTest description]
  * @return {[type]} [description]
  */
-export default function(body) {
+export default function (body) {
   var list1 = new List({
     // type: 'action',
     height: 600,
