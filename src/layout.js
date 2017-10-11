@@ -42,8 +42,8 @@ var layout = [Container, 'app', { display: 'flex', direction: 'vertical' },
     [List, 'navi-list', { theme: 'dark' }]
   ],
   [Component, 'body', { flex: '1', display: 'flex', direction: 'horizontal' },
-    [Component, 'main', { display: 'flex', direction: 'vartical', flex: '1' }],
-    [Drawer, 'side', { position: 'left', state: 'closed' }]
+    [Component, 'main', { display: 'flex', direction: 'vartical', flex: '1' }]
+    // [Drawer, 'side', { position: 'left', state: 'closed' }]
   ],
   [Menu, 'more-menu', {},
     [Item, 'item-find', { text: 'Find' }],

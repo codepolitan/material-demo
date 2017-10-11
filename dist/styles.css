@@ -6,168 +6,127 @@
   left: 0;
   right: 0;
   padding: 0;
-  margin: 0;
-}
-.container-app > .component-head {
-  z-index: 3;
-  -webkit-box-flex: none;
-  -moz-box-flex: none;
-  -webkit-flex: none 1 0%;
-  -moz-flex: none 1 0%;
-  -ms-flex: none 1 0%;
-  flex: none 1 0%;
-  display: -moz-box;
-  display: -webkit-box;
-  display: -webkit-flex;
-  display: -moz-flex;
-  display: -ms-flexbox;
-  display: -ms-flex;
-  display: flex;
-  -webkit-box-orient: horizontal;
-  -moz-box-orient: horizontal;
-  -webkit-box-direction: normal;
-  -moz-box-direction: normal;
-  -webkit-flex-direction: row;
-  -moz-flex-direction: row;
-  -ms-flex-direction: row;
-  flex-direction: row;
-  -webkit-box-lines: single;
-  -moz-box-lines: single;
-  -webkit-flex-wrap: nowrap;
-  -moz-flex-wrap: nowrap;
-  -ms-flex-wrap: nowrap;
-  flex-wrap: nowrap;
-  background-color: #4285F4;
-  background-color: rgba(0, 0, 0, 0.8);
-  padding: 10px 16px;
-  box-shadow: none;
-}
-.container-app > .component-head .text-title {
-  font-weight: 300;
-  display: inline-block;
-  color: rgba(255, 255, 255, 0.95);
-  padding: 0;
-  overflow: hidden;
-  white-space: nowrap;
-  text-overflow: ellipsis;
-}
-.container-app > .component-head .material-button .button-icon {
-  fill: rgba(255, 255, 255, 0.95);
-}
-.container-app > .component-head .material-switch {
-  display: inline-block;
-}
-.container-app > .drawer-navi {
-  width: 320px;
-  background-color: white;
-}
-.container-app > .drawer-navi .toolbar-navi-head {
-  padding: 10px 16px;
-  background-color: #3f51b5;
-}
-.container-app > .drawer-navi .toolbar-navi-head .material-button .button-icon {
-  fill: rgba(255, 255, 255, 0.95);
-}
-.container-app > .drawer-navi .toolbar-navi-head .text-title {
-  font-size: 1.25rem;
-  font-weight: 300;
-  display: inline-block;
-  color: rgba(255, 255, 255, 0.95);
-  padding: 0;
-  overflow: hidden;
-  white-space: nowrap;
-  text-overflow: ellipsis;
-}
-.container-app > .component-body {
-  position: relative;
-}
-.container-app > .component-body > .component-main {
-  position: relative;
-  background-color: #ffffff;
-  overflow: scroll;
-}
-.container-app > .component-body > .component-main .material-container.container-view-list {
-  padding: 0;
-  margin: 0;
-}
-.container-app > .component-body > .component-main .material-container.container-view-list .material-container {
-  display: flex;
-  flex-direction: raw;
-  padding: 0;
-  margin: 0;
-}
-.container-app > .component-body > .component-main .material-container.container-view-list .material-container .material-list {
-  border: 1px solid rgba(0, 0, 0, 0.05);
-  margin: 16px;
-  height: 300px;
-  width: 300px;
-}
-.container-app > .component-body > .component-main .material-container.container-view-list .material-container .material-list .material-checkbox {
-  margin-left: 16px;
-}
-.container-app > .component-body > .component-main .material-container.container-view-list .material-container .material-list .material-switch {
-  margin-left: 16px;
-}
-.container-app > .component-body > .component-main .material-calendar {
-  position: absolute;
-  top: 0;
-  bottom: 0;
-  left: 0;
-  right: 0;
-}
-.container-app > .component-body > .component-main .container-hero {
-  min-height: 360px;
-  background-color: rgba(0, 0, 0, 0.05);
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  flex-flow: row nowrap;
-  height: 360px;
-}
-.container-app > .component-body > .component-main > .layout-slider > .container-hero > .material-slider {
-  width: 60%;
-}
-.container-app > .component-body > .component-main > .layout-ripple > .material-container > .material-component {
-  position: relative;
-  width: 100%;
-  height: 100%;
-  overflow: hidden;
-}
-.container-app > .component-body > .component-main .material-container {
-  padding: 16px;
-  overflow: scroll;
-}
-.container-app > .component-body > .component-main > .material-layout > .material-container {
-  padding: 16px;
-}
-.container-app > .component-body > .component-main .layout-demo-button .material-button {
-  margin: 16px;
-}
-.container-app > .component-body > .component-main > .material-form.material-layout {
-  padding: 0;
-  margin: 0;
-  position: absolute;
-  top: 0;
-  bottom: 0;
-  left: 0;
-  right: 0;
-}
-.container-app > .component-body > .component-main > .material-form.material-layout > .material-component {
-  overflow: scroll;
-  padding: 16px;
-}
-.container-app > .component-body > .component-main > .material-form.material-layout > .material-component.component-foot {
-  padding: 12px 16px;
-  background-color: rgba(0, 0, 0, 0.02);
-}
-.container-app > .component-body > .component-main > .material-form.material-layout > .material-component.component-foot > .component-toolbar {
-  text-align: right;
-}
-.container-app > .component-body > .component-main > .container-buttons-container {
-  padding: 16px;
-}
-.container-app > .component-body > .drawer-side {
-  background-color: rgba(0, 0, 0, 0.05);
-  width: 200px;
-  border-left: 1px solid rgba(0, 0, 0, 0.1);
-}
+  margin: 0; }
+  .container-app > .component-head {
+    z-index: 3;
+    flex: none;
+    display: flex;
+    flex-direction: row;
+    flex-wrap: nowrap;
+    background-color: #4285F4;
+    background-color: rgba(0, 0, 0, 0.8);
+    box-shadow: 0 0 4px rgba(0, 0, 0, 0.14), 0 4px 8px rgba(0, 0, 0, 0.28);
+    padding: 10px 16px; }
+    .container-app > .component-head .text-title {
+      font-weight: 300;
+      display: inline-block;
+      color: rgba(255, 255, 255, 0.95);
+      padding: 0;
+      overflow: hidden;
+      white-space: nowrap;
+      text-overflow: ellipsis; }
+    .container-app > .component-head .material-button .button-icon {
+      fill: rgba(255, 255, 255, 0.95); }
+    .container-app > .component-head .material-switch {
+      display: inline-block; }
+  .container-app > .drawer-navi {
+    width: 320px;
+    background-color: white; }
+    .container-app > .drawer-navi .toolbar-navi-head {
+      padding: 10px 16px;
+      background-color: #3f51b5; }
+      .container-app > .drawer-navi .toolbar-navi-head .material-button .button-icon {
+        fill: rgba(255, 255, 255, 0.95); }
+      .container-app > .drawer-navi .toolbar-navi-head .text-title {
+        font-size: 1.25rem;
+        font-weight: 300;
+        display: inline-block;
+        color: rgba(255, 255, 255, 0.95);
+        padding: 0;
+        overflow: hidden;
+        white-space: nowrap;
+        text-overflow: ellipsis; }
+  .container-app > .component-body {
+    position: relative; }
+    .container-app > .component-body > .component-main {
+      position: relative;
+      background-color: white;
+      overflow: scroll; }
+      .container-app > .component-body > .component-main .material-container.container-view-list {
+        padding: 0;
+        margin: 0; }
+        .container-app > .component-body > .component-main .material-container.container-view-list .material-container {
+          display: flex;
+          flex-direction: raw;
+          padding: 0;
+          margin: 0; }
+          .container-app > .component-body > .component-main .material-container.container-view-list .material-container .material-list {
+            border: 1px solid rgba(0, 0, 0, 0.05);
+            margin: 16px;
+            height: 300px;
+            width: 300px; }
+            .container-app > .component-body > .component-main .material-container.container-view-list .material-container .material-list .material-checkbox {
+              margin-left: 16px; }
+            .container-app > .component-body > .component-main .material-container.container-view-list .material-container .material-list .material-switch {
+              margin-left: 16px; }
+      .container-app > .component-body > .component-main .material-calendar {
+        position: absolute;
+        top: 0;
+        bottom: 0;
+        left: 0;
+        right: 0; }
+      .container-app > .component-body > .component-main .container-hero {
+        min-height: 360px;
+        background-color: rgba(0, 0, 0, 0.05);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        flex-flow: row nowrap;
+        height: 360px; }
+      .container-app > .component-body > .component-main > .layout-slider > .container-hero > .material-slider {
+        width: 60%; }
+      .container-app > .component-body > .component-main > .layout-ripple > .material-container > .material-component {
+        position: relative;
+        width: 100%;
+        height: 100%;
+        overflow: hidden; }
+      .container-app > .component-body > .component-main .material-container {
+        padding: 16px;
+        overflow: scroll; }
+      .container-app > .component-body > .component-main > .material-layout > .material-container {
+        padding: 16px; }
+      .container-app > .component-body > .component-main > .material-form.material-layout {
+        padding: 0;
+        margin: 0;
+        position: absolute;
+        top: 0;
+        bottom: 0;
+        left: 0;
+        right: 0; }
+        .container-app > .component-body > .component-main > .material-form.material-layout > .material-component {
+          overflow: scroll;
+          padding: 16px; }
+        .container-app > .component-body > .component-main > .material-form.material-layout > .material-component.component-foot {
+          padding: 12px 16px;
+          background-color: rgba(0, 0, 0, 0.02); }
+          .container-app > .component-body > .component-main > .material-form.material-layout > .material-component.component-foot > .component-toolbar {
+            text-align: right; }
+      .container-app > .component-body > .component-main > .container-buttons-container {
+        padding: 16px; }
+    .container-app > .component-body > .drawer-side {
+      background-color: rgba(0, 0, 0, 0.05);
+      width: 200px;
+      border-left: 1px solid rgba(0, 0, 0, 0.1); }
+
+.view-button .container-hero {
+  position: relative; }
+  .view-button .container-hero .type-floating {
+    position: absolute;
+    right: 32px;
+    bottom: 32px; }
+.view-button .material-container {
+  padding: 0; }
+  .view-button .material-container .material-button {
+    margin: 16px 16px 16px 0; }
+
+/*# sourceMappingURL=styles.css.map */

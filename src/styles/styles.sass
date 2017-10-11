@@ -1,0 +1,171 @@
+@import ./theme.sass
+
+
+$border: rgba(163, 163, 163, 0.5)
+$navi-max-width: 320px
+$navi-width: 200px
+$side-min-width: 100px
+$list-min-width: 80px
+$list-width: 300px
+ 	
+// app specific
+.container-app
+  overflow: hidden
+  position: absolute
+  top: 0
+  bottom: 0
+  left: 0
+  right: 0
+  padding: 0
+  margin: 0
+
+  //user-select: none
+  > .component-head
+    z-index: 3
+    flex: none
+    display: flex
+    flex-direction: row
+    flex-wrap: nowrap
+    background-color: #4285F4
+    background-color: rgba(0, 0, 0, 0.8)
+    //background-color: rgb(63, 81, 181)
+    box-shadow: 0 0 4px rgba(0, 0, 0, 0.14),0 4px 8px rgba(0, 0, 0, 0.28)
+    padding: 10px 16px
+
+    .text-title
+      font-weight: 300
+      display: inline-block
+      color: rgba(255, 255, 255, 0.95)
+      padding: 0
+      overflow: hidden
+      white-space: nowrap
+      text-overflow: ellipsis
+
+    .material-button
+      .button-icon
+        fill: rgba(255, 255, 255, 0.95)
+
+    .material-switch
+      display: inline-block
+
+  > .drawer-navi
+    width: 320px
+    background-color: white
+
+    .toolbar-navi-head
+      padding: 10px 16px
+      background-color: $primary-color
+
+      .material-button
+        .button-icon
+          fill: rgba(255, 255, 255, 0.95)
+
+      .text-title
+        font-size: 1.25rem
+        font-weight: 300
+        display: inline-block
+        color: rgba(255, 255, 255, 0.95)
+        padding: 0
+        overflow: hidden
+        white-space: nowrap
+        text-overflow: ellipsis
+
+  > .component-body
+    position: relative
+
+    > .component-main
+      position: relative
+
+      //padding: 16px
+      background-color: rgba(255, 255, 255, 1)
+      overflow: scroll
+
+      .material-container.container-view-list
+        padding: 0
+        margin: 0
+
+        .material-container
+          display: flex
+          flex-direction: raw
+          padding: 0
+          margin: 0
+
+          .material-list
+            border: 1px solid rgba(0, 0, 0, 0.05)
+            margin: 16px
+            height: 300px
+            width: 300px
+
+            .material-checkbox
+              margin-left: 16px
+
+            .material-switch
+              margin-left: 16px
+
+      .material-calendar
+        position: absolute
+        top: 0
+        bottom: 0
+        left: 0
+        right: 0
+
+      .container-hero
+        //transform: scale(3)
+        min-height: 360px
+        background-color: rgba(0, 0, 0, 0.05)
+        display: flex
+        align-items: center
+        justify-content: center
+        flex-flow: row nowrap
+        height: 360px
+
+      > .layout-slider
+        > .container-hero
+          > .material-slider
+            width: 60%
+
+      > .layout-ripple
+        > .material-container
+          > .material-component
+            position: relative
+            width: 100%
+            height: 100%
+            overflow: hidden
+
+      .material-container
+        padding: 16px
+        overflow: scroll
+
+      > .material-layout
+        > .material-container
+          padding: 16px
+
+      > .material-form.material-layout
+        padding: 0
+        margin: 0
+        position: absolute
+        top: 0
+        bottom: 0
+        left: 0
+        right: 0
+
+        > .material-component
+          overflow: scroll
+          padding: 16px
+
+        > .material-component.component-foot
+          padding: 12px 16px
+          background-color: rgba(0, 0, 0, 0.02)
+
+          > .component-toolbar
+            text-align: right
+
+      > .container-buttons-container
+        padding: 16px
+
+    > .drawer-side
+      background-color: rgba(0, 0, 0, 0.05)
+      width: 200px
+      border-left: 1px solid rgba(0, 0, 0, 0.1)
+
+@import ./button.sass

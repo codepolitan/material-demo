@@ -3,7 +3,7 @@
 import Layout from 'material/src/layout.js'
 import Menu from 'material/src/menu.js'
 
-import Component from 'material/src/component.js'
+import View from 'material/src/view.js'
 import Container from 'material/src/container.js'
 import Button from 'material/src/button.js'
 import Text from 'material/src/text.js'
@@ -32,10 +32,17 @@ export default function (body) {
     name: 'Find'
   }]
 
-  var layout = new Layout([Component, 'demo-button', {},
+  var layout = new Layout([View, 'demo-button', {},
     [Container, 'hero', {},
-      [Button, 'first', { text: 'Flat' }],
-      [Button, 'second', { text: 'Raised', type: 'raised', color: 'primary' }]
+      [Button, 'openmenu', { text: 'Menu' }],
+      [Menu, 'menu', { list: list }]
     ]
   ], body)
-};
+
+  console.log('obuttn', layout, layout.get('openmenu'))
+
+  layout.get('openmenu').on('click', (e) => {
+    console.log('menu', layout.get('menu'))
+    layout.get('menu').show(e)
+  })
+}

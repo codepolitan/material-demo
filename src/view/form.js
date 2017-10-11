@@ -2,6 +2,8 @@
 
 // controls
 import Component from 'material/src/component.js'
+import Container from 'material/src/container.js'
+import Layout from 'material/src/layout.js'
 import Form from 'material/src/form.js'
 import Button from 'material/src/button.js'
 // import schema from '../data/schema.json';
@@ -13,178 +15,48 @@ import Slider from 'material/src/slider.js'
 import Text from 'material/src/text.js'
 
 export default function (body) {
-  var form = new Form({
-    layout: [Component, '', {display: 'flex', direction: 'vertical'},
-      [Component, 'main', { flex: 1 },
-        [Component, 'contact', { direction: 'vertical'},
+  /**
+   * [layout description]
+   * @type {Layout}
+   */
+  var layout = new Layout([Form, 'contact-form', {
+    layout: [Component, '', { display: 'flex', direction: 'vertical'},
+      [Container, 'main', { flex: 1 },
+        [Component, 'header', { direction: 'vertical'},
           [Text, '', { text: 'Form component', type: 'display1'}],
-          [Text, '', { text: 'Text fields allow users to input text, select text, and lookup data via auto-completion.', type: 'subheading1'}],
-          [Textfield, '', { flex: 1, name: 'firstname', text: 'Prénom'}],
-          [Textfield, '', { flex: 1, name: 'lastname', text: 'Nom'}]
+          [Text, '', { text: 'Text fields allow users to input text, select text, and lookup data via auto-completion.', type: 'subheading1'}]
+        ],
+        [Text, '', { text: 'Contact', type: 'headline'}],
+        [Component, 'contact', { display: 'flex', direction: 'horizontal'},
+          [Textfield, 'firstname', { flex: 1, name: 'firstname', text: 'Firstname'}],
+          [Textfield, 'lastname', { flex: 1, name: 'lastname', text: 'Lastname'}]
+        ],
+        [Text, '', { text: 'Address', type: 'headline'}],
+        [Component, 'address', { },
+          [Textfield, 'place.address', { flex: 1, name: 'address', text: 'Address'}],
+          [Textfield, 'place.info', { flex: 1, name: 'address', text: 'Info'}],
+          [Component, 'contact', { display: 'flex', direction: 'horizontal'},
+            [Textfield, 'zipcode', { flex: 1, name: 'zipcode', text: 'Zip Code'}],
+            [Textfield, 'place', { flex: 1, name: 'place', text: 'Place'}]
+          ]
+        ],
+          [Text, '', { text: 'Related', type: 'headline'}],
+        [Component, 'related', { direction: 'vertical'},
+            [Switch, 'active', { name: 'activ', text: 'Active' }],
+            // [Checkbox, 'vip', { text: 'vip' }],
+            [Slider, 'rating', { text: 'rating' }]
+        ]
+      ],
+      [Component, 'footer', { flex: 'none' },
+        [Component, 'toolbar', { display: 'flex', direction: 'horizontal'},
+            [Button, 'cancel', { text: 'Cancel' }],
+            [Button, 'apply', { text: 'Apply' }]
         ]
       ]
     ]
-  })
+  }], body)
 
-  form.insert(body)
+  var form = layout.get('contact-form')
 
   // form.set('info', data)
-
-  // list1.on('selected', function(item) {
-  //   console.log('item selected', item);
-  // });
 }
-
-/**
- * [initTest description]
- * @return {[type]} [description]
- */
-// export default function (body) {
-//   var form = new Form({
-//     layout: {
-//       component: Component,
-//       display: 'flex',
-//       direction: 'vertical',
-//       components: [{
-//         name: 'main',
-//         flex: 1,
-//         component: Component,
-//         components: [{
-//           name: 'contact',
-//           direction: 'vertical',
-
-//           components: [{
-//             type: 'display1',
-//             component: Text,
-//             text: 'Form Component'
-//           }, {
-//             type: 'subheading1',
-//             component: Text,
-//             text: 'Text fields allow users to input text, select text, and lookup data via auto-completion.'
-//           }, {
-//             type: 'headline',
-//             component: Text,
-//             text: 'Contact'
-//           }, {
-//             // name: 'fieldset',
-//             display: 'flex',
-//             direction: 'horizontal',
-//             components: [{
-//               flex: 1,
-//               name: 'firstname',
-//               component: Field,
-//               text: 'Prénom'
-//             }, {
-//               flex: 1,
-//               name: 'lastname',
-//               component: Field,
-//               options: {
-//                 text: 'Nom'
-//               }
-//             }]
-//           }]
-//         }, {
-//           name: 'address',
-//           direction: 'vertical',
-//           components: [{
-//             type: 'headline',
-//             component: Text,
-//             options: {
-//               text: 'Adresse'
-//             }
-//           }, {
-//             text: 'Address',
-//             name: 'place.address',
-//             component: Field
-//           }, {
-//             text: 'Address 2',
-//             name: 'place.info',
-//             component: Field
-//           }, {
-//             display: 'flex',
-//             direction: 'horizontal',
-//             components: [{
-//               text: 'NPA',
-//               name: 'place.zipcode',
-//               component: Field,
-//               size: 75
-//             }, {
-//               flex: 1,
-//               text: 'Lieu',
-//               name: 'place.name',
-//               component: Field
-//             }]
-//           }, {
-//             text: 'Pays',
-//             name: 'place.country',
-//             component: Field
-//           }, {
-//             text: 'lat',
-//             name: 'place.coord.lat',
-//             component: Field
-//           }, {
-//             text: 'long',
-//             name: 'place.coord.long',
-//             component: Field
-//           }]
-//         }, {
-//           name: 'related',
-//           direction: 'vertical',
-//           components: [{
-//             label: 'active',
-//             component: Switch,
-//             name: 'active',
-//             options: {
-//               label: 'active'
-//             }
-//           }, {
-//             text: 'vip',
-//             component: Checkbox,
-//             name: 'vip'
-//           }, {
-//             text: 'rating',
-//             component: Slider,
-//             name: 'rating'
-//           }]
-//         }]
-//       }, {
-//         name: 'foot',
-
-//         // position: 'fixed',
-//         // styles: {
-//         //   bottom: '0px'
-//         // },
-
-//         components: [{
-//           name: 'toolbar',
-//           component: Component,
-//           options: {
-//             class: 'ui-toolbar'
-//           },
-//           components: [{
-//             name: 'cancel',
-//             component: Button,
-//             options: {
-//               label: 'Cancel'
-//             }
-//           }, {
-//             name: 'apply',
-//             component: Button,
-//             options: {
-//               type: 'raised',
-//               label: 'Apply'
-//             }
-//           }]
-//         }]
-//       }]
-//     }
-//   })
-
-//   form.insert(body)
-
-//   form.set('info', data)
-
-//   // list1.on('selected', function(item) {
-//   //   console.log('item selected', item);
-//   // });
-// }
