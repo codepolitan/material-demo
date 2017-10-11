@@ -1,0 +1,174 @@
+@import ./flex.scss
+@import ./transition.scss
+
+$border: rgba(163, 163, 163, 0.5)
+$navi-max-width: 320px
+$navi-width: 200px
+$side-min-width: 100px
+$list-min-width: 80px
+$list-width: 300px
+
+// layout base
+.component-demo,
+.layout-demo
+  overflow: hidden
+  padding: 0
+  margin: 0
+  position: absolute
+  top: 0
+  bottom: 0
+  left: 0
+  right: 0
+
+  > .component-head
+    z-index: 3
+
+    +flex(none)
+    +display(flex)
+    +flex-direction(row)
+    +flex-wrap(nowrap)
+
+    background-color: #4285F4
+    background-color: rgba(0, 0, 0, 0.7)
+    background-color: #607D8B
+
+    //box-shadow: 0 2px 4px rgba(0, 0, 0, 0.14);
+    padding: 10px 16px
+
+    // -webkit-box-shadow: 0 1px 8px rgba(0, 0, 0, 0.3);
+    box-shadow: 0 0 4px rgba(0, 0, 0, 0.14), 0 4px 8px rgba(0, 0, 0, 0.28)
+
+    .text-app-title
+      font-size: 1.5rem
+      font-weight: 300
+      display: inline-block
+      color: rgba(255, 255, 255, 0.95)
+      padding: 6px 0 6px
+      overflow: hidden
+      white-space: nowrap
+      text-overflow: ellipsis
+
+    .material-button
+      .button-icon
+        fill: rgba(255, 255, 255, 0.95)
+
+    .material-switch
+      display: inline-block
+
+  > .material-drawer
+    z-index: 26
+    position: fixed
+    top: 0
+    left: 0
+    bottom: 0
+    background-color: #FFFFFF
+
+    //padding: 16px 0 16px 0;
+    box-shadow: 0px 8px 10px -5px rgba(0, 0, 0, 0.2), 0px 16px 24px 2px rgba(0, 0, 0, 0.14), 0px 6px 30px 5px rgba(0, 0, 0, 0.12)
+
+    .component-navi-head
+      background-color: rgba(0, 0, 0, 0.8)
+      padding: 100px 16px 16px
+
+      .material-text
+        display: inline-block
+        color: rgba(255, 255, 255, 0.95)
+        padding: 6px 0 6px
+        overflow: hidden
+        white-space: nowrap
+        text-overflow: ellipsis
+
+    .material-list.list-navi
+      +transition(0.2s)
+
+      .material-item
+        left: 0
+        padding: 8px 16px
+
+  > .component-body
+    //position: relative;
+    > .component-main
+      position: relative
+
+      //padding: 16px;
+      background-color: rgba(255, 255, 255, 1)
+      overflow: scroll
+
+      .material-calendar
+        position: absolute
+        top: 0
+        bottom: 0
+        left: 0
+        right: 0
+
+      .container-hero
+        //transform: scale(3);
+        min-height: 360px
+        background-color: rgba(0, 0, 0, 0.05)
+        display: flex
+        align-items: center
+        justify-content: center
+        flex-flow: row nowrap
+        height: 360px
+
+      > .layout-slider
+        > .container-hero
+          > .material-slider
+            width: 60%
+
+      > .layout-ripple
+        > .material-container
+          > .material-component
+            position: relative
+            width: 100%
+            height: 100%
+            overflow: hidden
+
+      > .material-container
+        padding: 16px
+        overflow: scroll
+
+      > .material-layout
+        > .material-container
+          padding: 16px
+
+      .layout-demo-button
+        .material-button
+          margin: 16px
+
+      > .material-form.material-layout
+        padding: 0
+        margin: 0
+        position: absolute
+        top: 0
+        bottom: 0
+        left: 0
+        right: 0
+
+        > .material-component
+          overflow: scroll
+          padding: 16px
+
+        > .material-component.component-foot
+          padding: 12px 16px
+          background-color: rgba(0, 0, 0, 0.02)
+
+          > .component-toolbar
+            text-align: right
+
+      > .container-buttons-container
+        padding: 16px
+
+// @media only screen and (max-width: 640px) {
+//   .layout-demo {
+//     >.component-body {
+//       .list-navi {
+//         z-index: 2;
+//         position: absolute;
+//         top: 0;
+//         bottom: 0;
+//         left: 0;
+//       }
+//     }
+//   }
+// }
