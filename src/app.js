@@ -4,8 +4,6 @@ import emitter from 'material/src/module/emitter'
 import dom from 'material/src/module/dom'
 import css from 'material/src/module/css'
 
-import Item from 'material/src/item'
-import Divider from 'material/src/divider'
 import defaults from './options'
 
 // import Container from 'material/src/container';
@@ -111,12 +109,10 @@ class App {
       var main = this.layout.get('main')
       dom.empty(main.wrapper)
 
-      if (view[name]) {
-        view[name](main)
-        Cookies.set('view', name)
-      } else {
-        console.info('main view ' + name + ' not found!')
-      }
+      if (!view[name]) return
+
+      Cookies.set('view', name)
+      view[name](main)
     })
 
     var nameview = Cookies.get('view')
