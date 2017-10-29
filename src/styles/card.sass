@@ -1,101 +1,96 @@
 
-.view-card,
-  .container-hero
+.layout-simple-card
+  .component-head
+    background-image: url(../demo/media/bg-card.jpg)
+    background-repeat: no-repeat
+    background-size: cover
+    height: 209px
+    background-color: #014689
+
+  .component-body
     padding: 16px
-    height: 460px
-    .material-card
-      margin: 16px
 
-  .container-hero,
-  .container-card
-    .material-card
-      width: 320px
-      display: inline-block
-      margin: 24px
-      vertical-align: top
-      .component-visual
-        background-image: url(../demo/media/bg-card.jpg)
-        background-repeat: no-repeat
-        background-size: cover
-        height: 209px
-        background-color: #014689
+    h2,
+    h3
+      margin: 0
+      padding-top: 8px
 
-      .component-body
-        padding: 16px
+  .component-action
+    padding: 8px
 
-        h2,
-        h3
-          margin: 0
-          padding-top: 8px
+    .material-button
+      font-size: 14px
+      padding: 0
 
-      .component-action
+      label
         padding: 8px
-        text-align: right
-        .material-button
-          font-size: 14px
-          padding: 0
 
-          label
-            padding: 8px
+.layout-simple-card-orange
+  .component-head
+    background-image: url(../demo/media/bg-card-orange.jpg)
+    background-repeat: no-repeat
+    background-size: cover
+    height: 209px
+    background-color: #014689
 
-    .component-simple-card
-      .component-head
+  .component-body
+    padding: 16px
 
-        background-color: #014689
+    h2,
+    h3
+      margin: 0
+      padding-top: 8px
 
-    .component-simple-card-avatar
-      .component-head
-        //padding: 16px
-        .component-avatar
-          margin: 16px
-          background: rgb(189, 189, 189)
-          height: 2.5rem
-          width: 2.5rem
-          border-radius: 50%
+  .component-action
+    padding: 8px
 
-        .component-info
-          padding: 16px 0 
-          .material-text
-            display: block
+    .material-button
+      font-size: 14px
+      padding: 0
 
-    .component-simple-card-square
-      .component-head
-        //padding: 16px
-        .component-square
-          margin: 16px
-          background-color: orange
-          height: 2.5rem
-          width: 2.5rem
-          //border-radius: 50%
+      label
+        padding: 8px
 
-        .component-info
-          padding: 16px 
-          .material-text
-            display: block
+.layout-little-card-orange
+  .component-head
+    background-repeat: no-repeat
+    background-size: cover
+    padding: 16px
 
+    .component-image
+      background-image: url(../demo/media/bg-card-orange.jpg)
+      background-repeat: no-repeat
+      background-size: cover
 
-      .component-visual
-        background-image: url(../demo/media/bg-card-orange.jpg)
-        background-repeat: no-repeat
-        background-size: cover
-        height: 209px
-        background-color: orange
+  .component-action
+    padding: 8px
 
-    .component-simple-big-square
-      //padding: 16px
-      .component-square
-        width: 180px
-        height: 180px
-        margin: 16px
-        background-color: orange
+    .material-button
+      font-size: 14px
+      padding: 0
 
-        //border-radius: 50%
+      label
+        padding: 8px
 
-      .component-info
-        padding: 16px 
-        .material-text
-          display: block
+.layout-head-card-text
+  .component-head
+    height: 185px
+    background-image: url(../demo/media/bg-card-orange.jpg)
+    background-repeat: no-repeat
+    background-size: cover
+    padding: 16px
+    justify-content: flex-end
 
+    .material-text
+      margin: 0
+      padding: 0
 
+  .component-action
+    padding: 8px
 
+    .material-button
+      font-size: 14px
+      padding: 0
 
+      label
+        padding: 8px

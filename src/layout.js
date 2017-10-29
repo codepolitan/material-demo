@@ -18,6 +18,7 @@ import iconMore from './icon/more.svg'
 import iconApps from './icon/apps.svg'
 import iconSide from './icon/side.svg'
 
+// define contants
 const TITLE = 'Material'
 
 /**

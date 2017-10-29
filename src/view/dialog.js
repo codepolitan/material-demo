@@ -1,14 +1,14 @@
 'use strict'
 
 import {
+  Layout,
+  View,
   Dialog,
   Component,
-  Container,
-  Checkbox,
   Button,
   Text,
   List,
-  Item
+  Toolbar
 } from 'material'
 
 import event from 'material/src/element/event.js'
@@ -21,10 +21,20 @@ import countries from '../data/list.json'
  * @return {[type]} [description]
  */
 export default function (body) {
-  var container = new Container({
-    container: body,
-    css: 'view-dialog'
-  })
+  var layout = new Layout([View, 'view', {},
+    [Toolbar, 'main', {},
+      [Button, '', {}],
+      [Button, '', {}]
+    ]
+  ], body)
+
+  var view = layout.get('view')
+
+  // var view = new View({
+  //   container: body,
+  //   name: 'dialog',
+  //   css: 'view-dialog'
+  // })
 
   var layout = [Component, 'simple-dialog', { display: 'flex', direction: 'vertical' },
     [Component, 'body', { display: 'flex', direction: 'vertical', flex: '1' },
@@ -38,20 +48,25 @@ export default function (body) {
   ]
 
   var layout2 = [Component, 'list-dialog', { display: 'flex', direction: 'vertical' },
-    [Component, 'head', { display: 'flex', direction: 'vertical', flex: '1' },
+    [Component, 'head', { display: 'flex', direction: 'vertical', flex: 'none' },
       [Text, 'text', { text: 'Choose a country', type: 'title' }]
     ],
-    [List, 'list', { flex: '1' }],
-    [Component, 'action', { display: 'flex', direction: 'vertical', flex: '1' },
-      [Button, 'decline', { text: 'decline', flex: 'none' }],
-      [Button, 'accept', { text: 'accept', flex: 'none' }]
+    [List, 'list', { flex: '1',
+      select: (item) => {
+        console.log('select', item)
+        dialog2.layout.get('cancel').enable(false)
+      }
+    }],
+    [Component, 'action', { display: 'flex', direction: 'horizontal', flex: 'none' },
+      [Button, 'cancel', { text: 'cancel', flex: 'none' }],
+      [Button, 'choose', { text: 'choose', flex: 'none' }]
     ]
   ]
 
   var dialog = new Dialog({
     class: 'simple-dialog',
     layout: layout
-  }).insert(container)
+  }).insert(view)
 
   console.log('button continue', dialog.layout.get('continue'))
 
@@ -66,13 +81,13 @@ export default function (body) {
   var dialog2 = new Dialog({
     class: 'simple-dialog',
     layout: layout2
-  }).insert(container)
+  }).insert(view)
 
-  dialog2.layout.get('accept').on('click', function () {
+  dialog2.layout.get('choose').on('click', function () {
     dialog2.close()
   })
 
-  dialog2.layout.get('decline').on('click', function () {
+  dialog2.layout.get('cancel').on('click', function () {
     dialog2.close()
   })
 
@@ -85,14 +100,14 @@ export default function (body) {
     label: 'show dialog'
   }).on('click', function () {
     dialog.show()
-  }).insert(container)
+  }).insert(view)
 
   new Button({
     color: 'primary',
     type: 'raised',
     label: 'show dialog list'
   }).on('click', function () {
-    dialog2.layout.get('accept').disable(true)
+    dialog2.layout.get('choose').disable(true)
     dialog2.show()
-  }).insert(container)
+  }).insert(view)
 };
