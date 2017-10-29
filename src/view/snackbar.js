@@ -29,25 +29,25 @@ export default function (body) {
     name: 'card'
   }).insert(view)
 
-  new Snackbar({
-    layout: [Component, 'content', { display: 'flex', direction: 'horizontal' },
-      [Text, 'text', {text: 'Message sent'}],
-      [Button, 'undo', { text: 'undo' }]
-    ]
-  }).insert(hero)
-
   var layout = [Component, 'content', { display: 'flex', direction: 'horizontal' },
     [Text, 'text', { flex: '1', text: 'Message sent'}],
     [Button, 'undo', { flex: 'none', text: 'undo' }]
   ]
 
+  new Snackbar({
+    layout: layout,
+    delay: 0
+  }).insert(hero)
+
   new Button({
     text: 'show'
   }).insert(container).on('click', () => {
-    var snackbar = new Snackbar({
+    var sb = new Snackbar({
       layout: layout
     }).insert(document.body)
 
-    console.log('snack', snackbar)
+    sb.layout.get('undo').on('click', () => {
+      console.log('undo')
+    })
   })
 };
