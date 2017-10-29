@@ -26,6 +26,7 @@ import form from './view/form'
 import tree from './view/tree'
 import ripple from './view/ripple'
 import menu from './view/menu'
+import snackbar from './view/snackbar'
 
 // import calendar from './view/calendar';
 
@@ -43,7 +44,8 @@ var view = {
   tree,
   ripple,
   calendar,
-  menu
+  menu,
+  snackbar
   //  calendar
 }
 
@@ -68,6 +70,17 @@ class App {
 
   init (options) {
     Object.assign(this, emitter)
+
+    // if ('serviceWorker' in navigator) {
+    //   navigator.serviceWorker
+    //     .register('./service-worker.js')
+    //     .then(function () { console.log('Service Worker Registered') })
+    // }
+
+    // self.addEventListener('fetch', function (event) {
+    //   console.log('say hello')
+    //   // Do something interesting with the fetch here
+    // })
   }
 
   build () {

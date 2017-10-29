@@ -36,14 +36,16 @@ export default function (body) {
     ]
   }).insert(hero)
 
+  var layout = [Component, 'content', { display: 'flex', direction: 'horizontal' },
+    [Text, 'text', { flex: '1', text: 'Message sent'}],
+    [Button, 'undo', { flex: 'none', text: 'undo' }]
+  ]
+
   new Button({
     text: 'show'
   }).insert(container).on('click', () => {
     var snackbar = new Snackbar({
-      layout: [Component, 'content', { display: 'flex', direction: 'horizontal' },
-        [Text, 'text', { flex: '1', text: 'Message sent'}],
-        [Button, 'undo', { flex: 'none', text: 'undo' }]
-      ]
+      layout: layout
     }).insert(document.body)
 
     console.log('snack', snackbar)
