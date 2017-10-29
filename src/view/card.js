@@ -4,6 +4,7 @@ import Card from 'material/src/card.js'
 
 import Component from 'material/src/component.js'
 import Container from 'material/src/container.js'
+import View from 'material/src/view.js'
 import Button from 'material/src/button.js'
 import Text from 'material/src/text.js'
 // controls
@@ -13,187 +14,112 @@ import Text from 'material/src/text.js'
  * @return {[type]} [description]
  */
 export default function (body) {
-  var container = new Container({
-    css: 'view-card'
+  var view = new View({
+    name: 'card'
   }).insert(body)
 
+  var hero = new Container({
+    name: 'hero'
+  }).insert(view)
+
+  var container = new Container({
+    name: 'card'
+  }).insert(view)
+
   var card = new Card({
-    layout: {
-      component: Component,
-      name: 'simple-card',
-      display: 'flex',
-      direction: 'vertical',
-      components: [{
-        name: 'head',
-        display: 'flex'
+    layout: [Component, 'simple-card', { display: 'flex', direction: 'vertical' },
+      [Component, 'visual', { display: 'flex'}],
+      [Component, 'body', { display: 'flex', direction: 'vertical'},
+        [Text, 'title', { text: 'title', type: 'title' }],
+        [Text, 'subtitle', { text: 'Subtitle here', type: 'subheading2' }]
+      ],
+      [Component, 'action', { },
+        [Button, 'action1', { text: 'action 1' }],
+        [Button, 'action2', { text: 'action 2' }]
+      ]
+    ]
+  }).insert(hero)
 
-      }, {
-        name: 'body',
-        display: 'flex',
-
-        direction: 'vertical',
-        flex: '1',
-        components: [{
-          text: 'Title goes here',
-          component: Text,
-          options: {
-            type: 'title'
-          }
-        }, {
-          component: Text,
-          text: 'Subtitle here',
-          options: {
-            type: 'subheading2'
-          }
-          // flex: '1',
-        }]
-      }, {
-        name: 'action',
-        component: Component,
-        direction: 'horizontal',
-        components: [{
-          flex: 'none',
-          text: 'action 1',
-          component: Button
-        }, {
-          flex: 'none',
-          text: 'action 1',
-          component: Button,
-          name: 'main'
-        }]
-      }]
-    }
+  var card = new Card({
+    layout: [Component, 'simple-card-avatar', { display: 'flex', direction: 'vertical' },
+      [Component, 'visual', { display: 'flex'}],
+      [Component, 'body', { display: 'flex', direction: 'vertical'},
+        [Text, 'title', { text: 'title', type: 'title' }],
+        [Text, 'subtitle', { text: 'Subtitle here', type: 'subheading2' }]
+      ],
+      [Component, 'action', { },
+        [Button, 'action1', { text: 'action 1' }],
+        [Button, 'action2', { text: 'action 2' }]
+      ]
+    ]
   }).insert(container)
 
-  var card2 = new Card({
-    layout: {
-      component: Component,
-      name: 'simple-card-orange',
-      display: 'flex',
-      direction: 'vertical',
-      components: [{
-        name: 'head',
-        display: 'flex'
-
-      }, {
-        name: 'body',
-        display: 'flex',
-
-        direction: 'vertical',
-        flex: '1',
-        components: [{
-          text: 'Title goes here',
-          component: Text,
-          options: {
-            type: 'title'
-          }
-        }, {
-          component: Text,
-          text: 'Subtitle here',
-          options: {
-            type: 'subheading2'
-          }
-          // flex: '1',
-        }]
-      }, {
-        name: 'action',
-        component: Component,
-        direction: 'horizontal',
-        components: [{
-          flex: 'none',
-          text: 'action 1',
-          component: Button
-        }, {
-          flex: 'none',
-          text: 'action 1',
-          component: Button,
-          name: 'main'
-        }]
-      }]
-    }
+  var card = new Card({
+    layout: [Component, 'simple-card-avatar', { display: 'flex', direction: 'vertical' },
+      [Component, 'head', { display: 'flex', direction: 'horizontal'},
+        [Component, 'avatar', { flex: 'none' }],
+        [Component, 'info', { css: 'text-adjust', display: 'flex', direction: 'vertical'},
+          [Text, 'firstname', { text: 'Nicolas', css: 'text-adjust'}],
+          [Text, 'lastname', { text: 'Tesla', css: 'text-adjust' }]
+        ]
+      ],
+      [Component, 'visual', { display: 'flex'}],
+      [Component, 'body', { display: 'flex', direction: 'vertical'},
+        [Text, 'title', { text: 'title', type: 'title' }],
+        [Text, 'subtitle', { text: 'Subtitle here', type: 'subheading2' }]
+      ],
+      [Component, 'action', { },
+        [Button, 'action1', { text: 'action 1' }],
+        [Button, 'action2', { text: 'action 2' }]
+      ]
+    ]
   }).insert(container)
 
-  var card3 = new Card({
-    layout: {
-      component: Component,
-      name: 'little-card-orange',
-      display: 'flex',
-      direction: 'vertical',
-      components: [{
-        name: 'head',
-        display: 'flex',
-        direction: 'horizontal',
-        components: [{
-          name: 'text',
-          components: [{
-            text: 'Title goes here',
-            component: Text,
-            options: {
-              type: 'title'
-            }
-          }, {
-            component: Text,
-            text: 'Subtitle here',
-            options: {
-              type: 'subheading2'
-            }
-            // f
-          }]
-        }, {
-          name: 'image',
-          display: 'flex',
-
-          direction: 'vertical',
-          flex: '1',
-          lex: '1'
-        }]
-      }, {
-        name: 'action',
-        component: Component,
-        direction: 'horizontal',
-        components: [{
-          flex: 'none',
-          text: 'action 1',
-          component: Button
-        }, {
-          flex: 'none',
-          text: 'action 1',
-          component: Button,
-          name: 'main'
-        }]
-      }]
-    }
+  var card = new Card({
+    layout: [Component, 'simple-card-avatar', { display: 'flex', direction: 'vertical' },
+      [Component, 'head', { display: 'flex', direction: 'horizontal'},
+        [Component, 'avatar', { flex: 'none' }],
+        [Component, 'info', { css: 'text-adjust', display: 'flex', direction: 'vertical'},
+          [Text, 'firstname', { text: 'Nicolas', css: 'text-adjust'}],
+          [Text, 'lastname', { text: 'Tesla', css: 'text-adjust' }]
+        ]
+      ],
+      [Component, 'body', { display: 'flex', direction: 'vertical'},
+        [Text, 'title', { text: 'title', type: 'title' }],
+        [Text, 'subtitle', { text: 'Subtitle here', type: 'subheading2' }]
+      ],
+      [Component, 'action', { },
+        [Button, 'action1', { text: 'action 1' }],
+        [Button, 'action2', { text: 'action 2' }]
+      ]
+    ]
   }).insert(container)
 
-  var card4 = new Card({
-    layout: {
-      component: Component,
-      name: 'head-card-text',
-      display: 'flex',
-      direction: 'vertical',
-      components: [{
-        name: 'head',
-        display: 'flex',
-        direction: 'vertical',
-        components: [{
-
-          text: 'Title',
-          component: Text,
-          options: {
-            type: 'title'
-          }
-
-        }]
-      }, {
-        name: 'action',
-        component: Component,
-        direction: 'horizontal',
-        components: [{
-          flex: 'none',
-          text: 'action 1',
-          component: Button
-        }]
-      }]
-    }
+  var card = new Card({
+    layout: [Component, 'simple-card-square', { display: 'flex', direction: 'vertical' },
+      [Component, 'head', { display: 'flex', direction: 'horizontal'},
+        [Component, 'info', { flex: '1', display: 'flex', direction: 'vertical'},
+          [Text, 'title', { text: 'title', type: 'title' }],
+        [Text, 'subtitle', { text: 'Subtitle here', type: 'subheading2' }]
+        ],
+        [Component, 'square', { flex: 'none' }]
+      ],
+      [Component, 'action', { },
+        [Button, 'action1', { text: 'action 1' }],
+        [Button, 'action2', { text: 'action 2' }]
+      ]
+    ]
   }).insert(container)
+
+  var card = new Card({
+    layout: [Component, 'simple-big-square', { display: 'flex', direction: 'horizontal' },
+      [Component, 'square', { flex: 'none' }],
+      [Component, 'action', { },
+        [Button, 'action1', { text: 'action 1' }],
+        [Button, 'action2', { text: 'action 2' }]
+      ]
+    ]
+  }).insert(container)
+
+  console.log('card', card)
 };
