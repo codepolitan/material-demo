@@ -27,6 +27,7 @@ import tree from './view/tree'
 import ripple from './view/ripple'
 import menu from './view/menu'
 import snackbar from './view/snackbar'
+import select from './view/select'
 
 // import calendar from './view/calendar';
 
