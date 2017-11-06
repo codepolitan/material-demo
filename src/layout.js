@@ -35,12 +35,12 @@ var layout = [Container, 'app', { display: 'flex', direction: 'vertical' },
       [Button, 'menu-more', { icon: iconMore, type: 'action' }]
     ]
   ],
-  [Drawer, 'navi', { css: 'drawer-temporary', type: 'temporary', size: 260 },
+  [Drawer, 'navi', { display: 'flex', direction: 'vertical', css: 'drawer-temporary', type: 'temporary', size: 260 },
     [Toolbar, 'navi-head', { theme: 'dark' },
       [Button, 'menu-navi-head', { icon: iconNavi, type: 'action' }],
       [Text, 'title', { text: TITLE }]
     ],
-    [List, 'navi-list', { theme: 'dark' }]
+    [List, 'navi-list', { theme: 'dark', flex: '1' }]
   ],
   [Component, 'body', { flex: '1', display: 'flex', direction: 'horizontal' },
     [Component, 'main', { display: 'flex', direction: 'vartical', flex: '1' }]

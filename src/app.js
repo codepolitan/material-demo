@@ -72,16 +72,16 @@ class App {
   init (options) {
     Object.assign(this, emitter)
 
-    // if ('serviceWorker' in navigator) {
-    //   navigator.serviceWorker
-    //     .register('./service-worker.js')
-    //     .then(function () { console.log('Service Worker Registered') })
-    // }
+    if ('serviceWorker' in navigator) {
+      navigator.serviceWorker
+        .register('./service-worker.js')
+        .then(function () { console.log('Service Worker Registered') })
+    }
 
-    // self.addEventListener('fetch', function (event) {
-    //   console.log('say hello')
-    //   // Do something interesting with the fetch here
-    // })
+    self.addEventListener('fetch', function (event) {
+      console.log('say hello')
+      // Do something interesting with the fetch here
+    })
   }
 
   build () {

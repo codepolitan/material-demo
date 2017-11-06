@@ -1,12 +1,4 @@
 @import ./theme.sass
-
-
-$border: rgba(163, 163, 163, 0.5)
-$navi-max-width: 320px
-$navi-width: 200px
-$side-min-width: 100px
-$list-min-width: 80px
-$list-width: 300px
  	
 // app specific
 .container-app
@@ -27,12 +19,15 @@ $list-width: 300px
     flex-direction: row
     flex-wrap: nowrap
     background-color: #4285F4
-    background-color: rgba(0, 0, 0, 0.8)
+    //background-color: rgba(0, 0, 0, 0.8)
     //background-color: rgb(63, 81, 181)
+    background-color: #3f51b5
     box-shadow: 0 0 4px rgba(0, 0, 0, 0.14),0 4px 8px rgba(0, 0, 0, 0.28)
     padding: 10px 16px
 
     .text-title
+      font-size: 1.3rem
+      line-height: 2.3rem
       font-weight: 300
       display: inline-block
       color: rgba(255, 255, 255, 0.95)
@@ -56,13 +51,14 @@ $list-width: 300px
     .toolbar-navi-head
       padding: 10px 16px
       background-color: $primary-color
-
+      height: 100px
       .material-button
         .button-icon
           fill: rgba(255, 255, 255, 0.95)
 
       .text-title
-        font-size: 1.25rem
+        font-size: 1.3rem
+        line-height: 2.3rem
         font-weight: 300
         display: inline-block
         color: rgba(255, 255, 255, 0.95)
