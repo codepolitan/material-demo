@@ -28,7 +28,6 @@ export default function (body) {
 
   var card = new Card({
     layout: [Component, 'simple-card', { display: 'flex', direction: 'vertical' },
-      [Component, 'visual', { display: 'flex'}],
       [Component, 'body', { display: 'flex', direction: 'vertical'},
         [Text, 'title', { text: 'title', type: 'title' }],
         [Text, 'subtitle', { text: 'Subtitle here', type: 'subheading2' }]
