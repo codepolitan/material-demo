@@ -1,5 +1,12 @@
-// var domready = require('material/src/module/domready');
+import domready from './module/domready'
 import App from './app.js'
+
+domready(function () {
+  var app = new App()
+
+  console.log('start app', app)
+})
+
 // import debug from 'debug.js';
 // // by default stderr is used
 // const log = debug('app:log');
@@ -12,6 +19,6 @@ import App from './app.js'
 // } else {
 //   debug.disable();
 // }
-document.addEventListener('DOMContentLoaded', function () {
-  new App()
-})
+// document.addEventListener('DOMContentLoaded', function () {
+//   new App()
+// })
