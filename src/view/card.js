@@ -28,7 +28,7 @@ export default function (body) {
 
   var card = new Card({
     layout: [Component, 'simple-card', { display: 'flex', direction: 'vertical' },
-      [Component, 'body', { display: 'flex', direction: 'vertical'},
+      [Component, 'body', { display: 'flex', direction: 'vertical' },
         [Text, 'title', { text: 'title', type: 'title' }],
         [Text, 'subtitle', { text: 'Subtitle here', type: 'subheading2' }]
       ],
@@ -39,7 +39,7 @@ export default function (body) {
     ]
   }).insert(hero)
 
-  var card = new Card({
+  var card2 = new Card({
     layout: [Component, 'simple-card-avatar', { display: 'flex', direction: 'vertical' },
       [Component, 'visual', { display: 'flex'}],
       [Component, 'body', { display: 'flex', direction: 'vertical'},
@@ -53,7 +53,7 @@ export default function (body) {
     ]
   }).insert(container)
 
-  var card = new Card({
+  var card3 = new Card({
     layout: [Component, 'simple-card-avatar', { display: 'flex', direction: 'vertical' },
       [Component, 'head', { display: 'flex', direction: 'horizontal'},
         [Component, 'avatar', { flex: 'none' }],
@@ -74,7 +74,7 @@ export default function (body) {
     ]
   }).insert(container)
 
-  var card = new Card({
+  var card4 = new Card({
     layout: [Component, 'simple-card-avatar', { display: 'flex', direction: 'vertical' },
       [Component, 'head', { display: 'flex', direction: 'horizontal'},
         [Component, 'avatar', { flex: 'none' }],
@@ -94,7 +94,7 @@ export default function (body) {
     ]
   }).insert(container)
 
-  var card = new Card({
+  var card5 = new Card({
     layout: [Component, 'simple-card-square', { display: 'flex', direction: 'vertical' },
       [Component, 'head', { display: 'flex', direction: 'horizontal'},
         [Component, 'info', { flex: '1', display: 'flex', direction: 'vertical'},
@@ -110,7 +110,7 @@ export default function (body) {
     ]
   }).insert(container)
 
-  var card = new Card({
+  var card6 = new Card({
     layout: [Component, 'simple-big-square', { display: 'flex', direction: 'horizontal' },
       [Component, 'square', { flex: 'none' }],
       [Component, 'action', { },
