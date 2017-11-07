@@ -28,6 +28,7 @@ import ripple from './view/ripple'
 import menu from './view/menu'
 import snackbar from './view/snackbar'
 import select from './view/select'
+import progress from './view/progress'
 
 // import calendar from './view/calendar';
 
@@ -46,7 +47,9 @@ var view = {
   ripple,
   calendar,
   menu,
-  snackbar
+  snackbar,
+  select,
+  progress
   //  calendar
 }
 
@@ -72,16 +75,16 @@ class App {
   init (options) {
     Object.assign(this, emitter)
 
-    if ('serviceWorker' in navigator) {
-      navigator.serviceWorker
-        .register('./service-worker.js')
-        .then(function () { console.log('Service Worker Registered') })
-    }
+    // if ('serviceWorker' in navigator) {
+    //   navigator.serviceWorker
+    //     .register('./service-worker.js')
+    //     .then(function () { console.log('Service Worker Registered') })
+    // }
 
-    self.addEventListener('fetch', function (event) {
-      console.log('say hello')
-      // Do something interesting with the fetch here
-    })
+    // self.addEventListener('fetch', function (event) {
+    //   console.log('say hello')
+    //   // Do something interesting with the fetch here
+    // })
   }
 
   build () {
