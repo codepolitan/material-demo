@@ -124,7 +124,7 @@ class App {
 
     this.on('view', (name) => {
       var main = this.layout.get('main')
-      dom.empty(main.wrapper)
+      dom.empty(main.root)
 
       if (!view[name]) return
 
