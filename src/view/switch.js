@@ -14,10 +14,10 @@ import Button from 'material/src/button.js'
  * [initTest description]
  * @return {[type]} [description]
  */
-export default function(body) {
+export default function (body) {
   var layout = new Layout([Component, 'checkbox-view', {},
     [Container, 'hero', {},
-      [Switch, '', { label: 'Switch' }]
+      [Switch, 'main-switch', { label: 'Switch' }]
     ],
     [Toolbar, 'footer', {},
       [Button, 'toggleBtn', { label: 'Toggle check' }],
@@ -30,9 +30,9 @@ export default function(body) {
       [Switch, 'disabled', { label: 'Disabled', disabled: true }]
     ],
     [Container, 'dark-container', { css: 'dark-theme' },
-      [Switch, '', { label: 'Switch' }],
-      [Switch, '', { label: 'Switch', checked: true }],
-      [Switch, '', { label: 'Disabled', disabled: true }]
+      [Switch, 'dark-default', { label: 'Switch' }],
+      [Switch, 'dark-uncheck', { label: 'Switch', checked: true }],
+      [Switch, 'dark-disabled', { label: 'Disabled', disabled: true }]
     ]
   ], body)
 

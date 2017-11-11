@@ -34,7 +34,7 @@ export default function (body) {
     ],
     [Container, 'containerbutton', {},
       [Container, 'options', {},
-        [Checkbox, 'darktheme', { label: 'Dark Theme' }]
+        [Checkbox, 'darktheme', { name: 'darktheme', label: 'Dark Theme' }]
       ],
       [Component, 'button-default', {},
         [Text, 'standard-button', { text: 'Standard Button', type: 'subheading2' }],
