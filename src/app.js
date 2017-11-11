@@ -77,8 +77,11 @@ class App {
 
     if ('serviceWorker' in navigator) {
       navigator.serviceWorker
-        .register('/src/sw.js')
-        .then(function () { console.log('Service Worker Registered') })
+        .register('/sw.js')
+        .then(function (registration) {
+          // console.log('Service Worker Registered')
+          console.log('ServiceWorker registration successful with scope: ', registration.scope)
+        })
     }
 
     self.addEventListener('fetch', function (event) {
