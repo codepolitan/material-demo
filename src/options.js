@@ -20,6 +20,7 @@ var options = {
     { name: 'Select' },
     { name: 'Snackbar' },
     { name: 'Switch' },
+    { name: 'Tabs' },
     { name: 'Views', type: 'divider' },
     { name: 'List' },
     { name: 'Form' },

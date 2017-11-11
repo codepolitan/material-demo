@@ -29,6 +29,7 @@ import menu from './view/menu'
 import snackbar from './view/snackbar'
 import select from './view/select'
 import progress from './view/progress'
+import tabs from './view/tabs'
 
 // import calendar from './view/calendar';
 
@@ -49,7 +50,8 @@ var view = {
   menu,
   snackbar,
   select,
-  progress
+  progress,
+  tabs
   //  calendar
 }
 

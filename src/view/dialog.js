@@ -41,9 +41,9 @@ export default function (body) {
       [Text, 'text', { text: 'Title', type: 'title' }],
       [Text, 'text', { text: 'This is a subheadubg 2', type: 'subheading2' }]
     ],
-    [Component, 'action', { display: 'flex', direction: 'vertical', flex: '1' },
-      [Button, 'cancel', { text: 'continue', flex: 'none' }],
-      [Button, 'continue', { text: 'cancel', flex: 'none' }]
+    [Component, 'action', { display: 'flex', direction: 'horizontal', flex: '1' },
+      [Button, 'cancel', { text: 'cancel', flex: 'none' }],
+      [Button, 'continue', { text: 'continue', flex: 'none' }]
     ]
   ]
 
@@ -54,12 +54,12 @@ export default function (body) {
     [List, 'list', { flex: '1',
       select: (item) => {
         console.log('select', item)
-        dialog2.layout.get('cancel').enable(false)
+        dialog2.layout.get('choose').enable(true)
       }
     }],
     [Component, 'action', { display: 'flex', direction: 'horizontal', flex: 'none' },
       [Button, 'cancel', { text: 'cancel', flex: 'none' }],
-      [Button, 'choose', { text: 'choose', flex: 'none' }]
+      [Button, 'choose', { text: 'choose', flex: 'none', color: 'primary' }]
     ]
   ]
 
