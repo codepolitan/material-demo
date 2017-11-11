@@ -7,6 +7,12 @@ domready(function () {
   console.log('start app', app)
 })
 
+// document.addEventListener('DOMContentLoaded', function () {
+//   var app = new App()
+
+//   console.log('start app', app)
+// })
+
 // import debug from 'debug.js';
 // // by default stderr is used
 // const log = debug('app:log');
