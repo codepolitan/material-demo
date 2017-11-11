@@ -146,9 +146,9 @@ export default function (body) {
   layout.get('darktheme').on('change', function (checked) {
     console.log('darktheme', checked, layout.get('containerbutton'))
     if (checked) {
-      css.add(layout.get('containerbutton').wrapper, 'dark-theme')
+      css.add(layout.get('containerbutton').root, 'dark-theme')
     } else {
-      css.remove(layout.get('containerbutton').wrapper, 'dark-theme')
+      css.remove(layout.get('containerbutton').root, 'dark-theme')
     }
   })
 }

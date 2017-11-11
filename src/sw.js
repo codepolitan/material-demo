@@ -1,7 +1,10 @@
 var cacheName = 'material-demo'
 var filesToCache = [
-  '/public',
+  '/index.html',
+  '/manifest.json',
   '/material/material.css',
+  '/img/iconx512.png',
+  '/img/icon.png',
   '/dist/styles.css',
   '/dist/bundle.js'
 ]

@@ -14,10 +14,12 @@
     flex-direction: row;
     flex-wrap: nowrap;
     background-color: #4285F4;
-    background-color: rgba(0, 0, 0, 0.8);
+    background-color: #3f51b5;
     box-shadow: 0 0 4px rgba(0, 0, 0, 0.14), 0 4px 8px rgba(0, 0, 0, 0.28);
     padding: 10px 16px; }
     .container-app > .component-head .text-title {
+      font-size: 1.3rem;
+      line-height: 2.3rem;
       font-weight: 300;
       display: inline-block;
       color: rgba(255, 255, 255, 0.95);
@@ -34,11 +36,13 @@
     background-color: white; }
     .container-app > .drawer-navi .toolbar-navi-head {
       padding: 10px 16px;
-      background-color: #3f51b5; }
+      background-color: #3f51b5;
+      height: 100px; }
       .container-app > .drawer-navi .toolbar-navi-head .material-button .button-icon {
         fill: rgba(255, 255, 255, 0.95); }
       .container-app > .drawer-navi .toolbar-navi-head .text-title {
-        font-size: 1.25rem;
+        font-size: 1.3rem;
+        line-height: 2.3rem;
         font-weight: 300;
         display: inline-block;
         color: rgba(255, 255, 255, 0.95);
@@ -76,6 +80,7 @@
         left: 0;
         right: 0; }
       .container-app > .component-body > .component-main .container-hero {
+        position: relative;
         min-height: 360px;
         background-color: rgba(0, 0, 0, 0.05);
         display: flex;
@@ -128,5 +133,90 @@
   padding: 0; }
   .view-button .material-container .material-button {
     margin: 16px 16px 16px 0; }
+
+.view-card .container-hero {
+  padding: 16px;
+  height: 460px; }
+  .view-card .container-hero .material-card {
+    margin: 16px; }
+.view-card .container-hero .material-card,
+.view-card .container-card .material-card {
+  width: 320px;
+  display: inline-block;
+  margin: 24px;
+  vertical-align: top; }
+  .view-card .container-hero .material-card .component-visual,
+  .view-card .container-card .material-card .component-visual {
+    background-image: url(../demo/media/bg-card.jpg);
+    background-repeat: no-repeat;
+    background-size: cover;
+    height: 209px;
+    background-color: #014689; }
+  .view-card .container-hero .material-card .component-body,
+  .view-card .container-card .material-card .component-body {
+    padding: 16px; }
+    .view-card .container-hero .material-card .component-body h2,
+    .view-card .container-hero .material-card .component-body h3,
+    .view-card .container-card .material-card .component-body h2,
+    .view-card .container-card .material-card .component-body h3 {
+      margin: 0;
+      padding-top: 8px; }
+  .view-card .container-hero .material-card .component-action,
+  .view-card .container-card .material-card .component-action {
+    padding: 8px;
+    text-align: right; }
+    .view-card .container-hero .material-card .component-action .material-button,
+    .view-card .container-card .material-card .component-action .material-button {
+      font-size: 14px;
+      padding: 0; }
+      .view-card .container-hero .material-card .component-action .material-button label,
+      .view-card .container-card .material-card .component-action .material-button label {
+        padding: 8px; }
+.view-card .container-hero .component-simple-card .component-head,
+.view-card .container-card .component-simple-card .component-head {
+  background-color: #014689; }
+.view-card .container-hero .component-simple-card-avatar .component-head .component-avatar,
+.view-card .container-card .component-simple-card-avatar .component-head .component-avatar {
+  margin: 16px;
+  background: #bdbdbd;
+  height: 2.5rem;
+  width: 2.5rem;
+  border-radius: 50%; }
+.view-card .container-hero .component-simple-card-avatar .component-head .component-info,
+.view-card .container-card .component-simple-card-avatar .component-head .component-info {
+  padding: 16px 0; }
+  .view-card .container-hero .component-simple-card-avatar .component-head .component-info .material-text,
+  .view-card .container-card .component-simple-card-avatar .component-head .component-info .material-text {
+    display: block; }
+.view-card .container-hero .component-simple-card-square .component-head .component-square,
+.view-card .container-card .component-simple-card-square .component-head .component-square {
+  margin: 16px;
+  background-color: orange;
+  height: 2.5rem;
+  width: 2.5rem; }
+.view-card .container-hero .component-simple-card-square .component-head .component-info,
+.view-card .container-card .component-simple-card-square .component-head .component-info {
+  padding: 16px; }
+  .view-card .container-hero .component-simple-card-square .component-head .component-info .material-text,
+  .view-card .container-card .component-simple-card-square .component-head .component-info .material-text {
+    display: block; }
+.view-card .container-hero .component-simple-card-square .component-visual,
+.view-card .container-card .component-simple-card-square .component-visual {
+  background-repeat: no-repeat;
+  background-size: cover;
+  height: 209px;
+  background-color: orange; }
+.view-card .container-hero .component-simple-big-square .component-square,
+.view-card .container-card .component-simple-big-square .component-square {
+  width: 180px;
+  height: 180px;
+  margin: 16px;
+  background-color: orange; }
+.view-card .container-hero .component-simple-big-square .component-info,
+.view-card .container-card .component-simple-big-square .component-info {
+  padding: 16px; }
+  .view-card .container-hero .component-simple-big-square .component-info .material-text,
+  .view-card .container-card .component-simple-big-square .component-info .material-text {
+    display: block; }
 
 /*# sourceMappingURL=styles.css.map */
