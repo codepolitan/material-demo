@@ -19,7 +19,6 @@ var options = {
     { name: 'Progress' },
     { name: 'Select' },
     { name: 'Snackbar' },
-    { name: 'Progress' },
     { name: 'Switch' },
     { name: 'Views', type: 'divider' },
     { name: 'List' },
