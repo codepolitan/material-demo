@@ -24,7 +24,7 @@ import iconLink from '../icon/link.svg'
  * @return {[type]} [description]
  */
 export default function (body) {
-  var layout = new Layout([View, 'button', {},
+  var layout = new Layout([Container, 'button', {},
     [Container, 'hero', {},
       [Button, 'first', { text: 'Flat' }],
       [Button, 'second', { text: 'Raised', type: 'raised', color: 'primary' }],
@@ -36,9 +36,9 @@ export default function (body) {
       [Container, 'options', {},
         [Checkbox, 'darktheme', { name: 'darktheme', label: 'Dark Theme' }]
       ],
-      [Component, 'button-default', {},
+      [Container, 'button-default', {},
         [Text, 'standard-button', { text: 'Standard Button', type: 'subheading2' }],
-        [Component, 'buttons-container', {},
+        [Container, 'buttons-container', {},
           [Button, 'default', { text: 'default' }],
           [Button, 'default-icontext', { icon: iconHappy, text: 'icon text' }],
           [Button, 'default-compact', { text: 'Compact', style: 'compact' }],
@@ -46,7 +46,7 @@ export default function (body) {
           [Button, 'default-densecompact', { text: 'Compact dense', style: 'compact dense' }],
           [Button, 'default-link', { text: 'Link', tag: 'a' }]
         ],
-        [Component, 'buttons-container', {},
+        [Container, 'buttons-container', {},
           [Button, 'default', { text: 'default', color: 'primary' }],
           [Button, 'default-icontext', { icon: iconHappy, text: 'icon text', color: 'primary' }],
           [Button, 'default-compact', { text: 'Compact', style: 'compact', color: 'primary' }],
@@ -54,7 +54,7 @@ export default function (body) {
           [Button, 'default-densecompact', { text: 'Compact dense', style: 'compact dense', color: 'primary' }],
           [Button, 'default-link', { text: 'Link', color: 'primary', tag: 'a' }]
         ],
-        [Component, 'buttons-container', {},
+        [Container, 'buttons-container', {},
           [Button, 'default', { text: 'default', color: 'secondary' }],
           [Button, 'default-icontext', { icon: iconHappy, text: 'icon text', color: 'secondary' }],
           [Button, 'default-compact', { text: 'Compact', style: 'compact', color: 'secondary' }],
@@ -63,7 +63,7 @@ export default function (body) {
           [Button, 'default-link', { text: 'Link', color: 'secondary', tag: 'a' }]
         ],
         [Text, 'raised-button', { text: 'Raised Button', type: 'subheading2' }],
-        [Component, 'buttons-raised', {},
+        [Container, 'buttons-raised', {},
           [Button, 'raised', { text: 'raised', type: 'raised' }],
           [Button, 'default-icontext', { icon: iconHappy, type: 'raised', text: 'icon text' }],
           [Button, 'raised-compact', { text: 'Compact', type: 'raised', style: 'compact' }],
@@ -72,7 +72,7 @@ export default function (body) {
           [Button, 'raised-link', { text: 'Link', type: 'raised' }],
           [Button, 'raised-link', { icon: iconStar, type: 'raised' }]
         ],
-        [Component, 'buttons-raised-primary', {},
+        [Container, 'buttons-raised-primary', {},
           [Button, 'raised', { text: 'raised primary', type: 'raised', color: 'primary' }],
           [Button, 'default-icontext', { icon: iconHappy, type: 'raised', text: 'icon text', color: 'primary' }],
           [Button, 'raised-compact', { text: 'Compact', type: 'raised', style: 'compact', color: 'primary' }],
@@ -81,7 +81,7 @@ export default function (body) {
           [Button, 'raised-link', { text: 'Link', type: 'raised', color: 'primary' }],
           [Button, 'raised-link', { icon: iconStar, type: 'raised', color: 'primary' }]
         ],
-        [Component, 'buttons-raised-secondary', {},
+        [Container, 'buttons-raised-secondary', {},
           [Button, 'raised', { text: 'raised secondary', type: 'raised', color: 'secondary' }],
           [Button, 'default-icontext', { icon: iconHappy, type: 'raised', text: 'icon text', color: 'secondary' }],
           [Button, 'raised-compact', { text: 'Compact', type: 'raised', style: 'compact', color: 'secondary' }],
@@ -90,21 +90,21 @@ export default function (body) {
           [Button, 'raised-link', { text: 'Link', type: 'raised', color: 'secondary' }]
         ],
         [Text, 'action-button', { text: 'Action Button', type: 'subheading2' }],
-        [Component, 'buttons-action', {},
+        [Container, 'buttons-action', {},
           [Button, 'action', { icon: iconStar, type: 'action' }],
           [Button, 'action-compact', { icon: iconHappy, type: 'action', style: 'compact' }],
           [Button, 'action-dense', { icon: iconPhone, type: 'action', style: 'dense' }],
           [Button, 'action-densecompact', { icon: iconAccessibility, type: 'action', style: 'compact dense' }],
           [Button, 'action-link', { icon: iconLink, type: 'action' }]
         ],
-        [Component, 'buttons-action', {},
+        [Container, 'buttons-action', {},
           [Button, 'action', { icon: iconStar, type: 'action', color: 'primary' }],
           [Button, 'action-compact', { icon: iconHappy, type: 'action', style: 'compact', color: 'primary' }],
           [Button, 'action-dense', { icon: iconPhone, type: 'action', style: 'dense', color: 'primary' }],
           [Button, 'action-densecompact', { icon: iconAccessibility, type: 'action', style: 'compact dense', color: 'primary' }],
           [Button, 'action-link', { icon: iconLink, type: 'action', color: 'primary' }]
         ],
-        [Component, 'buttons-action-secondary', {},
+        [Container, 'buttons-action-secondary', {},
           [Button, 'action', { icon: iconStar, type: 'action', color: 'secondary' }],
           [Button, 'action-compact', { icon: iconHappy, type: 'action', style: 'compact', color: 'secondary' }],
           [Button, 'action-dense', { icon: iconPhone, type: 'action', style: 'dense', color: 'secondary' }],
@@ -112,21 +112,21 @@ export default function (body) {
           [Button, 'action-link', { icon: iconLink, type: 'action', color: 'secondary' }]
         ],
         [Text, 'floating-button', { text: 'Floating Button', type: 'subheading2' }],
-        [Component, 'buttons-floating', {},
+        [Container, 'buttons-floating', {},
           [Button, 'floating', { icon: iconStar, type: 'floating' }],
           [Button, 'floating-compact', { icon: iconHappy, type: 'floating', style: 'compact' }],
           [Button, 'floating-dense', { icon: iconPhone, type: 'floating', style: 'dense' }],
           [Button, 'floating-densecompact', { icon: iconAccessibility, type: 'floating', style: 'compact dense' }],
           [Button, 'floating-link', { icon: iconLink, type: 'floating', tag: 'a' }]
         ],
-        [Component, 'buttons-floating', {},
+        [Container, 'buttons-floating', {},
           [Button, 'floating', { icon: iconStar, type: 'floating', color: 'primary' }],
           [Button, 'floating-compact', { icon: iconHappy, type: 'floating', style: 'compact', color: 'primary' }],
           [Button, 'floating-dense', { icon: iconPhone, type: 'floating', style: 'dense', color: 'primary' }],
           [Button, 'floating-densecompact', { icon: iconAccessibility, type: 'floating', style: 'compact dense', color: 'primary' }],
           [Button, 'floating-link', { icon: iconLink, type: 'floating', color: 'primary' }]
         ],
-        [Component, 'buttons-floating-secondary', {},
+        [Container, 'buttons-floating-secondary', {},
           [Button, 'floating', { icon: iconStar, text: 'floating secondary', type: 'floating', color: 'secondary' }],
           [Button, 'floating-compact', { icon: iconHappy, text: 'Compact', type: 'floating', style: 'compact', color: 'secondary' }],
           [Button, 'floating-dense', { icon: iconPhone, text: 'Dense', type: 'floating', style: 'dense', color: 'secondary' }],

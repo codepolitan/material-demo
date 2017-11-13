@@ -103,6 +103,14 @@ class App {
       navi.toggle(e)
     })
 
+    this.layout.get('body').root.addEventListener('scroll', (e) => {
+      if (this.layout.get('body').root.scrollTop > 0) {
+        css.add(this.layout.get('head').root, 'head-shadow')
+      } else {
+        css.remove(this.layout.get('head').root, 'head-shadow')
+      }
+    })
+
     this.layout.get('menu-navi-head').on('click', function (e) {
       navi.close(e)
     })
