@@ -24,11 +24,11 @@ import iconLink from '../icon/link.svg'
  * @return {[type]} [description]
  */
 export default function (body) {
-  var layout = new Layout([Container, 'button', {},
+  var layout = new Layout([View, 'button', {},
     [Container, 'hero', {},
-      [Button, 'first', { text: 'Flat' }],
+      [Button, 'first', { text: 'Flat', color: 'primary' }],
       [Button, 'second', { text: 'Raised', type: 'raised', color: 'primary' }],
-      [Button, 'third', { icon: iconStar, type: 'action' }],
+      [Button, 'third', { icon: iconStar, type: 'action', color: 'secondary' }],
       [Button, 'fourth', { icon: iconStar, text: 'text' }],
       [Button, 'fifth', { icon: iconStar, type: 'floating', color: 'secondary' }]
     ],
@@ -87,7 +87,8 @@ export default function (body) {
           [Button, 'raised-compact', { text: 'Compact', type: 'raised', style: 'compact', color: 'secondary' }],
           [Button, 'raised-dense', { text: 'Dense', type: 'raised', style: 'dense', color: 'secondary' }],
           [Button, 'raised-densecompact', { text: 'Compact dense', type: 'raised', style: 'compact dense', color: 'secondary' }],
-          [Button, 'raised-link', { text: 'Link', type: 'raised', color: 'secondary' }]
+          [Button, 'raised-link', { text: 'Link', type: 'raised', color: 'secondary' }],
+          [Button, 'raised-link', { icon: iconStar, type: 'raised', color: 'secondary' }]
         ],
         [Text, 'action-button', { text: 'Action Button', type: 'subheading2' }],
         [Container, 'buttons-action', {},
