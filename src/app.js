@@ -24,35 +24,38 @@ import slider from './view/slider'
 import list from './view/list'
 import form from './view/form'
 import tree from './view/tree'
-import ripple from './view/ripple'
+
 import menu from './view/menu'
 import snackbar from './view/snackbar'
 import select from './view/select'
 import progress from './view/progress'
 import tabs from './view/tabs'
 
+import ripple from './view/ripple'
+import elevation from './view/elevation'
+
 // import calendar from './view/calendar';
 
 var view = {
   typography,
   button,
+  calendar,
   card,
   checkbox,
   dialog,
-  switch: switchc,
+  elevation,
   field,
   slider,
   list,
   form,
   tree,
   ripple,
-  calendar,
   menu,
+  progress,
   snackbar,
   select,
-  progress,
+  switch: switchc,
   tabs
-  //  calendar
 }
 
 /**
@@ -74,6 +77,11 @@ class App {
     this.emit('ready')
   }
 
+  /**
+   * [init description]
+   * @param  {[type]} options [description]
+   * @return {[type]}         [description]
+   */
   init (options) {
     Object.assign(this, emitter)
 
@@ -92,10 +100,18 @@ class App {
     })
   }
 
+  /**
+   * [build description]
+   * @return {[type]} [description]
+   */
   build () {
     this.layout = new Layout(layout, document.body)
   }
 
+  /**
+   * [setup description]
+   * @return {[type]} [description]
+   */
   setup () {
     var navi = this.layout.get('navi')
 

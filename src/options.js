@@ -18,6 +18,7 @@ var options = {
     { name: 'Menu' },
     { name: 'Progress' },
     { name: 'Select' },
+    { name: 'Slider' },
     { name: 'Snackbar' },
     { name: 'Switch' },
     { name: 'Tabs' },
@@ -26,7 +27,9 @@ var options = {
     { name: 'Form' },
     { name: 'Calendar' },
     { type: 'divider' },
-    { name: 'ripple' }
+    { name: 'ripple' },
+    { name: 'elevation' },
+    { name: 'color' }
   ]
 }
 
