@@ -10,7 +10,7 @@ const app = express()
 
 const port = 3001
 
-app.use(compression())
+// app.use(compression())
 app.use('/', express.static(path.join(__dirname, '/')))
 app.use('/dist', express.static(path.join(__dirname, '/dist')))
 app.use('/public', express.static(path.join(__dirname, '/public')))

@@ -5,12 +5,14 @@ import {
   View,
   Dialog,
   Component,
+  Checkbox,
   Button,
   Text,
   List,
   Toolbar
 } from 'material'
 
+import css from 'material/src/module/css.js'
 import event from 'material/src/element/event.js'
 import countries from '../data/list.json'
 
@@ -21,15 +23,6 @@ import countries from '../data/list.json'
  * @return {[type]} [description]
  */
 export default function (body) {
-  var layout = new Layout([View, 'view', {},
-    [Toolbar, 'main', {},
-      [Button, '', {}],
-      [Button, '', {}]
-    ]
-  ], body)
-
-  var view = layout.get('view')
-
   // var view = new View({
   //   container: body,
   //   name: 'dialog',
@@ -66,7 +59,7 @@ export default function (body) {
   var dialog = new Dialog({
     class: 'simple-dialog',
     layout: layout
-  }).insert(view)
+  }).insert(body)
 
   console.log('button continue', dialog.layout.get('continue'))
 
@@ -81,7 +74,7 @@ export default function (body) {
   var dialog2 = new Dialog({
     class: 'simple-dialog',
     layout: layout2
-  }).insert(view)
+  }).insert(body)
 
   dialog2.layout.get('choose').on('click', function () {
     dialog2.close()
@@ -94,13 +87,28 @@ export default function (body) {
   var list = dialog2.layout.get('list')
   list.set('list', countries)
 
+  console.log('body', body)
+
+  new Checkbox({
+    primary: true,
+    type: 'raised',
+    label: 'dark theme'
+  }).on('change', function (state) {
+    console.log('console', state)
+    if (state) {
+      css.add(body.root, 'dark-theme')
+    } else {
+      css.remove(body.root, 'dark-theme')
+    }
+  }).insert(body)
+
   new Button({
     primary: true,
     type: 'raised',
     label: 'show dialog'
   }).on('click', function () {
     dialog.show()
-  }).insert(view)
+  }).insert(body)
 
   new Button({
     color: 'primary',
@@ -109,5 +117,5 @@ export default function (body) {
   }).on('click', function () {
     dialog2.layout.get('choose').disable(true)
     dialog2.show()
-  }).insert(view)
+  }).insert(body)
 };

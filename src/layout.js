@@ -2,6 +2,8 @@
 import {
   Component,
   Container,
+  Checkbox,
+  Switch,
   Button,
   Drawer,
   List,
@@ -25,18 +27,15 @@ const TITLE = 'Material'
  * Application Layout
  */
 var layout = [Container, 'app', { display: 'flex', direction: 'vertical' },
-  [Component, 'head', { flex: 'none', display: 'flex', direction: 'horizontal' },
-    [Toolbar, 'toolbar', { flex: 1, display: 'flex', direction: 'horizontal' },
-      [Button, 'menu-navi', { icon: iconNavi, type: 'action' }],
-      [Text, 'title', { text: TITLE }]
-    ],
-    [Toolbar, 'desk', { display: 'flex', direction: 'horizontal' },
-      [Button, 'menu-side', { icon: iconSide, type: 'action' }],
-      [Button, 'menu-more', { icon: iconMore, type: 'action' }]
-    ]
+  [Toolbar, 'head', { display: 'flex', direction: 'horizontal', type: 'app' },
+    [Button, 'menu-navi', { icon: iconNavi, type: 'action' }],
+    [Text, 'title', { text: TITLE }],
+    [Checkbox, 'dark-theme', { text: 'dark theme' }],
+    // [Button, 'menu-side', { icon: iconSide, type: 'action' }],
+    [Button, 'menu-more', { icon: iconMore, type: 'action' }]
   ],
-  [Drawer, 'navi', { display: 'flex', direction: 'vertical', css: 'drawer-temporary', type: 'temporary', size: 260 },
-    [Toolbar, 'navi-head', { },
+  [Drawer, 'navi', { display: 'flex', direction: 'vertical', css: 'drawer-temporary', type: 'temporary' },
+    [Toolbar, 'navi-head', { type: 'app' },
       [Button, 'menu-navi-head', { icon: iconNavi, type: 'action' }],
       [Text, 'title', { text: TITLE }]
     ],

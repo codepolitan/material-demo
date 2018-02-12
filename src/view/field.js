@@ -2,7 +2,9 @@
 
 import Layout from 'material/src/layout.js'
 import Component from 'material/src/component.js'
+import Checkbox from 'material/src/checkbox.js'
 import Container from 'material/src/container.js'
+import View from 'material/src/view.js'
 import Button from 'material/src/button.js'
 // controls
 import Toolbar from 'material/src/toolbar.js'
@@ -13,38 +15,24 @@ import Textfield from 'material/src/textfield.js'
  * @return {[type]} [description]
  */
 export default function (body) {
-  var layout = new Layout([Component, 'checkbox-view', {},
+  var layout = new Layout([View, 'checkbox-view', {},
     [Container, 'hero', {},
       [Textfield, '', { label: 'Textfield' }]
     ],
-    [Container, 'footer', {},
-      [Button, 'toggleBtn', { label: 'Toggle check' }],
-      [Button, 'enableBtn', { label: 'Enable', checked: true }],
-      [Button, 'disableBtn', { label: 'Disable', disabled: true }]
-    ],
-    [Container, 'default-container', {},
+    [Container, 'checkbox-options', {},
       [Textfield, 'default', { label: 'Textfield' }],
-      [Textfield, 'uncheck', { label: 'Textfield', checked: true }],
-      [Textfield, 'disabled', { label: 'Disabled', disabled: true }]
-    ],
-    [Container, 'dark-container', { css: 'dark-theme' },
-      [Textfield, '', { label: 'Textfield' }],
-      [Textfield, '', { label: 'Textfield', checked: true }],
-      [Textfield, '', { label: 'Disabled', disabled: true }]
+      [Checkbox, 'disabled', { label: 'Disabled', style: 'dense' }],
+      [Checkbox, 'dense', { label: 'Dense', style: 'dense' }],
+      [Checkbox, 'required', { label: 'Required', style: 'dense' }]
     ]
   ], body)
 
-  layout.get('toggleBtn').on('click', () => {
-    layout.get('default').toggle()
-  }).insert(layout.get('container'))
-
-  layout.get('enableBtn').on('click', () => {
-    layout.get('disabled').enable()
-    layout.get('disabled').label('Enabled')
-  }).insert(layout.get('container'))
-
-  layout.get('disableBtn').on('click', () => {
-    layout.get('disabled').disable()
-    layout.get('disabled').label('Disabled')
+  layout.get('disabled').on('change', (state) => {
+    console.log('disabled', state)
+    if (state) {
+      layout.get('default').set('disabled', true)
+    } else {
+      layout.get('default').set('disabled', false)
+    }
   }).insert(layout.get('container'))
 }
