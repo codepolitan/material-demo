@@ -9,33 +9,14 @@
   margin: 0
 
   //user-select: none
-  > .component-head
-    z-index: 3
-    flex: none
-    display: flex
-    flex-direction: row
-    flex-wrap: nowrap
-    background-color: #4285F4
-    //background-color: rgba(0, 0, 0, 0.8)
-    //background-color: rgb(63, 81, 181)
-    background-color: #3f51b5
-    
-    padding: 10px 16px
-    transition: box-shadow .3s
+  > .material-toolbar
+    > .material-divider
+      flex: 1
+      border: none
+
     &.head-shadow
       transition: box-shadow .3s
       box-shadow: 0 0 4px rgba(0, 0, 0, 0.14),0 4px 8px rgba(0, 0, 0, 0.28)
-
-    .text-title
-      font-size: 1.3rem
-      line-height: 2.3rem
-      font-weight: 300
-      display: inline-block
-      color: rgba(255, 255, 255, 0.95)
-      padding: 0
-      overflow: hidden
-      white-space: nowrap
-      text-overflow: ellipsis
 
     .material-button
       .button-icon
@@ -49,56 +30,16 @@
     width: 320px
     background-color: white
 
-    .toolbar-navi-head
-      padding: 10px 16px
-      background-color: $primary-color
-      height: 100px
-      .material-button
-        .button-icon
-          fill: rgba(255, 255, 255, 0.95)
-
-      .text-title
-        font-size: 1.3rem
-        line-height: 2.3rem
-        font-weight: 300
-        display: inline-block
-        color: rgba(255, 255, 255, 0.95)
-        padding: 0
-        overflow: hidden
-        white-space: nowrap
-        text-overflow: ellipsis
-
   > .component-body
     position: relative
     overflow: scroll
     > .component-main
       position: relative
 
-      //padding: 16px
-      background-color: rgba(255, 255, 255, 1)
-      
-
-      .material-container.container-view-list
-        padding: 0
-        margin: 0
-
-        .material-container
-          display: flex
-          flex-direction: raw
-          padding: 0
-          margin: 0
-
-          .material-list
-            border: 1px solid rgba(0, 0, 0, 0.05)
-            margin: 16px
-            height: 300px
-            width: 300px
-
-            .material-checkbox
-              margin-left: 16px
-
-            .material-switch
-              margin-left: 16px
+      >.material-view
+        >.material-container
+          padding: 48px
+          overflow: scroll
 
       .material-calendar
         position: absolute
@@ -110,13 +51,13 @@
       .container-hero
         position: relative
         //transform: scale(3)
-        min-height: 360px
+        min-height: 640px
         background-color: rgba(0, 0, 0, 0.05)
         display: flex
         align-items: center
         justify-content: center
         flex-flow: row nowrap
-        height: 360px
+        height: 640px
 
       > .layout-slider
         > .container-hero
@@ -130,10 +71,6 @@
             width: 100%
             height: 100%
             overflow: hidden
-
-      .material-container
-        padding: 16px
-        overflow: scroll
 
       > .material-layout
         > .material-container
@@ -166,3 +103,5 @@
       background-color: rgba(0, 0, 0, 0.05)
       width: 200px
       border-left: 1px solid rgba(0, 0, 0, 0.1)
+
+
