@@ -2,8 +2,6 @@
 
 // import material components
 import {
-  View,
-  Component,
   Container,
   Checkbox,
   Button,
