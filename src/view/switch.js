@@ -26,12 +26,12 @@ export default function (body) {
     ],
     [Container, 'default-container', {},
       [Switch, 'default', { label: 'Switch' }],
-      [Switch, 'uncheck', { label: 'Switch', checked: true }],
+      [Switch, 'check', { label: 'Checked', checked: true }],
       [Switch, 'disabled', { label: 'Disabled', disabled: true }]
     ],
     [Container, 'dark-container', { css: 'dark-theme' },
       [Switch, 'dark-default', { label: 'Switch' }],
-      [Switch, 'dark-uncheck', { label: 'Switch', checked: true }],
+      [Switch, 'dark-uncheck', { label: 'Checked', checked: true }],
       [Switch, 'dark-disabled', { label: 'Disabled', disabled: true }]
     ]
   ], body)
