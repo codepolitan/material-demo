@@ -3,7 +3,7 @@
 import Switch from 'material/src/switch.js'
 
 import Layout from 'material/src/layout.js'
-import Component from 'material/src/component.js'
+import View from 'material/src/view.js'
 import Container from 'material/src/container.js'
 
 // toolbar
@@ -15,7 +15,7 @@ import Button from 'material/src/button.js'
  * @return {[type]} [description]
  */
 export default function (body) {
-  var layout = new Layout([Component, 'checkbox-view', {},
+  var layout = new Layout([View, 'checkbox-view', {},
     [Container, 'hero', {},
       [Switch, 'main-switch', { label: 'Switch' }]
     ],

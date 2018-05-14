@@ -1,7 +1,7 @@
 'use strict'
 
 import {
-  Component,
+  View,
   Checkbox,
   Container,
   Toolbar,
@@ -13,8 +13,8 @@ import {
  * [initTest description]
  * @return {[type]} [description]
  */
-export default function(body) {
-  var layout = new Layout([Component, 'checkbox-view', {},
+export default function (body) {
+  var layout = new Layout([View, 'checkbox', {},
     [Container, 'hero', {},
       [Checkbox, '', { label: 'Checkbox' }]
     ],

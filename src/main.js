@@ -3,8 +3,6 @@ import App from './app.js'
 
 domready(function () {
   var app = new App()
-
-  console.log('start app', app)
 })
 
 // document.addEventListener('DOMContentLoaded', function () {

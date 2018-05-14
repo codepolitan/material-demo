@@ -39,10 +39,10 @@ export default function (body) {
     ]
   ], body)
 
-  console.log('obuttn', layout, layout.get('openmenu'))
+  // console.log('obuttn', layout, layout.get('openmenu'))
 
   layout.get('openmenu').on('click', (e) => {
-    console.log('menu', layout.get('menu'))
+    // console.log('menu', layout.get('menu'))
     layout.get('menu').show(e)
   })
 }

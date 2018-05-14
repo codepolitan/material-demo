@@ -2,6 +2,7 @@
 
 import {
   Layout,
+  View,
   Container,
   Text
 } from 'material'
@@ -41,7 +42,9 @@ export default function (body) {
     return list.push([Text, type, {type: type.toLowerCase().replace(/\s+/g, ''), text: type}])
   })
 
-  var layout = [Container, 'main', {}].concat(list)
+  var typography = [Container, 'typography', {}].concat(list)
+
+  var layout = [View, 'typography', {}, typography]
 
   new Layout(layout, body)
 };

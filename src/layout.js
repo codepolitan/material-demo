@@ -1,56 +1,47 @@
 // import components
 import {
-  Component,
-  Container,
-  Checkbox,
-  Switch,
   Button,
   Drawer,
   List,
   Text,
   Menu,
   Toolbar,
-  Item,
-  Divider
+  Checkbox,
+  View
 } from 'material'
 
 // import icons
 import iconNavi from './icon/navi.svg'
 import iconMore from './icon/more.svg'
-import iconApps from './icon/apps.svg'
-import iconSide from './icon/side.svg'
+// import iconApps from './icon/apps.svg'
+// import iconSide from './icon/side.svg'
 
 // define contants
 const TITLE = 'Material'
 
+console.log('layout --', document.body)
+
 /**
  * Application Layout
  */
-var layout = [Container, 'app', { display: 'flex', direction: 'vertical' },
-  [Toolbar, 'head', { display: 'flex', direction: 'horizontal', type: 'app' },
+var layout = [
+  [Toolbar, 'head', { type: 'app', display: 'flex', direction: 'horizontal', color: 'primary' },
     [Button, 'menu-navi', { icon: iconNavi, type: 'action' }],
-    [Text, 'title', { text: TITLE }],
-    [Checkbox, 'dark-theme', { text: 'dark theme' }],
-    // [Button, 'menu-side', { icon: iconSide, type: 'action' }],
+    [Text, 'title', { css: 'pin-bottom', text: TITLE }],
     [Button, 'menu-more', { icon: iconMore, type: 'action' }]
   ],
-  [Drawer, 'navi', { display: 'flex', direction: 'vertical', css: 'drawer-temporary', type: 'temporary' },
-    [Toolbar, 'navi-head', { type: 'app' },
+  [Drawer, 'navi', { fixed: 1, css: 'drawer-temporary', display: 'flex', direction: 'horizontal', type: 'temporary' },
+    [Toolbar, 'navi-head', { fixed: 1, flexible: 1 },
       [Button, 'menu-navi-head', { icon: iconNavi, type: 'action' }],
       [Text, 'title', { text: TITLE }]
     ],
     [List, 'navi-list', { flex: '1' }]
   ],
-  [Component, 'body', { flex: '1', display: 'flex', direction: 'horizontal' },
-    [Component, 'main', { display: 'flex', direction: 'vartical', flex: '1' }]
-    // [Drawer, 'side', { position: 'left', state: 'closed' }]
+  [Menu, 'more-menu', { position: 'fixed' },
+    [Checkbox, 'darktheme', { text: 'Dark theme' }],
+    [Checkbox, 'rtl', { text: 'RTL' }]
   ],
-  [Menu, 'more-menu', {},
-    [Item, 'item-find', { text: 'Find' }],
-    [Divider, 'divider-menu', {}],
-    [Item, 'item-copy', { text: 'Copy' }],
-    [Item, 'item-paste', { text: 'Paste' }]
-  ]
+  [View, 'main', { position: 'fixed' }]
 ]
 
 export default layout

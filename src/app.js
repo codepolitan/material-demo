@@ -17,6 +17,7 @@ import button from './view/button'
 import calendar from './view/calendar'
 import card from './view/card'
 import dialog from './view/dialog'
+import drawer from './view/drawer'
 import checkbox from './view/checkbox'
 import switchc from './view/switch'
 import field from './view/field'
@@ -24,6 +25,7 @@ import slider from './view/slider'
 import list from './view/list'
 import form from './view/form'
 import tree from './view/tree'
+import toolbar from './view/toolbar'
 
 import menu from './view/menu'
 import snackbar from './view/snackbar'
@@ -43,12 +45,14 @@ var view = {
   card,
   checkbox,
   dialog,
+  drawer,
   elevation,
   field,
   slider,
   list,
   form,
   tree,
+  toolbar,
   ripple,
   menu,
   progress,
@@ -87,10 +91,10 @@ class App {
 
     if ('serviceWorker' in navigator) {
       navigator.serviceWorker
-        .register('/sw.js')
+        .register('/serviceworker.js')
         .then(function (registration) {
           // console.log('Service Worker Registered')
-          console.log('ServiceWorker registration successful with scope: ', registration.scope)
+          console.log('./sw.js registration successful with scope: ', registration.scope)
         })
     }
 
@@ -98,6 +102,8 @@ class App {
       console.log('say hello')
       // Do something interesting with the fetch here
     })
+
+    this.body = document.body
   }
 
   /**
@@ -105,7 +111,9 @@ class App {
    * @return {[type]} [description]
    */
   build () {
-    this.layout = new Layout(layout, document.body)
+    this.layout = new Layout(layout, this.body)
+
+    this.main = this.layout.get('main')
   }
 
   /**
@@ -119,8 +127,8 @@ class App {
       navi.toggle(e)
     })
 
-    this.layout.get('body').root.addEventListener('scroll', (e) => {
-      if (this.layout.get('body').root.scrollTop > 0) {
+    document.body.addEventListener('scroll', (e) => {
+      if (this.body.scrollTop > 0) {
         css.add(this.layout.get('head').root, 'head-shadow')
       } else {
         css.remove(this.layout.get('head').root, 'head-shadow')
@@ -151,6 +159,30 @@ class App {
       this.layout.get('more-menu').show(e)
     })
 
+    // console.log('dark', this.layout.get('darktheme'))
+
+    // this.layout.get('darktheme').on('change', (state) => {
+    //   console.log('darktheme', state)
+    // })
+
+    // this.layout.get('darktheme').on('change', (state) => {
+    //   console.log('darktheme', state)
+    //   if (state) {
+    //     css.add(this.main, 'dark-theme')
+    //   } else {
+    //     css.remove(this.main, 'dark-theme')
+    //   }
+    // })
+
+    this.layout.get('rtl').on('change', (state) => {
+      console.log('rtl', state)
+      if (state) {
+        this.body.dir = 'rtl'
+      } else {
+        this.body.removeAttribute('dir')
+      }
+    })
+
     this.on('view', (name) => {
       var main = this.layout.get('main')
       dom.empty(main.root)
@@ -172,8 +204,11 @@ class App {
    *
    */
   view (name) {
-    // console.log('updateMainView', name);
+    console.log('updateMainView', name)
 
+    var header = this.layout.get('head')
+
+    header.set('minimize')
     this.emit('view', name)
 
     return this

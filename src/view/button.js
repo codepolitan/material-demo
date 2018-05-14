@@ -3,6 +3,7 @@
 // import material components
 import {
   Container,
+  View,
   Checkbox,
   Button,
   Text
@@ -23,6 +24,10 @@ import iconLink from '../icon/link.svg'
  */
 export default function (body) {
   var layout = new Layout([View, 'button', {},
+    [Container, 'top', {},
+      [Text, 'title', { type: 'title', text: 'Buttons' }],
+      [Text, 'title', { text: 'Buttons communicate the action that will occur when the user touches them.' }]
+    ],
     [Container, 'hero', {},
       [Button, 'first', { text: 'Flat', color: 'primary' }],
       [Button, 'second', { text: 'Raised', type: 'raised', color: 'primary' }],
@@ -31,9 +36,6 @@ export default function (body) {
       [Button, 'fifth', { icon: iconStar, type: 'floating', color: 'secondary' }]
     ],
     [Container, 'containerbutton', {},
-      [Container, 'options', {},
-        [Checkbox, 'darktheme', { name: 'darktheme', label: 'Dark Theme' }]
-      ],
       [Container, 'button-default', {},
         [Text, 'standard-button', { text: 'Standard Button', type: 'subheading2' }],
         [Container, 'buttons-container', {},
@@ -140,14 +142,5 @@ export default function (body) {
 
   layout.get('default').on('click', (e) => {
     console.log('click', e, layout.get('default'))
-  })
-
-  layout.get('darktheme').on('change', function (checked) {
-    console.log('darktheme', checked, layout.get('containerbutton'))
-    if (checked) {
-      css.add(layout.get('containerbutton').root, 'dark-theme')
-    } else {
-      css.remove(layout.get('containerbutton').root, 'dark-theme')
-    }
   })
 }

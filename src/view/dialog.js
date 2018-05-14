@@ -4,12 +4,10 @@ import {
   Layout,
   View,
   Dialog,
-  Component,
-  Checkbox,
+  Container,
   Button,
-  Text,
   List,
-  Toolbar
+  Text
 } from 'material'
 
 import css from 'material/src/module/css.js'
@@ -17,105 +15,91 @@ import event from 'material/src/element/event.js'
 import countries from '../data/list.json'
 
 // controls
-
 /**
  * [initTest description]
  * @return {[type]} [description]
  */
 export default function (body) {
-  // var view = new View({
-  //   container: body,
-  //   name: 'dialog',
-  //   css: 'view-dialog'
-  // })
-
-  var layout = [Component, 'simple-dialog', { display: 'flex', direction: 'vertical' },
-    [Component, 'body', { display: 'flex', direction: 'vertical', flex: '1' },
-      [Text, 'text', { text: 'Title', type: 'title' }],
-      [Text, 'text', { text: 'This is a subheadubg 2', type: 'subheading2' }]
+  // dialog view
+  var layout = new Layout([View, 'elevation', {},
+    [Container, 'top', {},
+      [Text, 'title', { type: 'title', text: 'Dialogs', style: 'adjust' }],
+      [Text, 'title', { text: 'Dialogs inform users about a specific task and may contain critical information, require decisions, or involve multiple tasks.' }]
     ],
-    [Component, 'action', { display: 'flex', direction: 'horizontal', flex: '1' },
-      [Button, 'cancel', { text: 'cancel', flex: 'none' }],
-      [Button, 'continue', { text: 'continue', flex: 'none' }]
+    [Container, 'hero', {},
+      [Button, 'alert', { text: 'Alert', color: 'primary', type: 'raised' }],
+      [Button, 'simple', { text: 'Simple', color: 'primary', type: 'raised' }],
+      [Button, 'confirmation', { text: 'Confirmation', color: 'primary', type: 'raised' }]
     ]
-  ]
+  ], body)
 
-  var layout2 = [Component, 'list-dialog', { display: 'flex', direction: 'vertical' },
-    [Component, 'head', { display: 'flex', direction: 'vertical', flex: 'none' },
-      [Text, 'text', { text: 'Choose a country', type: 'title' }]
-    ],
-    [List, 'list', { flex: '1',
+  // alert dialog
+
+  var alert = new Dialog({
+    name: 'alert',
+    content: 'Discard draft?',
+    accept: { text: 'discard', color: 'primary' },
+    cancel: { text: 'cancel', color: 'primary' }
+  }).on('accepted', () => {
+    console.log('alert dialog accepted')
+  }).on('canceled', () => {
+    console.log('alert dialog canceled')
+  }).insert(document.body)
+
+  //  simple dialog
+
+  var simple = new Dialog({
+    name: 'simple',
+    title: 'Choose a country',
+    content: [List, 'list', { flex: '1',
       select: (item) => {
         console.log('select', item)
-        dialog2.layout.get('choose').enable(true)
+        simple.accept.enable()
       }
     }],
-    [Component, 'action', { display: 'flex', direction: 'horizontal', flex: 'none' },
-      [Button, 'cancel', { text: 'cancel', flex: 'none' }],
-      [Button, 'choose', { text: 'choose', flex: 'none', color: 'primary' }]
-    ]
-  ]
+    accept: { text: 'choose', color: 'primary' },
+    cancel: { text: 'cancel' }
+  }).on('accepted', () => {
+    console.log('simple dialog accepted')
+  }).on('canceled', () => {
+    console.log('simple dialog canceled')
+  }).insert(document.body)
 
-  var dialog = new Dialog({
-    class: 'simple-dialog',
-    layout: layout
-  }).insert(body)
+  simple.accept.disable()
 
-  console.log('button continue', dialog.layout.get('continue'))
-
-  dialog.layout.get('continue').on('click', function () {
-    dialog.close()
-  })
-
-  dialog.layout.get('cancel').on('click', function () {
-    dialog.close()
-  })
-
-  var dialog2 = new Dialog({
-    class: 'simple-dialog',
-    layout: layout2
-  }).insert(body)
-
-  dialog2.layout.get('choose').on('click', function () {
-    dialog2.close()
-  })
-
-  dialog2.layout.get('cancel').on('click', function () {
-    dialog2.close()
-  })
-
-  var list = dialog2.layout.get('list')
+  var list = simple.content.get('list')
   list.set('list', countries)
 
-  console.log('body', body)
+  //  confirmation dialog
 
-  new Checkbox({
-    primary: true,
-    type: 'raised',
-    label: 'dark theme'
-  }).on('change', function (state) {
-    console.log('console', state)
-    if (state) {
-      css.add(body.root, 'dark-theme')
-    } else {
-      css.remove(body.root, 'dark-theme')
-    }
-  }).insert(body)
+  var confirmation = new Dialog({
+    name: 'confirmation',
+    content: [List, 'list', { flex: '1',
+      select: (item) => {
+        console.log('select', item)
+        simple.action.accept.enable(true)
+      }
+    }]
+  }).on('accepted', () => {
+    console.log('simple dialog accepted')
+  }).on('canceled', () => {
+    console.log('simple dialog canceled')
+  }).insert(document.body)
 
-  new Button({
-    primary: true,
-    type: 'raised',
-    label: 'show dialog'
-  }).on('click', function () {
-    dialog.show()
-  }).insert(body)
+  var list = simple.content.get('list')
+  list.set('list', countries)
 
-  new Button({
-    color: 'primary',
-    type: 'raised',
-    label: 'show dialog list'
-  }).on('click', function () {
-    dialog2.layout.get('choose').disable(true)
-    dialog2.show()
-  }).insert(body)
-};
+  // activate buttons behavior
+
+  layout.get('alert').on('click', () => {
+    alert.show()
+  })
+
+  layout.get('simple').on('click', () => {
+    simple.show()
+  })
+
+  layout.get('confirmation').on('click', () => {
+    confirmation.show()
+  })
+}

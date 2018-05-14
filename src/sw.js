@@ -3,6 +3,9 @@ var filesToCache = [
   '/index.html',
   '/manifest.json',
   '/material/material.css',
+  '/dist/vendor/roboto/fonts/Regular/Roboto-Regular.woff2?v=1.1.0',
+  '/dist/vendor/roboto/fonts/Italic/Roboto-Italic.woff2?v=1.1.0',
+  '/dist/vendor/roboto/fonts/Light/Roboto-Light.woff2?v=1.1.0',
   '/img/iconx512.png',
   '/img/icon.png',
   '/dist/styles.css',
@@ -35,7 +38,7 @@ self.addEventListener('activate', function (e) {
 })
 
 self.addEventListener('fetch', function (e) {
-  console.log('[ServiceWorker] Fetch', e.request.url)
+  console.log('[ServiceWorker] Fetch', e, e.request.url)
   e.respondWith(
     caches.match(e.request).then(function (response) {
       return response || fetch(e.request)
