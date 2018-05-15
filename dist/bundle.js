@@ -900,7 +900,7 @@ const defaults$2 = {
  * @param  {?} container [description]
  * @return {?}           [description]
  */
-function init (instance) {
+function init$1 (instance) {
   instance.on('built', (container) => {
     set(container);
   });
@@ -1114,12 +1114,12 @@ class Button {
    */
   init (options) {
     this.options = Object.assign({}, defaults$1, options || {});
-    Object.assign(this, control, emitter, attach, init);
+    Object.assign(this, control, emitter, attach, init$1);
 
     this.element = this.element || {};
 
     // init module
-    init(this);
+    init$1(this);
 
     this.emit('init');
   }
@@ -1273,12 +1273,12 @@ class Button$2 {
    */
   init (options) {
     this.options = Object.assign({}, defaults$4, options || {});
-    Object.assign(this, control, emitter, attach, init);
+    Object.assign(this, control, emitter, attach, init$1);
 
     this.element = this.element || {};
 
     // init module
-    init(this);
+    init$1(this);
 
     this.emit('init');
   }
@@ -2157,7 +2157,7 @@ function label (root, text, options) {
 
 'use strict';
 
-function init$1 (element, attribute) {
+function init$2 (element, attribute) {
   for (var key in attribute) {
     if (attribute.hasOwnProperty(key)) {
       element.setAttribute(key, attribute[key]);
@@ -2179,7 +2179,7 @@ function remove$2 (element, name) {
   return element.removeAttribute(name)
 }
 
-var attribute = { init: init$1, set: set$2, get: get$1, remove: remove$2 };
+var attribute = { init: init$2, set: set$2, get: get$1, remove: remove$2 };
 
 function isObject (object) {
   return object &&
@@ -2836,7 +2836,7 @@ class Divider {
   }
 }
 
-function init$2 (instance) {
+function init$3 (instance) {
   // assign modules
   modules(instance);
 
@@ -2888,7 +2888,7 @@ class Drawer {
   constructor (options) {
     this.options = Object.assign({}, defaults$11, options || {});
 
-    init$2(this);
+    init$3(this);
 
     this.build();
     this.attach();
@@ -3843,7 +3843,7 @@ class Slider {
    * @return {Object} This class instance
    */
   init (options) {
-    init$2(this);
+    init$3(this);
 
     return this
   }
