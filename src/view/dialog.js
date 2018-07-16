@@ -74,12 +74,15 @@ export default function (body) {
 
   var confirmation = new Dialog({
     name: 'confirmation',
+    title: 'Confirmation',
     content: [List, 'list', { flex: '1',
       select: (item) => {
         console.log('select', item)
         simple.action.accept.enable(true)
       }
-    }]
+    }],
+    accept: { text: 'discard', color: 'primary' },
+    cancel: { text: 'cancel', color: 'primary' }
   }).on('accepted', () => {
     console.log('simple dialog accepted')
   }).on('canceled', () => {
@@ -90,6 +93,9 @@ export default function (body) {
   list.set('list', countries)
 
   // activate buttons behavior
+
+  var list = confirmation.content.get('list')
+  list.set('list', countries)
 
   layout.get('alert').on('click', () => {
     alert.show()
