@@ -1,0 +1,72 @@
+
+.view-drawer
+  //background-color: red
+  
+  .container-hero
+    .material-toolbar
+      width: 400px
+   
+  .container-sample
+    display: inline-block
+    
+    .container-screen
+      position: relative
+      &.screen-persistent
+        display: flex
+        min-width: 320px
+        flex-direction: row
+        flex-wrap: nowrap
+        padding: 0
+
+ 
+    .container-screen
+      &.screen-permanent
+        display: flex
+        min-width: 320px
+        flex-direction: row
+        flex-wrap: nowrap
+        padding: 0
+
+      .container-main
+        position: relative
+        display: flex
+        min-width: 320px
+        flex-direction: row
+        flex-wrap: nowrap
+        padding: 0
+
+
+      position: relative
+      //width: 375px
+      height: 667px
+      overflow: scroll
+      //padding: 16px
+      border: 1px solid rgba(0,0,0,0.1)
+   
+
+      .material-toolbar
+        &.is-flexible
+          background-image: url(/dist/bgtoolbar.jpg)
+          background-size: cover
+
+
+      .material-container
+        padding: 0px
+        &.content-text
+          padding: 16px
+        
+
+
+      >.material-text
+        display: block
+        margin-bottom: 16px
+        &.type-title
+          margin-left: 64px
+          margin-bottom: 0px
+        &.pin-bottom
+          position: absolute
+          bottom: 0
+        &.type-default
+          margin-bottom: 16px
+
+                
