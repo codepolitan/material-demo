@@ -287,19 +287,34 @@ body {
 
 .material-container.container-view-list {
   padding: 0;
-  margin: 0; }
+  margin: 0;
+  display: block; }
+  .material-container.container-view-list .container-default {
+    padding: 50px; }
   .material-container.container-view-list .container-list {
-    float: left;
-    display: flex;
-    flex-direction: raw;
-    padding: 0;
-    margin: 0;
-    margin: 16px;
-    width: 360px;
-    height: 640px;
-    border: 1px solid #EBEBEB; }
-    .material-container.container-view-list .container-list .material-list .material-switch {
-      margin-left: 16px; }
+    display: inline;
+    margin-bottom: 50px; }
+    .material-container.container-view-list .container-list .container-screen {
+      position: relative;
+      width: 396px;
+      height: 667px;
+      overflow: scroll;
+      padding-left: 2px !important;
+      padding-right: 2px !important;
+      border: 1px solid rgba(0, 0, 0, 0.1); }
+  .material-container.container-view-list .material-list.list-listhero {
+    width: 300px;
+    margin: 0 auto;
+    padding: 0; }
+    .material-container.container-view-list .material-list.list-listhero .material-item {
+      background-color: black;
+      display: list-item;
+      height: 53px;
+      width: 53px;
+      overflow: hidden;
+      margin: 2px; }
+  .material-container.container-view-list .container-list .material-list .material-switch {
+    margin-left: 16px; }
 
 .view-tabs .material-container.container-herotabs {
   padding: 0; }
@@ -330,6 +345,55 @@ body {
         position: absolute;
         bottom: 0; }
       .view-toolbar .container-sample .container-screen > .material-text.type-default {
+        margin-bottom: 16px; }
+
+.view-drawer .container-hero .material-toolbar {
+  width: 400px; }
+.view-drawer .container-sample {
+  display: inline-block; }
+  .view-drawer .container-sample .container-screen {
+    position: relative; }
+    .view-drawer .container-sample .container-screen.screen-persistent {
+      display: flex;
+      min-width: 320px;
+      flex-direction: row;
+      flex-wrap: nowrap;
+      padding: 0; }
+  .view-drawer .container-sample .container-screen {
+    position: relative;
+    height: 667px;
+    overflow: scroll;
+    border: 1px solid rgba(0, 0, 0, 0.1); }
+    .view-drawer .container-sample .container-screen.screen-permanent {
+      display: flex;
+      min-width: 320px;
+      flex-direction: row;
+      flex-wrap: nowrap;
+      padding: 0; }
+    .view-drawer .container-sample .container-screen .container-main {
+      position: relative;
+      display: flex;
+      min-width: 320px;
+      flex-direction: row;
+      flex-wrap: nowrap;
+      padding: 0; }
+    .view-drawer .container-sample .container-screen .material-toolbar.is-flexible {
+      background-image: url(/dist/bgtoolbar.jpg);
+      background-size: cover; }
+    .view-drawer .container-sample .container-screen .material-container {
+      padding: 0px; }
+      .view-drawer .container-sample .container-screen .material-container.content-text {
+        padding: 16px; }
+    .view-drawer .container-sample .container-screen > .material-text {
+      display: block;
+      margin-bottom: 16px; }
+      .view-drawer .container-sample .container-screen > .material-text.type-title {
+        margin-left: 64px;
+        margin-bottom: 0px; }
+      .view-drawer .container-sample .container-screen > .material-text.pin-bottom {
+        position: absolute;
+        bottom: 0; }
+      .view-drawer .container-sample .container-screen > .material-text.type-default {
         margin-bottom: 16px; }
 
 .view-ripple .container-hero {

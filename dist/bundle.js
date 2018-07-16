@@ -316,6 +316,13 @@ function is (object) {
 
 'use strict';
 
+/**
+ * insert element into dom
+ * @param  {HTMLElement} element   [description]
+ * @param  {HTMLElement} container [description]
+ * @param  {string} context   [description]
+ * @return {?}           [description]
+ */
 function insert (element, container, context) {
   if (!element || !container) return
 
@@ -340,6 +347,9 @@ function insert (element, container, context) {
   return element
 }
 
+/**
+ *
+ */
 class Layout {
   /**
    * [constructor description]
@@ -484,6 +494,19 @@ class Layout {
   }
 }
 
+/**
+ * Classify component related functions
+ * @module component/classify
+ * @category component
+ */
+
+/**
+ * Init component class
+ * @param  {element} element The component root element
+ * @param  {object} options component class options
+ * @return {Instance} The Class instance
+ *
+ */
 function classify (element, options) {
   css.add(element, options.prefix + '-' + options.class);
 
@@ -593,7 +616,7 @@ var control = {
    * [initLabel description]
    * @return {?} [description]
    */
-  label (label) {
+  label (label, container) {
     if (!label) return
 
     this.element = this.element || {};
@@ -604,7 +627,9 @@ var control = {
 
     this.element.label.textContent = label;
 
-    insert(this.element.label, this.root);
+    container = container || this.root;
+
+    insert(this.element.label, container);
   },
 
   /**
@@ -612,10 +637,12 @@ var control = {
    * @param  {string} type
    * @return {string}
    */
-  icon (icon) {
+  icon (icon, container, position) {
     if (!icon) return
 
-    var position = 'top';
+    container = container || this.root;
+
+    position = position || 'top';
     if (this.options.type === 'text-icon') {
       position = 'bottom';
     }
@@ -623,7 +650,7 @@ var control = {
     this.element = this.element || {};
 
     this.element.icon = create$2('i', this.options.class + '-icon');
-    insert(this.element.icon, this.root, position);
+    insert(this.element.icon, container, position);
 
     this.element.icon.innerHTML = icon;
   },
@@ -792,16 +819,14 @@ function _each (object, callback) {
 }
 
 /**
- * Array.indexOf support
- * @param {Array} array
- * @param {*} obj
- * @returns {number}
- * @private
- */
-
-/**
  * Element style related methods
  * @module component/style
+ */
+/**
+ * Gets element's computed style
+ * @param {string} prop
+ * @returns {*}
+ * @private
  */
 function get (element, style) {
   // console.log('get', element, style);
@@ -1045,6 +1070,18 @@ var extract = { e, f };
 
 'use strict';
 
+/**
+ * attach function to events
+ * @module module/attach
+ * @category module
+ */
+
+/**
+ * [attach description]
+ * @param  {object} component [description]
+ * @param  {[type]} events    [description]
+ * @return {[type]}           [description]
+ */
 var attach = {
   attach: function (events) {
     events = events || this.options.events;
@@ -1852,6 +1889,12 @@ class Calendar {
 
 'use strict';
 
+/**
+ * Inject method insert element to the domtree using Dom methods
+ * @param {HTMLElement} container [description]
+ * @param  {string} context - Injection context
+ * @return {Object} This class intance
+ */
 var insert$2 = {
 
   /**
@@ -1917,6 +1960,7 @@ var insert$2 = {
 'use strict';
 
 // import modules
+// import components
 let defaults$5 = {
   prefix: 'material',
   class: 'card',
@@ -2142,6 +2186,10 @@ class Container {
   }
 }
 
+/**
+ * [initLabel description]
+ * @return {?} [description]
+ */
 function label (root, text, options) {
   text = text || null;
 
@@ -2236,6 +2284,8 @@ var icon = `
 </svg>`;
 
 'use strict';
+
+// element related modules
 
 let defaults$8 = {
   prefix: 'material',
@@ -2700,10 +2750,14 @@ class Dialog {
     });
 
     this.insertElement(this.title.root, this.surface);
+
+    console.log('buildTitle', this.title);
   }
 
   buildContent () {
+    console.log('buildContent', typeof this.options.content);
     if (typeof this.options.content === 'string') {
+      console.log('text content', this.options.content);
       this.content = new Text({
         type: 'content',
         css: 'dialog-content',
@@ -2713,6 +2767,9 @@ class Dialog {
       this.insertElement(this.content.root, this.surface);
     } else if (_isArray(this.options.content)) {
       this.content = new Layout(this.options.content, this.surface);
+      console.log('layout content', this.content);
+    } else {
+      console.log('other content', this.content);
     }
   }
 
@@ -2995,6 +3052,7 @@ class Drawer {
 
 'use strict';
 
+// import component
 const defaults$12 = {
   prefix: 'material',
   class: 'form',
@@ -3258,12 +3316,131 @@ class Form {
 
 'use strict';
 
+// import insert from './component/insert'
+var defaults$14 = {
+  prefix: 'material',
+  class: 'image',
+  tag: 'div'
+};
+
+/**
+ * The item class is used for example as item list
+ *
+ * @class
+ * @extends {Component}
+ * @return {Object} The class instance
+ * @example new Item(object);
+ */
+class Image {
+  /**
+   * init
+   * @return {Object} The class options
+   */
+  constructor (options) {
+    this.init(options);
+    this.build();
+
+    return this
+  }
+
+  /**
+   * [init description]
+   * @param  {?} options [description]
+   * @return {?}         [description]
+   */
+  init (options) {
+    this.options = Object.assign({}, defaults$14, options || {});
+    Object.assign(this, control);
+  }
+
+  /**
+   * Build function for item
+   * @return {Object} This class instance
+   */
+  build (options) {
+    options = options || this.options;
+
+    var tag = options.tag || 'div';
+    var text = options.text || options.label;
+    this.root = document.createElement(tag);
+
+    // if (options.src) {
+    //   this.root.setAttribute('style', 'background-image: url(' + options.src + ')')
+
+    if (options.src) {
+      this.image = document.createElement('img');
+      this.image.setAttribute('src', options.src);
+      css.add(this.image, this.options.class + '-image');
+      insert(this.image, this.root);
+    }
+
+    this.info = document.createElement('span');
+    css.add(this.info, this.options.class + '-info');
+
+    insert(this.info, this.root);
+
+    this.label(text, this.info);
+
+    // this.label = this.element.label
+
+    this.icon(this.options.icon, this.info, 'bottom');
+
+    // if (text) {
+    //   this.label = document.createElement('span')
+    //   this.label.innerText = text
+    //   css.add(this.label, this.options.class + '-label')
+    //   insert(this.label, this.root)
+    // }
+
+    css.add(this.root, this.options.prefix + '-' + this.options.class);
+
+    if (options.css) { css.add(this.root, options.css); }
+    // css.add(this.root, this.options.class + '-adjust');
+
+    if (this.options.container) {
+      this.insert(this.options.container);
+    }
+  }
+
+  /**
+   * [insert description]
+   * @param  {?} container [description]
+   * @param  {?} context   [description]
+   * @return {?}           [description]
+   */
+  insert (container, context) {
+    insert(this.root, container, context);
+
+    return this
+  }
+
+  /**
+   * Get or set text value of the element
+   * @param {string} value The text to set
+   * @returns {*}
+   */
+  set (value) {
+    if (value) {
+      if (this.root.innerText) {
+        this.root.innerText = value;
+      } else {
+        this.root.textContent = value;
+      }
+
+      return this
+    }
+
+    return this
+  }
+}
+
 'use strict';
 
 var defaults$15 = {
   prefix: 'material',
   class: 'item',
   type: 'default',
+  tag: 'li',
   types: {
     default: 'span',
     display4: 'h1',
@@ -3320,7 +3497,9 @@ class Item {
    */
   build () {
     // define main tag
-    this.options.tag = this.options.types[this.options.type];
+    this.options.tag = this.options.tag || this.options.types[this.options.type];
+
+    this.options.tag = this.options.tag;
 
     this.root = create(this.options);
 
@@ -3362,6 +3541,7 @@ class Item {
 const defaults$16 = {
   prefix: 'material',
   class: 'list',
+  tag: 'ul',
   functions: ['render', 'select'],
   target: '.material-item',
   events: [
@@ -3433,13 +3613,21 @@ class List {
    */
   build (options) {
     // define main tag
-    var tag = this.options.tag || 'div';
+    var tag = this.options.tag || 'ul';
 
     this.root = document.createElement(tag);
     css.add(this.root, 'material-' + this.options.class);
 
     if (options.name) {
       css.add(this.root, options.class + '-' + options.name);
+    }
+
+    if (options.type) {
+      css.add(this.root, 'type-' + options.type);
+    }
+
+    if (options.layout) {
+      css.add(this.root, 'layout-' + options.layout);
     }
 
     if (this.options.list) {
@@ -3785,6 +3973,7 @@ var icon$1 = `
 
 'use strict';
 
+// import control from './control';
 let defaults$19 = {
   prefix: 'material',
   class: 'slider',
@@ -4133,6 +4322,7 @@ class Slider {
 'use strict';
 
 // import modules
+// import components
 let defaults$20 = {
   prefix: 'material',
   class: 'snackbar',
@@ -5142,6 +5332,11 @@ var iconMore = `
 </svg>`;
 
 // import components
+// import icons
+// import iconApps from './icon/apps.svg'
+// import iconSide from './icon/side.svg'
+
+// define contants
 const TITLE = 'Material';
 
 console.log('layout --', document.body);
@@ -5346,6 +5541,10 @@ var cookies = createCommonjsModule(function (module, exports) {
 
 'use strict';
 
+/**
+ * [initTest description]
+ * @return {[type]} [description]
+ */
 var typography = function (body) {
   var types = [
     'Display 4',
@@ -5421,6 +5620,10 @@ var iconLink = `
 'use strict';
 
 // import material components
+/**
+ * [initTest description]
+ * @return {[type]} [description]
+ */
 var button$1 = function (body) {
   var layout = new Layout([View, 'button', {},
     [Container, 'top', {},
@@ -5637,6 +5840,32 @@ var calendar = function (body) {
 
 'use strict';
 
+// import Card from 'material/src/card.js'
+
+// import Component from 'material/src/component.js'
+// import Container from 'material/src/container.js'
+// import Toolbar from 'material/src/container.js'
+// import View from 'material/src/view.js'
+// import Button from 'material/src/button.js'
+// import Text from 'material/src/text.js'
+// controls
+
+/**
+ * [initTest description]
+ * @return {[type]} [description]
+ */
+  // var view = new View({
+  //   name: 'card'
+  // }).insert(body)
+
+  // var hero = new Container({
+  //   name: 'hero'
+  // }).insert(view)
+
+  // var container = new Container({
+  //   name: 'card'
+  // }).insert(view)
+
 var card = function (body) {
   var layout = new Layout([View, 'checkbox', {},
     [Container, 'top', {},
@@ -5790,41 +6019,36 @@ var card = function (body) {
   // }).insert(container)
 };
 
-var countries = [{
-  "name": "Austria",
-  "code": "AT"
+var countries = [
+{
+  "name": "Åland Islands",
+  "code": "AX",
+  "photo": "73eac2653f934492870062d9fd5e1a86.jpg"
 },
 {
-  "name": "Azerbaijan",
-  "code": "AZ"
+  "name": "Albania",
+  "code": "AL",
+  "photo": "789cbc6ee86de75cbaf3b81b8763499d.jpg"
 },
 {
-  "name": "Bahamas",
-  "code": "BS"
+  "name": "Algeria",
+  "code": "DZ",
+  "photo": "d0b5ac3599bc4cd4a99d0312366b954a.jpg"
 },
 {
-  "name": "Bahrain",
-  "code": "BH"
+  "name": "American Samoa",
+  "code": "AS",
+  "photo": "d43e9b123005290402cdba20d07a03b2.jpg"
 },
 {
-  "name": "Bangladesh",
-  "code": "BD"
-},
-{
-  "name": "Barbados",
-  "code": "BB"
-},
-{
-  "name": "Belarus",
-  "code": "BY"
-},
-{
-  "name": "Belgium",
-  "code": "BE"
+  "name": "Andorra",
+  "code": "AD",
+  "photo": "73eac2653f934492870062d9fd5e1a86.jpg"
 },
 {
   "name": "Belize",
-  "code": "BZ"
+  "code": "BZ",
+  "photo": "0b71538477262c450880a1adb8626f6a.jpg"
 },
 {
   "name": "Benin",
@@ -5877,6 +6101,11 @@ var countries = [{
 
 'use strict';
 
+// controls
+/**
+ * [initTest description]
+ * @return {[type]} [description]
+ */
 var dialog = function (body) {
   // dialog view
   var layout = new Layout([View, 'elevation', {},
@@ -5932,12 +6161,15 @@ var dialog = function (body) {
 
   var confirmation = new Dialog({
     name: 'confirmation',
+    title: 'Confirmation',
     content: [List, 'list', { flex: '1',
       select: (item) => {
         console.log('select', item);
         simple.action.accept.enable(true);
       }
-    }]
+    }],
+    accept: { text: 'discard', color: 'primary' },
+    cancel: { text: 'cancel', color: 'primary' }
   }).on('accepted', () => {
     console.log('simple dialog accepted');
   }).on('canceled', () => {
@@ -5948,6 +6180,9 @@ var dialog = function (body) {
   list.set('list', countries);
 
   // activate buttons behavior
+
+  var list = confirmation.content.get('list');
+  list.set('list', countries);
 
   layout.get('alert').on('click', () => {
     alert.show();
@@ -5970,6 +6205,11 @@ var iconApps = `
 
 'use strict';
 
+/**
+ * [initTest description]
+ * @return {[type]} [description]
+ */
+
 const TITLE$1 = 'Material';
 const CONTENT = 'Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas. Vestibulum tortor quam, feugiat vitae, ultricies eget, tempor sit amet, ante. Donec eu libero sit amet quam egestas semper. Aenean ultricies mi vitae est. Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas. Vestibulum tortor quam, feugiat vitae, ultricies eget, tempor sit amet, ante. Donec eu libero sit amet quam egestas semper. Aenean ultricies mi vitae est.';
 
@@ -5979,94 +6219,17 @@ var drawer = function (body) {
       [Text, 'title', { type: 'title', text: 'Buttons' }],
       [Text, 'title', { text: 'Buttons communicate the action that will occur when the user touches them.' }]
     ],
-    [Container, 'hero', {},
-      [Toolbar, 'head', { display: 'flex', direction: 'horizontal', color: 'primary' },
-        [Button, 'menu-navi', { icon: iconNavi, type: 'action' }],
-        [Text, 'title', { text: TITLE$1 }],
-        [Button, 'menu-more', { icon: iconMore, type: 'action' }]
-      ]
-    ],
     [Container, 'sample', {},
       [Container, 'top', {},
-        [Text, 'title', { type: 'title', text: 'Normal' }]
-      ],
-      [Container, 'screen', {},
-        [Toolbar, 'head', { display: 'flex', direction: 'horizontal', color: 'primary' },
-          [Button, 'menu-navi', { icon: iconNavi, type: 'action' }],
-          [Text, 'title', { text: 'Title' }],
-          [Button, 'menu-more', { icon: iconMore, type: 'action' }]
-        ],
-        [Text, '', { text: CONTENT }],
-        [Text, '', { text: CONTENT }],
-        [Text, '', { text: CONTENT }],
-        [Text, '', { text: CONTENT }],
-        [Text, '', { text: CONTENT }],
-        [Text, '', { text: CONTENT }],
-        [Text, '', { text: CONTENT }]
-      ]
-    ],
-    [Container, 'sample', {},
-      [Container, 'top', {},
-        [Text, 'title', { type: 'title', text: 'Fixed' }]
-      ],
-      [Container, 'screen', { css: 'fixed-screen' },
-        [Toolbar, 'head', { fixed: 'fixed', color: 'primary' },
-          [Button, 'menu-navi', { icon: iconNavi, type: 'action' }],
-          [Text, 'title', { text: 'Title' }],
-          [Button, 'menu-more', { icon: iconMore, type: 'action' }]
-        ],
-        [Text, '', { text: CONTENT }],
-        [Text, '', { text: CONTENT }],
-        [Text, '', { text: CONTENT }],
-        [Text, '', { text: CONTENT }],
-        [Text, '', { text: CONTENT }],
-        [Text, '', { text: CONTENT }],
-        [Text, '', { text: CONTENT }]
-      ]
-    ],
-    [Container, 'sample', {},
-      [Container, 'top', {},
-        [Text, 'title', { type: 'title', text: 'Flexile' }]
-      ],
-      [Container, 'screen', { css: 'flexile-screen' },
-        [Toolbar, 'head', { type: 'flexible', height: 224, display: 'flex', direction: 'vertical', color: 'primary' },
-          [Container, 'section', { css: 'menu', display: 'flex', direction: 'horizontal' },
-            [Button, 'menu-navi', { icon: iconNavi, type: 'action' }],
-            [Divider, 'section', { flex: 1 }],
-            [Button, 'menu-apps', { icon: iconApps, type: 'action' }],
-            [Button, 'menu-more', { icon: iconMore, type: 'action' }]
-          ],
-          [Container, 'section', { },
-            [Text, 'title', { css: 'pin-bottom', type: 'title', text: 'Title' }]
-          ]
-        ],
-        [Text, '', { text: CONTENT }],
-        [Text, '', { text: CONTENT }],
-        [Text, '', { text: CONTENT }],
-        [Text, '', { text: CONTENT }],
-        [Text, '', { text: CONTENT }],
-        [Text, '', { text: CONTENT }],
-        [Text, '', { text: CONTENT }]
-
-      ]
-    ],
-    [Container, 'sample', {},
-      [Container, 'top', {},
-        [Text, 'title', { type: 'title', text: 'Flexible' }]
+        [Text, 'title', { type: 'title', text: 'Temporary' }]
       ],
       [Container, 'screen', { css: 'screen-waterfall' },
-        [Toolbar, 'waterfalltollbar', { waterfall: 1, height: 224, flexible: 1, fixed: 1, display: 'flex', direction: 'vertical', color: 'primary' },
-          [Container, 'section', { css: 'menu', display: 'flex', direction: 'horizontal' },
-            [Button, 'menu-water', { icon: iconNavi, type: 'action' }],
-            [Divider, 'section', { flex: 1 }],
-            [Button, 'menu-apps', { icon: iconApps, type: 'action' }],
-            [Button, 'menu-more', { icon: iconMore, type: 'action' }]
-          ],
-          [Container, 'section', { },
-            [Text, 'title', { css: 'pin-bottom', type: 'title', text: 'Title' }]
-          ]
+        [Toolbar, 'head', { fixed: 'fixed', color: 'primary' },
+          [Button, 'navi-temporary', { icon: iconNavi, type: 'action' }],
+          [Text, 'title', { text: 'Title' }],
+          [Button, 'menu-more', { icon: iconMore, type: 'action' }]
         ],
-        [Drawer, 'navi-water', { display: 'flex', direction: 'vertical', css: 'drawer-temporary', type: 'temporary' },
+        [Drawer, 'drawer-temporary', { display: 'flex', direction: 'vertical', css: 'drawer-temporary', type: 'temporary' },
           [Toolbar, 'navi-head', { type: 'app' },
             [Button, 'menu-navi-head', { icon: iconNavi, type: 'action' }],
             [Text, 'title', { text: TITLE$1 }]
@@ -6082,18 +6245,123 @@ var drawer = function (body) {
         [Text, '', { text: CONTENT }]
 
       ]
+    ],
+    [Container, 'sample', {},
+      [Container, 'top', {},
+        [Text, 'title', { type: 'title', text: 'persistent' }]
+      ],
+      [Container, 'screen', { css: 'screen-persistent' },
+
+        [Drawer, 'drawer-persistent', { display: 'flex', direction: 'vertical', css: 'drawer-persistent', type: 'persistent' },
+          [Toolbar, 'navi-head', { },
+            [Button, 'menu-navi-head', { icon: iconNavi, type: 'action' }],
+            [Text, 'title', { text: TITLE$1 }]
+          ],
+          [List, 'navi-list', { flex: '1' }]
+        ],
+        [Container, 'content', { css: 'content-persistent' },
+          [Toolbar, 'head', { display: 'flex', direction: 'horizontal', color: 'primary' },
+            [Button, 'navi-persistent', { icon: iconNavi, type: 'action' }],
+            [Text, 'title', { text: 'Title' }],
+            [Button, 'menu-more', { icon: iconMore, type: 'action' }]
+          ],
+          [Container, 'text-content', { css: 'content-text' },
+            [Text, '', { text: CONTENT }],
+            [Text, '', { text: CONTENT }],
+            [Text, '', { text: CONTENT }],
+            [Text, '', { text: CONTENT }],
+            [Text, '', { text: CONTENT }],
+            [Text, '', { text: CONTENT }],
+            [Text, '', { text: CONTENT }]
+          ]
+        ]
+      ]
+    ],
+    [Container, 'sample', {},
+      [Container, 'top', {},
+        [Text, 'title', { type: 'title', text: 'permanent' }]
+      ],
+      [Container, 'screen', { css: 'screen-permanent' },
+        [Drawer, 'drawer-permanent', { display: 'flex', direction: 'vertical', css: 'drawer-permanent', type: 'permanent' },
+          [Toolbar, 'navi-head', { },
+            [Text, 'title', { text: TITLE$1 }]
+          ],
+          [List, 'navi-list', { flex: '1' }]
+        ],
+        [Container, 'main', { css: 'container-main' },
+          [Toolbar, 'head', { display: 'flex', direction: 'horizontal', color: 'primary' },
+            [Button, 'navi-permanent', { icon: iconNavi, type: 'action' }],
+            [Text, 'title', { text: 'Title' }],
+            [Button, 'menu-more', { icon: iconMore, type: 'action' }]
+          ],
+          [Container, 'content', { css: 'content-permanent' },
+            [Container, 'text-content', { css: 'content-text' },
+              [Text, '', { text: CONTENT }],
+              [Text, '', { text: CONTENT }],
+              [Text, '', { text: CONTENT }],
+              [Text, '', { text: CONTENT }],
+              [Text, '', { text: CONTENT }],
+              [Text, '', { text: CONTENT }],
+              [Text, '', { text: CONTENT }]
+            ]
+          ]
+        ]
+      ]
+    ],
+    [Container, 'sample', {},
+      [Container, 'top', {},
+        [Text, 'title', { type: 'title', text: 'permanent' }]
+      ],
+      [Container, 'screen', { css: 'screen-permanent' },
+        [Toolbar, 'head', { display: 'flex', direction: 'horizontal', color: 'primary' },
+          [Text, 'title', { text: 'Title' }],
+          [Button, 'menu-more', { icon: iconMore, type: 'action' }]
+        ],
+        [Container, 'main', { css: 'container-main' },
+          [Drawer, 'drawer-permanent', { display: 'flex', direction: 'vertical', css: 'drawer-permanent', type: 'permanent' },
+            [List, 'navi-list', { flex: '1' }]
+          ],
+          [Container, 'content', { css: 'content-permanent' },
+            [Container, 'text-content', { css: 'content-text' },
+              [Text, '', { text: CONTENT }],
+              [Text, '', { text: CONTENT }],
+              [Text, '', { text: CONTENT }],
+              [Text, '', { text: CONTENT }],
+              [Text, '', { text: CONTENT }],
+              [Text, '', { text: CONTENT }],
+              [Text, '', { text: CONTENT }]
+            ]
+          ]
+        ]
+      ]
     ]
   ], body);
 
-  var navi = layout.get('navi-water');
+  var temporary = layout.get('drawer-temporary');
 
-  layout.get('menu-water').on('click', function (e) {
-    navi.toggle(e);
+  layout.get('navi-temporary').on('click', function (e) {
+    temporary.toggle(e);
+  });
+
+  var persistent = layout.get('drawer-persistent');
+
+  layout.get('navi-persistent').on('click', function (e) {
+    persistent.toggle(e);
+  });
+
+  var permanent = layout.get('drawer-permanent');
+
+  layout.get('navi-permanent').on('click', function (e) {
+    permanent.toggle(e);
   });
 };
 
 'use strict';
 
+/**
+ * [initTest description]
+ * @return {[type]} [description]
+ */
 var checkbox = function (body) {
   var layout = new Layout([View, 'checkbox', {},
     [Container, 'hero', {},
@@ -6133,6 +6401,11 @@ var checkbox = function (body) {
 
 'use strict';
 
+// toolbar
+/**
+ * [initTest description]
+ * @return {[type]} [description]
+ */
 var switchc = function (body) {
   var layout = new Layout([View, 'checkbox-view', {},
     [Container, 'hero', {},
@@ -6172,6 +6445,11 @@ var switchc = function (body) {
 
 'use strict';
 
+// controls
+/**
+ * [initTest description]
+ * @return {[type]} [description]
+ */
 var field = function (body) {
   var layout = new Layout([View, 'checkbox-view', {},
     [Container, 'hero', {},
@@ -6197,6 +6475,10 @@ var field = function (body) {
 
 'use strict';
 
+/**
+ * [initTest description]
+ * @return {[type]} [description]
+ */
 var slider = function(body) {
   new Layout([Component, 'slider', {},
     [Container, 'hero', {},
@@ -6215,47 +6497,76 @@ var slider = function(body) {
   ], body);
 };
 
+/**
+ * [initTest description]
+ * @return {[type]} [description]
+ */
 var list$1 = function (body) {
   var layout = new Layout([Container, 'view-list', {},
-    [Container, 'default', {},
-      [View, 'default', { css: 'container-list', display: 'flex', direction: 'vertical'},
-        [Toolbar, 'toolbar', { type: 'app', display: 'flex', direction: 'horizontal' },
-          [Button, 'menu-navi', { icon: iconNavi, type: 'action' }],
-          [Text, 'title', { text: 'topics' }],
-          [Divider],
-          [Button, 'menu-more', { icon: iconMore, type: 'action' }]
-        ],
-        [List, 'first-list', {}]
-      ],
-      [View, 'default', { css: 'container-list', display: 'flex', direction: 'vertical'},
-        [Toolbar, 'toolbar', { type: 'app', display: 'flex', direction: 'horizontal' },
-          [Button, 'menu-navi', { icon: iconNavi, type: 'action' }],
-          [Text, 'title', { text: 'topics' }]
-        ],
-        [List, 'second-list', {}]
-      ],
-      [View, 'default', { css: 'container-list', display: 'flex', direction: 'vertical'},
-        [Toolbar, 'toolbar', { type: 'app', display: 'flex', direction: 'horizontal' },
-          [Button, 'menu-navi', { icon: iconNavi, type: 'action' }],
-          [Text, 'title', { text: 'topics' }]
-        ],
-        [List, 'third-list', {}]
-      ]
+    [Container, 'hero', {},
+      [List, 'listhero', { label: 'ImageList', type: 'image' }]
     ],
-    [Container, 'dark', { css: 'dark-theme' },
-      [List, 'first-list-dark', {}],
-      [List, 'second-list-dark', {}],
-      [List, 'third-list-dark', {}]
+    [Container, 'default', {},
+
+      [Container, 'checkbox-options', {},
+        [Checkbox, 'hideinfo', { label: 'hidelabel', style: 'dense' }],
+        [Checkbox, 'infoafter', { label: 'Label Below', style: 'dense' }],
+        [Checkbox, 'required', { label: 'Required', style: 'dense' }]
+      ],
+      [Container, 'default', { css: 'container-list', display: 'flex', direction: 'vertical'},
+        [Container, 'top', {},
+          [Text, 'title', { type: 'title', text: 'Standard' }]
+        ],
+        [Container, 'screen', { css: '' },
+          [Toolbar, 'head', { fixed: 'fixed', color: 'primary' },
+            [Button, 'menu-navi', { icon: iconNavi, type: 'action' }],
+            [Text, 'title', { text: 'Image List' }],
+            [Button, 'menu-more', { icon: iconMore, type: 'action' }]
+          ],
+          [List, 'standard', { type: 'image' }]
+        ]
+      ],
+      [Container, 'default', { css: 'container-list', display: 'flex', direction: 'vertical'},
+        [Container, 'top', {},
+          [Text, 'title', { type: 'title', text: 'Masonnery' }]
+        ],
+        [Container, 'screen', { css: '' },
+          [Toolbar, 'head', { fixed: 'fixed', color: 'primary' },
+            [Button, 'menu-navi', { icon: iconNavi, type: 'action' }],
+            [Text, 'title', { text: 'Image List' }],
+            [Button, 'menu-more', { icon: iconMore, type: 'action' }]
+          ],
+          [List, 'masonry', { layout: 'masonry', type: 'image'}]
+        ]
+      ],
+      [Container, 'default', { css: 'container-list', display: 'flex', direction: 'vertical'},
+        [Container, 'screen', { css: '' },
+          [Toolbar, 'head', { fixed: 'fixed', color: 'primary' },
+            [Button, 'menu-navi', { icon: iconNavi, type: 'action' }],
+            [Text, 'title', { text: 'Image List' }],
+            [Button, 'menu-more', { icon: iconMore, type: 'action' }]
+          ],
+          [List, 'second-list', {}]
+        ]
+      ],
+      [Container, 'default', { css: 'container-list', display: 'flex', direction: 'vertical'},
+        [Container, 'screen', { css: '' },
+          [Toolbar, 'head', { fixed: 'fixed', color: 'primary' },
+            [Button, 'menu-navi', { icon: iconNavi, type: 'action' }],
+            [Text, 'title', { text: 'Image List' }],
+            [Button, 'menu-more', { icon: iconMore, type: 'action' }]
+          ],
+          [List, 'third-list', {}]
+        ]
+      ]
     ]
   ], body);
 
-  var first = layout.get('first-list');
+  var listhero = layout.get('listhero');
+  var standard = layout.get('standard');
+  var masonry = layout.get('masonry');
   var second = layout.get('second-list');
   var third = layout.get('third-list');
-
-  var firstDark = layout.get('first-list-dark');
-  var secondDark = layout.get('second-list-dark');
-  var thirdDark = layout.get('third-list-dark');
 
   var renderCheckbox = {
     render: (info) => {
@@ -6291,21 +6602,125 @@ var list$1 = function (body) {
     }
   };
 
+  var renderMasonry = {
+
+    /**
+     * [render description]
+     * @param  {?} info [description]
+     * @return {?}      [description]
+     */
+    render (info) {
+      var item;
+
+      console.log('---info', info);
+      if (info.type === 'divider') {
+        item = new Divider();
+      } else {
+        var photo = '/dist/bgtoolbar.jpg';
+        if (info.photo) photo = '/dist/img/photos/' + info.photo;
+
+        item = new Image({
+          tag: 'li',
+          src: photo,
+          name: info.name,
+          icon: iconStar,
+          label: info.text || info.name
+        });
+      }
+
+     // console.log('item', item)
+
+      var height = Math.floor(Math.random() * 300) + 100;
+
+      item.image.style.height = height + 'px';
+      item.root.style.height = height + 'px';
+
+      return item
+    }
+
+  };
+
+  var renderStandard = {
+
+    /**
+     * [render description]
+     * @param  {?} info [description]
+     * @return {?}      [description]
+     */
+    render (info) {
+      var item;
+      console.log('---info', info);
+      if (info.type === 'divider') {
+        item = new Divider();
+      } else {
+        var photo = '/dist/bgtoolbar.jpg';
+        if (info.photo) photo = '/dist/img/photos/' + info.photo;
+
+        item = new Image({
+          tag: 'li',
+          src: photo,
+          icon: iconStar,
+          name: info.name,
+          text: info.text || info.name,
+          label: info.text || info.name
+        });
+      }
+
+      // console.log('item', item)
+
+      // var height = Math.floor(Math.random() * 300) + 30
+
+      // item.image.style.height = height + 'px'
+      // item.root.style.height = height + 'px'
+
+      return item
+    }
+
+  };
+
+  Object.assign(standard, renderStandard);
   Object.assign(second, renderCheckbox);
+
+  Object.assign(masonry, renderMasonry);
   Object.assign(third, renderSwitch);
-  Object.assign(secondDark, renderCheckbox);
-  Object.assign(thirdDark, renderSwitch);
 
   // var list = countries.concat(countries, countries, countries, countries, countries, countries, countries, countries, countries, countries, countries, countries, countries, countries, countries, countries, countries, countries, countries, countries, countries, countries, countries, countries, countries);
   var list = countries;
 
-  layout.get('first-list').set('list', list);
+  console.log('masonry', masonry);
+
+  layout.get('listhero').set('list', list);
+
+  layout.get('standard').set('list', list);
+  layout.get('masonry').set('list', list);
   layout.get('second-list').set('list', list);
   layout.get('third-list').set('list', list);
 
-  layout.get('first-list-dark').set('list', list);
-  layout.get('second-list-dark').set('list', list);
-  layout.get('third-list-dark').set('list', list);
+  layout.get('hideinfo').on('change', (state) => {
+    console.log('standard', standard);
+
+    if (state) {
+      css.add(standard.root, 'hide-info');
+      css.add(masonry.root, 'hide-info');
+    } else {
+      css.remove(standard.root, 'hide-info');
+      css.remove(masonry.root, 'hide-info');
+      // layout.get('masonry').set('disabled', true)
+    }
+  });
+
+  layout.get('infoafter').on('change', (state) => {
+    console.log('standard', standard);
+
+    if (state) {
+      css.add(standard.root, 'info-below');
+      css.add(masonry.root, 'info-below');
+    } else {
+      css.remove(standard.root, 'info-below');
+      css.remove(masonry.root, 'info-below');
+      // layout.get('masonry').set('disabled', true)
+    }
+  });
 
   // list1.on('selected', function(item) {
   //   console.log('item selected', item);
@@ -6315,6 +6730,7 @@ var list$1 = function (body) {
 'use strict';
 
 // controls
+// import schema from '../data/schema.json';
 var form = function (body) {
   /**
    * [layout description]
@@ -6365,6 +6781,10 @@ var form = function (body) {
 'use strict';
 
 // controls
+/**
+ * [initTest description]
+ * @return {[type]} [description]
+ */
 var tree = function (body) {
   var list1 = new List({
     // type: 'action',
@@ -6389,6 +6809,11 @@ var tree = function (body) {
 };
 
 'use strict';
+
+/**
+ * [initTest description]
+ * @return {[type]} [description]
+ */
 
 const TITLE$2 = 'Material';
 const CONTENT$1 = 'Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas. Vestibulum tortor quam, feugiat vitae, ultricies eget, tempor sit amet, ante. Donec eu libero sit amet quam egestas semper. Aenean ultricies mi vitae est. Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas. Vestibulum tortor quam, feugiat vitae, ultricies eget, tempor sit amet, ante. Donec eu libero sit amet quam egestas semper. Aenean ultricies mi vitae est.';
@@ -6514,6 +6939,12 @@ var toolbar = function (body) {
 
 'use strict';
 
+// controls
+
+/**
+ * [initTest description]
+ * @return {[type]} [description]
+ */
 var menu = function (body) {
   var list = [{
     name: 'Undo'
@@ -6550,6 +6981,12 @@ var menu = function (body) {
 
 'use strict';
 
+// controls
+
+/**
+ * [initTest description]
+ * @return {[type]} [description]
+ */
 var snackbar = function (body) {
   var view = new View({
     name: 'snackbar'
@@ -6588,6 +7025,12 @@ var snackbar = function (body) {
 
 'use strict';
 
+// controls
+
+/**
+ * [initTest description]
+ * @return {[type]} [description]
+ */
 var select = function (body) {
   var list = [{
     name: 'Undo'
@@ -6624,6 +7067,12 @@ var select = function (body) {
 
 'use strict';
 
+// controls
+
+/**
+ * [initTest description]
+ * @return {[type]} [description]
+ */
 var progress = function (body) {
   var layout = new Layout([View, 'demo-button', {},
     [Container, 'hero', {},
@@ -6638,6 +7087,12 @@ var progress = function (body) {
 
 'use strict';
 
+// controls
+
+/**
+ * [initTest description]
+ * @return {[type]} [description]
+ */
 var tabs = function (body) {
   var list = [{
     text: 'One',
@@ -6676,6 +7131,10 @@ var tabs = function (body) {
 
 'use strict';
 
+/**
+ * This view present he ripple module
+ * @return {HTMLElement} The view's container
+ */
 var ripple$1 = function (body) {
   console.log('init ripple layout');
   var layout = new Layout([View, 'ripple', {},
@@ -6689,6 +7148,10 @@ var ripple$1 = function (body) {
 
 'use strict';
 
+/**
+ * This view present he ripple module
+ * @return {HTMLElement} The view's container
+ */
 var elevation = function (body) {
   console.log('init elevation layout');
   var layout = new Layout([View, 'elevation', {},
@@ -6731,6 +7194,10 @@ var elevation = function (body) {
 };
 
 'use strict';
+
+// import Container from 'material/src/container';
+// demo
+// import calendar from './view/calendar';
 
 var view = {
   typography,
