@@ -1,38 +1,33 @@
-[{
-  "name": "Austria",
-  "code": "AT"
+[
+{
+  "name": "Åland Islands",
+  "code": "AX",
+  "photo": "73eac2653f934492870062d9fd5e1a86.jpg"
 },
 {
-  "name": "Azerbaijan",
-  "code": "AZ"
+  "name": "Albania",
+  "code": "AL",
+  "photo": "789cbc6ee86de75cbaf3b81b8763499d.jpg"
 },
 {
-  "name": "Bahamas",
-  "code": "BS"
+  "name": "Algeria",
+  "code": "DZ",
+  "photo": "d0b5ac3599bc4cd4a99d0312366b954a.jpg"
 },
 {
-  "name": "Bahrain",
-  "code": "BH"
+  "name": "American Samoa",
+  "code": "AS",
+  "photo": "d43e9b123005290402cdba20d07a03b2.jpg"
 },
 {
-  "name": "Bangladesh",
-  "code": "BD"
-},
-{
-  "name": "Barbados",
-  "code": "BB"
-},
-{
-  "name": "Belarus",
-  "code": "BY"
-},
-{
-  "name": "Belgium",
-  "code": "BE"
+  "name": "Andorra",
+  "code": "AD",
+  "photo": "73eac2653f934492870062d9fd5e1a86.jpg"
 },
 {
   "name": "Belize",
-  "code": "BZ"
+  "code": "BZ",
+  "photo": "0b71538477262c450880a1adb8626f6a.jpg"
 },
 {
   "name": "Benin",

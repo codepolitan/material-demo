@@ -2,18 +2,100 @@
 .material-container.container-view-list
   padding: 0
   margin: 0
+  display: block
+
+  .container-default
+    padding: 50px
 
   .container-list
-    float: left
-    display: flex
-    flex-direction: raw
-    padding: 0
-    margin: 0
-    margin: 16px
-    width: 360px
-    height: 640px
+    display: inline
+    margin-bottom: 50px
 
-    border: 1px solid #EBEBEB
+    .container-screen
+      position: relative
+      width: 396px
+      height: 667px
+      overflow: scroll
+      padding-left: 2px !important
+      padding-right: 2px !important
+      border: 1px solid rgba(0, 0, 0, 0.1)
+
+  .material-list
+    // max-width: 1000px
+    // display: flex
+    // flex-wrap: wrap
+    // margin: 0 auto
+    // padding: 0
+
+
+    // .material-image
+    //   //float: left
+    //   //background-color: red
+    //   position: relative
+    //   display: list-item
+    //   height: 125px
+    //   width: 125px
+    //   overflow: hidden
+    //   margin: 2px 2px
+    //   padding: 0
+    //   background-color: red
+    //   -webkit-column-break-inside: avoid
+    //   break-inside: avoid-column
+    //   display: list-item
+    //   text-align: -webkit-match-parent
+    //   position: relative
+    //   box-sizing: border-box
+    //   //margin-bottom: 16px
+
+    //   .image-image
+    //     height: 125px
+    //     width: 125px
+    //     display: block
+
+    //   .image-label
+    //     color: rgba(255,255,255,.8)
+    //     padding: 16px
+    //     background-color: rgba(0,0,0,.6)
+    //     display: block
+    //     position: absolute
+    //     bottom: 0
+    //     left: 0
+    //     right: 0
+
+
+
+    &.list-listhero
+      width: 300px
+      //white-space: nowrap
+      // display: flex
+      // flex-wrap: wrap
+      margin: 0 auto
+      padding: 0
+      .material-item
+        //float: left
+        background-color: black
+        display: list-item
+        height: 53px
+        width: 53px
+        overflow: hidden
+        margin: 2px
+
+
+
+          
+
+
+  .container-list
+    // //float: left
+    // display: flex
+    // flex-direction: raw
+    // padding: 0
+    // margin: 0
+    // margin: 16px
+    // //width: 360px
+    // //height: 640px
+
+    // border: 1px solid #EBEBEB
     .material-list
       .material-checkbox
         //margin-left: 16px
