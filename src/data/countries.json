@@ -1,27 +1,33 @@
 [
 {
   "name": "Afghanistan",
-  "code": "AF"
+  "code": "AF",
+  "photo": "0b71538477262c450880a1adb8626f6a.jpg"
 },
 {
   "name": "Åland Islands",
-  "code": "AX"
+  "code": "AX",
+  "photo": "73eac2653f934492870062d9fd5e1a86.jpg"
 },
 {
   "name": "Albania",
-  "code": "AL"
+  "code": "AL",
+  "photo": "789cbc6ee86de75cbaf3b81b8763499d.jpg"
 },
 {
   "name": "Algeria",
-  "code": "DZ"
+  "code": "DZ",
+  "photo": "d0b5ac3599bc4cd4a99d0312366b954a.jpg"
 },
 {
   "name": "American Samoa",
-  "code": "AS"
+  "code": "AS",
+  "photo": "d43e9b123005290402cdba20d07a03b2.jpg"
 },
 {
   "name": "Andorra",
-  "code": "AD"
+  "code": "AD",
+  "photo": "73eac2653f934492870062d9fd5e1a86.jpg"
 },
 {
   "name": "Angola",
