@@ -1,61 +1,43 @@
+
+@import ./grid.sass
+
+//////////
+// GRID //
+//////////
+
+// Specify the number of columns and set column and gutter widths
+$columns: 12
+$column-width: 60
+$gutter-width: 20
+
+// Remove the definition below for a pixel-based layout
+$total-width: 100%
+
 body
-  // overflow: hidden
-  // position: absolute
-  // top: 0
-  // bottom: 0
-  // left: 0
-  // right: 0
-  // padding: 0
-  // margin: 0
-
-
-  padding-top: 56px
-  .container-hero
-    position: relative
-    //transform: scale(3)
-    min-height: 480px
-    background-color: rgba(0, 0, 0, 0.05)
-    display: flex
-    align-items: center
-    justify-content: center
-    flex-flow: row nowrap
-    height: 480px
-    padding: 0
-    margin: 0
-    > div,
-    > span, 
-    > header
-      //display: inline-block
-      color: rgba(0, 0, 0, 0.87)
-      -webkit-font-smoothing: antialiased
-      white-space: nowrap
-      position: relative
-      vertical-align: middle
-
-
-  //user-select: none
-
-
-    &.under-scroll
-      transition: box-shadow .3s
-      box-shadow: 0 0 4px rgba(0, 0, 0, 0.14),0 4px 8px rgba(0, 0, 0, 0.28)
-
-    .material-switch
-      display: inline-block
-
-  .drawer-navi
-    background-color: white
-    .toolbar-navi-head
-      border-bottom: 1px solid rgba(0,0 ,0 ,.1)
-
+  .material-drawer.drawer-navi
+    background-color: transparent
+    .drawer-panel
+      color: rgba(1, 1, 1, .8) 
+      //background-color: rgba(0, 0 , 0, .71)
+      .toolbar-navi-head
+        border-bottom: 1px solid rgba(0, 0 ,0 , .12)
 
   .view-main
     position: relative
 
     .material-view
-      .material-container
-        padding: 16px
-        overflow: scroll
+      //width: 90% 
+      margin: 0 auto
+      .container-top
+        padding-left: 32px
+        padding-right: 32px
+        margin: 0 auto 20px
+        //@include column(12)
+      .container-body
+        padding-left: 32px
+        padding-right: 32px
+        margin: 0 auto 20px
+        //@include column(12)
 
     .material-calendar
       position: absolute
@@ -76,6 +58,15 @@ body
       height: 480px
       padding: 0
       margin: 0
+      > div,
+      > span, 
+      > header
+        //display: inline-block
+        color: rgba(0, 0, 0, 0.87)
+        -webkit-font-smoothing: antialiased
+        white-space: nowrap
+        position: relative
+        vertical-align: middle
 
     > .layout-slider
       > .container-hero
@@ -117,11 +108,8 @@ body
     > .container-buttons-container
       padding: 16px
 
-    > .drawer-side
-      background-color: rgba(0, 0, 0, 0.05)
-      // width: 200px
-      border-left: 1px solid rgba(0, 0, 0, 0.1)
-
+    .material-switch
+      display: inline-block
 
 .container-app 
   > .component-body 
@@ -132,7 +120,8 @@ body
           padding: 16px
           overflow: scroll
 
-
-@media (min-width: 640px)
-  body
-    padding-top: 64px
+@media screen and (max-width: 720px)
+  #maincolumn,
+  #sidebar
+    @include column(12)
+    margin-bottom: 1em
