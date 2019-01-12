@@ -1,6 +1,9 @@
 import {
   List,
+  AppBar,
   Toolbar,
+  Banner,
+  Component,
   Button,
   Item,
   Textfield,
@@ -51,10 +54,18 @@ export default function (body) {
           [Text, 'title', { type: 'title', text: 'Standard' }]
         ],
         [Container, 'screen', { css: '' },
-          [Toolbar, 'head', { fixed: 'fixed', color: 'primary' },
+          [AppBar, 'head', { fixed: 'fixed', color: 'primary' },
             [Button, 'menu-navi', { icon: iconNavi, type: 'action' }],
             [Text, 'title', { text: 'Image List' }],
             [Button, 'menu-more', { icon: iconMore, type: 'action' }]
+          ],
+          [Banner, '', { },
+            [Text, 'title', { text: 'There was a problem processing the transaction' }],
+            [Toolbar, 'banner', { display: 'flex', direction: 'horizontal' },
+              [Component, 'space', { flex: 1 }],
+              [Button, 'default', { text: 'Fix it', color: 'primary' }],
+              [Button, 'default', { text: 'Learn more', color: 'primary' }]
+            ]
           ],
           [List, 'standard', { type: 'image' }]
         ]
@@ -64,7 +75,7 @@ export default function (body) {
           [Text, 'title', { type: 'title', text: 'Masonnery' }]
         ],
         [Container, 'screen', { css: '' },
-          [Toolbar, 'head', { fixed: 'fixed', color: 'primary' },
+          [AppBar, 'head', { fixed: 'fixed', color: 'primary' },
             [Button, 'menu-navi', { icon: iconNavi, type: 'action' }],
             [Text, 'title', { text: 'Image List' }],
             [Button, 'menu-more', { icon: iconMore, type: 'action' }]
@@ -74,7 +85,7 @@ export default function (body) {
       ],
       [Container, 'default', { css: 'container-list', display: 'flex', direction: 'vertical'},
         [Container, 'screen', { css: '' },
-          [Toolbar, 'head', { fixed: 'fixed', color: 'primary' },
+          [AppBar, 'head', { fixed: 'fixed', color: 'primary' },
             [Button, 'menu-navi', { icon: iconNavi, type: 'action' }],
             [Text, 'title', { text: 'Image List' }],
             [Button, 'menu-more', { icon: iconMore, type: 'action' }]
@@ -84,7 +95,7 @@ export default function (body) {
       ],
       [Container, 'default', { css: 'container-list', display: 'flex', direction: 'vertical'},
         [Container, 'screen', { css: '' },
-          [Toolbar, 'head', { fixed: 'fixed', color: 'primary' },
+          [AppBar, 'head', { fixed: 'fixed', color: 'primary' },
             [Button, 'menu-navi', { icon: iconNavi, type: 'action' }],
             [Text, 'title', { text: 'Image List' }],
             [Button, 'menu-more', { icon: iconMore, type: 'action' }]

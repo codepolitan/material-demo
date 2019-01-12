@@ -10,6 +10,8 @@ var options = {
   components: [
     { name: 'Typography' },
     { name: 'Components', type: 'divider' },
+    { name: 'AppBar' },
+    { name: 'Banner' },
     { name: 'Button' },
     { name: 'Card' },
     { name: 'Checkbox' },

@@ -1,5 +1,6 @@
 // import components
 import {
+  AppBar,
   Button,
   Drawer,
   List,
@@ -25,23 +26,23 @@ console.log('layout --', document.body)
  * Application Layout
  */
 var layout = [
-  [Toolbar, 'head', { type: 'app', display: 'flex', direction: 'horizontal', color: 'primary' },
+  [AppBar, 'head', { type: 'app', display: 'flex', direction: 'horizontal', color: 'primary' },
     [Button, 'menu-navi', { icon: iconNavi, type: 'action' }],
     [Text, 'title', { css: 'pin-bottom', text: TITLE }],
     [Button, 'menu-more', { icon: iconMore, type: 'action' }]
   ],
   [Drawer, 'navi', { fixed: 1, css: 'drawer-temporary', display: 'flex', direction: 'horizontal', type: 'temporary' },
-    [Toolbar, 'navi-head', { fixed: 1, flexible: 1 },
+    [AppBar, 'navi-head', { fixed: 1, flexible: 1 },
       [Button, 'menu-navi-head', { icon: iconNavi, type: 'action' }],
       [Text, 'title', { text: TITLE }]
     ],
     [List, 'navi-list', { flex: '1' }]
   ],
+  [View, 'main', { position: 'fixed' }],
   [Menu, 'more-menu', { position: 'fixed' },
     [Checkbox, 'darktheme', { text: 'Dark theme' }],
     [Checkbox, 'rtl', { text: 'RTL' }]
-  ],
-  [View, 'main', { position: 'fixed' }]
+  ]
 ]
 
 export default layout

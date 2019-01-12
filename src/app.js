@@ -13,6 +13,8 @@ import Cookies from './vendor/cookies'
 
 // demo
 import typography from './view/typography'
+import appbar from './view/appbar'
+import banner from './view/banner'
 import button from './view/button'
 import calendar from './view/calendar'
 import card from './view/card'
@@ -40,6 +42,8 @@ import elevation from './view/elevation'
 
 var view = {
   typography,
+  appbar,
+  banner,
   button,
   calendar,
   card,
