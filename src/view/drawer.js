@@ -12,7 +12,7 @@ import {
   Layout,
   Text,
   Menu,
-  Toolbar,
+  AppBar,
   Item,
   View
 } from 'material'
@@ -33,21 +33,21 @@ const CONTENT = 'Pellentesque habitant morbi tristique senectus et netus et male
 export default function (body) {
   var layout = new Layout([View, 'drawer', {},
     [Container, 'top', {},
-      [Text, 'title', { type: 'title', text: 'Buttons' }],
-      [Text, 'title', { text: 'Buttons communicate the action that will occur when the user touches them.' }]
+      [Text, 'title', { type: 'title', text: 'Drawer' }],
+      [Text, 'title', { text: 'Navigation drawers provide access to destinations in your app.' }]
     ],
     [Container, 'sample', {},
       [Container, 'top', {},
         [Text, 'title', { type: 'title', text: 'Temporary' }]
       ],
       [Container, 'screen', { css: 'screen-waterfall' },
-        [Toolbar, 'head', { fixed: 'fixed', color: 'primary' },
+        [AppBar, 'head', { fixed: 'fixed', color: 'primary' },
           [Button, 'navi-temporary', { icon: iconNavi, type: 'action' }],
           [Text, 'title', { text: 'Title' }],
           [Button, 'menu-more', { icon: iconMore, type: 'action' }]
         ],
         [Drawer, 'drawer-temporary', { display: 'flex', direction: 'vertical', css: 'drawer-temporary', type: 'temporary' },
-          [Toolbar, 'navi-head', { type: 'app' },
+          [AppBar, 'navi-head', { },
             [Button, 'menu-navi-head', { icon: iconNavi, type: 'action' }],
             [Text, 'title', { text: TITLE }]
           ],
@@ -70,14 +70,14 @@ export default function (body) {
       [Container, 'screen', { css: 'screen-persistent' },
 
         [Drawer, 'drawer-persistent', { display: 'flex', direction: 'vertical', css: 'drawer-persistent', type: 'persistent' },
-          [Toolbar, 'navi-head', { },
+          [AppBar, 'navi-head', { },
             [Button, 'menu-navi-head', { icon: iconNavi, type: 'action' }],
             [Text, 'title', { text: TITLE }]
           ],
           [List, 'navi-list', { flex: '1' }]
         ],
         [Container, 'content', { css: 'content-persistent' },
-          [Toolbar, 'head', { display: 'flex', direction: 'horizontal', color: 'primary' },
+          [AppBar, 'head', { display: 'flex', direction: 'horizontal', color: 'primary' },
             [Button, 'navi-persistent', { icon: iconNavi, type: 'action' }],
             [Text, 'title', { text: 'Title' }],
             [Button, 'menu-more', { icon: iconMore, type: 'action' }]
@@ -100,13 +100,13 @@ export default function (body) {
       ],
       [Container, 'screen', { css: 'screen-permanent' },
         [Drawer, 'drawer-permanent', { display: 'flex', direction: 'vertical', css: 'drawer-permanent', type: 'permanent' },
-          [Toolbar, 'navi-head', { },
+          [AppBar, 'navi-head', { },
             [Text, 'title', { text: TITLE }]
           ],
           [List, 'navi-list', { flex: '1' }]
         ],
         [Container, 'main', { css: 'container-main' },
-          [Toolbar, 'head', { display: 'flex', direction: 'horizontal', color: 'primary' },
+          [AppBar, 'head', { display: 'flex', direction: 'horizontal', color: 'primary' },
             [Button, 'navi-permanent', { icon: iconNavi, type: 'action' }],
             [Text, 'title', { text: 'Title' }],
             [Button, 'menu-more', { icon: iconMore, type: 'action' }]
@@ -130,7 +130,7 @@ export default function (body) {
         [Text, 'title', { type: 'title', text: 'permanent' }]
       ],
       [Container, 'screen', { css: 'screen-permanent' },
-        [Toolbar, 'head', { display: 'flex', direction: 'horizontal', color: 'primary' },
+        [AppBar, 'head', { display: 'flex', direction: 'horizontal', color: 'primary' },
           [Text, 'title', { text: 'Title' }],
           [Button, 'menu-more', { icon: iconMore, type: 'action' }]
         ],
