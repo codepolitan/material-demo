@@ -32,8 +32,8 @@ const CONTENT = 'Pellentesque habitant morbi tristique senectus et netus et male
 export default function (body) {
   var layout = new Layout([View, 'toolbar', {},
     [Container, 'top', {},
-      [Text, 'title', { type: 'title', text: 'Buttons' }],
-      [Text, 'title', { text: 'Buttons communicate the action that will occur when the user touches them.' }]
+      [Text, 'title', { type: 'title', text: 'Toolbar' }],
+      [Text, 'title', { text: '...' }]
     ],
     [Container, 'hero', {},
       [Toolbar, 'head', { display: 'flex', direction: 'horizontal', color: 'primary' },
