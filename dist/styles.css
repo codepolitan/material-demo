@@ -103,8 +103,48 @@
   font-style: italic; }
 /* END Black Italic */
 body {
-  padding-top: 56px; }
-  body .container-hero {
+  width: 100%;
+  *zoom: 1; }
+  body:before, body:after {
+    content: "";
+    display: table; }
+  body:after {
+    clear: both; }
+
+body {
+  width: 100%;
+  *zoom: 1; }
+  body:before, body:after {
+    content: "";
+    display: table; }
+  body:after {
+    clear: both; }
+
+body .material-drawer.drawer-navi {
+  background-color: transparent; }
+  body .material-drawer.drawer-navi .drawer-panel {
+    color: rgba(1, 1, 1, 0.8); }
+    body .material-drawer.drawer-navi .drawer-panel .toolbar-navi-head {
+      border-bottom: 1px solid rgba(0, 0, 0, 0.12); }
+body .view-main {
+  position: relative; }
+  body .view-main .material-view {
+    margin: 0 auto; }
+    body .view-main .material-view .container-top {
+      padding-left: 32px;
+      padding-right: 32px;
+      margin: 0 auto 20px; }
+    body .view-main .material-view .container-body {
+      padding-left: 32px;
+      padding-right: 32px;
+      margin: 0 auto 20px; }
+  body .view-main .material-calendar {
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0; }
+  body .view-main .container-hero {
     position: relative;
     min-height: 480px;
     background-color: rgba(0, 0, 0, 0.05);
@@ -115,79 +155,88 @@ body {
     height: 480px;
     padding: 0;
     margin: 0; }
-    body .container-hero > div,
-    body .container-hero > span,
-    body .container-hero > header {
+    body .view-main .container-hero > div,
+    body .view-main .container-hero > span,
+    body .view-main .container-hero > header {
       color: rgba(0, 0, 0, 0.87);
       -webkit-font-smoothing: antialiased;
       white-space: nowrap;
       position: relative;
       vertical-align: middle; }
-  body .drawer-navi {
-    background-color: white; }
-    body .drawer-navi .toolbar-navi-head {
-      border-bottom: 1px solid rgba(0, 0, 0, 0.1); }
-  body .view-main {
-    position: relative; }
-    body .view-main .material-view .material-container {
-      padding: 16px;
-      overflow: scroll; }
-    body .view-main .material-calendar {
-      position: absolute;
-      top: 0;
-      bottom: 0;
-      left: 0;
-      right: 0; }
-    body .view-main .container-hero {
-      position: relative;
-      min-height: 480px;
-      background-color: rgba(0, 0, 0, 0.05);
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      flex-flow: row nowrap;
-      height: 480px;
-      padding: 0;
-      margin: 0; }
-    body .view-main > .layout-slider > .container-hero > .material-slider {
-      width: 60%; }
-    body .view-main > .layout-ripple > .material-container > .material-component {
-      position: relative;
-      width: 100%;
-      height: 100%;
-      overflow: hidden; }
-    body .view-main > .material-layout > .material-container {
+  body .view-main > .layout-slider > .container-hero > .material-slider {
+    width: 60%; }
+  body .view-main > .layout-ripple > .material-container > .material-component {
+    position: relative;
+    width: 100%;
+    height: 100%;
+    overflow: hidden; }
+  body .view-main > .material-layout > .material-container {
+    padding: 16px; }
+  body .view-main > .material-form.material-layout {
+    padding: 0;
+    margin: 0;
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0; }
+    body .view-main > .material-form.material-layout > .material-component {
+      overflow: scroll;
       padding: 16px; }
-    body .view-main > .material-form.material-layout {
-      padding: 0;
-      margin: 0;
-      position: absolute;
-      top: 0;
-      bottom: 0;
-      left: 0;
-      right: 0; }
-      body .view-main > .material-form.material-layout > .material-component {
-        overflow: scroll;
-        padding: 16px; }
-      body .view-main > .material-form.material-layout > .material-component.component-foot {
-        padding: 12px 16px;
-        background-color: rgba(0, 0, 0, 0.02); }
-        body .view-main > .material-form.material-layout > .material-component.component-foot > .component-toolbar {
-          text-align: right; }
-    body .view-main > .container-buttons-container {
-      padding: 16px; }
-    body .view-main > .drawer-side {
-      background-color: rgba(0, 0, 0, 0.05);
-      border-left: 1px solid rgba(0, 0, 0, 0.1); }
+    body .view-main > .material-form.material-layout > .material-component.component-foot {
+      padding: 12px 16px;
+      background-color: rgba(0, 0, 0, 0.02); }
+      body .view-main > .material-form.material-layout > .material-component.component-foot > .component-toolbar {
+        text-align: right; }
+  body .view-main > .container-buttons-container {
+    padding: 16px; }
+  body .view-main .material-switch {
+    display: inline-block; }
 
 .container-app > .component-body > .component-main > .material-view > .material-container {
   margin: 0px;
   padding: 16px;
   overflow: scroll; }
 
-@media (min-width: 640px) {
-  body {
-    padding-top: 64px; } }
+@media screen and (max-width: 720px) {
+  #maincolumn,
+  #sidebar {
+    display: inline;
+    float: left;
+    width: 97.9166666667%;
+    margin: 0 1.0416666667%;
+    margin-bottom: 1em; } }
+.view-banner .container-hero .material-toolbar {
+  width: 400px; }
+.view-banner .container-sample {
+  display: inline-block;
+  margin: 16px; }
+  .view-banner .container-sample .container-screen {
+    position: relative;
+    width: 375px;
+    height: 667px;
+    overflow: scroll;
+    padding: 0px;
+    border: 1px solid rgba(0, 0, 0, 0.1); }
+    .view-banner .container-sample .container-screen .material-container.container-content {
+      padding: 16px; }
+      .view-banner .container-sample .container-screen .material-container.container-content .material-text {
+        display: block;
+        margin-bottom: 16px; }
+    .view-banner .container-sample .container-screen .material-container {
+      padding: 0px; }
+    .view-banner .container-sample .container-screen > .material-text {
+      display: block;
+      margin-bottom: 16px; }
+      .view-banner .container-sample .container-screen > .material-text.type-title {
+        margin-left: 64px;
+        margin-bottom: 0px; }
+      .view-banner .container-sample .container-screen > .material-text.pin-bottom {
+        position: absolute;
+        bottom: 0; }
+      .view-banner .container-sample .container-screen > .material-text.type-default {
+        margin-bottom: 16px; }
+
 .view-button .container-hero {
   position: relative; }
   .view-button .container-hero .type-floating {
@@ -204,87 +253,79 @@ body {
   height: 460px; }
   .view-card .container-hero .material-card {
     margin: 16px; }
-.view-card .container-hero,
 .view-card .container-card {
-  margin: 16px; }
-  .view-card .container-hero .material-card,
+  display: inline-block; }
   .view-card .container-card .material-card {
+    display: inline;
+    float: left;
+    width: 31.25%;
+    margin: 0 1.0416666667%;
     margin: 8px;
     vertical-align: top;
     background-color: white; }
-    .view-card .container-hero .material-card .component-visual,
     .view-card .container-card .material-card .component-visual {
       background-repeat: no-repeat;
       background-size: cover;
       height: 209px;
       background-color: #014689; }
-    .view-card .container-hero .material-card .component-body,
     .view-card .container-card .material-card .component-body {
       padding: 16px; }
-      .view-card .container-hero .material-card .component-body h2,
-      .view-card .container-hero .material-card .component-body h3,
       .view-card .container-card .material-card .component-body h2,
       .view-card .container-card .material-card .component-body h3 {
         margin: 0;
         padding-top: 8px; }
-    .view-card .container-hero .material-card .component-action,
     .view-card .container-card .material-card .component-action {
       padding: 8px;
       text-align: right; }
-      .view-card .container-hero .material-card .component-action .material-button,
       .view-card .container-card .material-card .component-action .material-button {
         font-size: 14px;
         padding: 0; }
-        .view-card .container-hero .material-card .component-action .material-button label,
         .view-card .container-card .material-card .component-action .material-button label {
           padding: 8px; }
-  .view-card .container-hero .component-simple-card .component-head,
   .view-card .container-card .component-simple-card .component-head {
     background-color: #014689; }
-  .view-card .container-hero .component-simple-card-avatar .component-head .component-avatar,
   .view-card .container-card .component-simple-card-avatar .component-head .component-avatar {
     margin: 16px;
     background: #bdbdbd;
     height: 2.5rem;
     width: 2.5rem;
     border-radius: 50%; }
-  .view-card .container-hero .component-simple-card-avatar .component-head .component-info,
   .view-card .container-card .component-simple-card-avatar .component-head .component-info {
     padding: 16px 0; }
-    .view-card .container-hero .component-simple-card-avatar .component-head .component-info .material-text,
     .view-card .container-card .component-simple-card-avatar .component-head .component-info .material-text {
       display: block; }
-  .view-card .container-hero .component-simple-card-square .component-head .component-square,
   .view-card .container-card .component-simple-card-square .component-head .component-square {
     margin: 16px;
     background-color: orange;
     height: 2.5rem;
     width: 2.5rem; }
-  .view-card .container-hero .component-simple-card-square .component-head .component-info,
   .view-card .container-card .component-simple-card-square .component-head .component-info {
     padding: 16px; }
-    .view-card .container-hero .component-simple-card-square .component-head .component-info .material-text,
     .view-card .container-card .component-simple-card-square .component-head .component-info .material-text {
       display: block; }
-  .view-card .container-hero .component-simple-card-square .component-visual,
   .view-card .container-card .component-simple-card-square .component-visual {
     background-repeat: no-repeat;
     background-size: cover;
     height: 209px;
     background-color: orange; }
-  .view-card .container-hero .component-simple-big-square .component-square,
   .view-card .container-card .component-simple-big-square .component-square {
     width: 180px;
     height: 180px;
     margin: 16px;
     background-color: orange; }
-  .view-card .container-hero .component-simple-big-square .component-info,
   .view-card .container-card .component-simple-big-square .component-info {
     padding: 16px; }
-    .view-card .container-hero .component-simple-big-square .component-info .material-text,
     .view-card .container-card .component-simple-big-square .component-info .material-text {
       display: block; }
 
+@media screen and (max-width: 720px) {
+  .view-card .container-card {
+    margin: 16px; }
+    .view-card .container-card .material-card {
+      display: inline;
+      float: left;
+      width: 97.9166666667%;
+      margin: 0 1.0416666667%; } }
 .material-container.container-view-list {
   padding: 0;
   margin: 0;
@@ -345,6 +386,34 @@ body {
         position: absolute;
         bottom: 0; }
       .view-toolbar .container-sample .container-screen > .material-text.type-default {
+        margin-bottom: 16px; }
+
+.view-appbar .container-hero .material-toolbar {
+  width: 400px; }
+.view-appbar .container-sample {
+  display: inline-block; }
+  .view-appbar .container-sample .container-screen {
+    position: relative;
+    width: 375px;
+    height: 667px;
+    overflow: scroll;
+    padding: 16px;
+    border: 1px solid rgba(0, 0, 0, 0.1); }
+    .view-appbar .container-sample .container-screen .material-appbar.is-flexible {
+      background-image: url(/dist/bgtoolbar.jpg);
+      background-size: cover; }
+    .view-appbar .container-sample .container-screen .material-container {
+      padding: 0px; }
+    .view-appbar .container-sample .container-screen > .material-text {
+      display: block;
+      margin-bottom: 16px; }
+      .view-appbar .container-sample .container-screen > .material-text.type-title {
+        margin-left: 64px;
+        margin-bottom: 0px; }
+      .view-appbar .container-sample .container-screen > .material-text.pin-bottom {
+        position: absolute;
+        bottom: 0; }
+      .view-appbar .container-sample .container-screen > .material-text.type-default {
         margin-bottom: 16px; }
 
 .view-drawer .container-hero .material-toolbar {

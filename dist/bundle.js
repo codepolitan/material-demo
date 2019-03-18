@@ -283,6 +283,8 @@ var options = {
   components: [
     { name: 'Typography' },
     { name: 'Components', type: 'divider' },
+    { name: 'AppBar' },
+    { name: 'Banner' },
     { name: 'Button' },
     { name: 'Card' },
     { name: 'Checkbox' },
@@ -560,6 +562,449 @@ function create (options) {
   return element
 }
 
+'use strict';
+
+/**
+ * Inject method insert element to the domtree using Dom methods
+ * @param {HTMLElement} container [description]
+ * @param  {string} context - Injection context
+ * @return {Object} This class intance
+ */
+var insert$2 = {
+
+  /**
+   * [insert description]
+   * @param  {?} container [description]
+   * @param  {?} context   [description]
+   * @param  {?} debug     [description]
+   * @return {?}           [description]
+   */
+  insert (container, context) {
+    var element = this.root;
+
+    this.insertElement(element, container, context);
+
+    return this
+  },
+
+  /**
+   * [insertElement description]
+
+   * @param  {?} element   [description]
+   * @param  {?} container [description]
+   * @param  {?} context   [description]
+   * @param  {?} debug     [description]
+   * @return {?}           [description]
+   */
+  insertElement (element, container, context) {
+    if (container && container.root) {
+      container = container.root;
+    }
+
+    this.container = container;
+
+    // if (debug) {
+    // console.log('insert', container);
+    // }
+
+    // this.emit('insert');
+
+    context = context || 'bottom';
+
+    var contexts = ['top', 'bottom', 'after', 'before'];
+    var methods = ['prepend', 'append', 'after', 'before'];
+
+    var index = contexts.indexOf(context);
+    if (index === -1) {
+      return
+    }
+
+    var method = methods[index];
+
+    // this.emit('insert');
+
+    // insert component element to the dom tree using Dom
+    // console.log('dom', method, element);
+    dom[method](container, element);
+    // this.emit('injected');
+    //
+    return element
+  }
+};
+
+'use strict';
+
+/**
+ * Utility functions
+ * @module module/utils
+ */
+
+/**
+ * Checks if given value is an array
+ * @param {*} object
+ * @returns {boolean}
+ * @private
+ */
+function _isArray (object) {
+  return Object.prototype.toString.call(object) === '[object Array]'
+}
+
+/**
+ * Checks if javascript object is plain object
+ * @param {Object} object
+ * @returns {*|boolean}
+ * @private
+ */
+function _isLiteralObject (object) {
+  return object && typeof object === 'object' && Object.getPrototypeOf(object) === Object.getPrototypeOf({})
+}
+
+/**
+ * Checks if object is iterable
+ * @param {Object} object
+ * @returns {boolean}
+ * @private
+ */
+function _isIterable (object) {
+  var r = _isLiteralObject(object) ||
+    _isArray(object) ||
+    (typeof object === 'object' &&
+      object !== null &&
+      object.length !== undefined);
+
+  return r
+}
+
+/**
+ *
+ * @param {Object} object
+ * @param {Function} callback
+ * @private
+ */
+function _each (object, callback) {
+  if (_isArray(object) || (typeof object === 'object' && object.length !== undefined)) {
+    for (var i = 0, l = object.length; i < l; i++) {
+      callback.apply(object[i], [object[i], i]);
+    }
+    return
+  }
+
+  if (_isLiteralObject(object)) {
+    for (var key in object) {
+      callback.apply(object[key], [object[key], key]);
+    }
+  }
+}
+
+/**
+ * Element style related methods
+ * @module component/style
+ */
+/**
+ * Gets element's computed style
+ * @param {string} prop
+ * @returns {*}
+ * @private
+ */
+function get (element, style) {
+  // console.log('get', element, style);
+  // get array of elements
+  if (_isArray(style)) {
+    var css = {};
+    for (var i in list) {
+      css[list[i]] = this.get(element, list[i]);
+    }
+    return css
+  } else {
+    var computedStyle;
+
+    if (typeof window.getComputedStyle === 'function') { // normal browsers
+      computedStyle = window.getComputedStyle(element);
+    } else if (typeof document.currentStyle !== undefined) { // other browsers
+      computedStyle = element.currentStyle;
+    } else {
+      computedStyle = element.style;
+    }
+
+    if (style) {
+      return computedStyle[style]
+    } else {
+      return computedStyle
+    }
+  }
+}
+
+/**
+ * set element style
+ * @param { ? } element [description]
+ * @param {?} style   [description]
+ */
+function set (element, style) {
+  if (_isIterable(element) && _isLiteralObject(style)) {
+    _each(element, function (e) {
+      set(e, style);
+    });
+    return element
+  }
+
+  if (_isLiteralObject(style)) {
+    // console.log('style', element, style);
+    for (var i in style) {
+      element.style[i] = style[i];
+    }
+    return style
+  }
+
+  return false
+}
+
+var style = { get, set };
+
+'use strict';
+
+/**
+ * Element style related methods
+ * @module component/style
+ */
+function offset (element, prop) {
+  var rect = element.getBoundingClientRect();
+
+  var offset = {
+    top: Math.round(rect.top),
+    right: Math.round(rect.right),
+    bottom: Math.round(rect.bottom),
+    left: Math.round(rect.left),
+    width: rect.width ? Math.round(rect.width) : Math.round(element.offsetWidth),
+    height: rect.height ? Math.round(rect.height) : Math.round(element.offsetHeight)
+  };
+
+  // css width and height
+  if (offset.width <= 0) {
+    offset.width = parseFloat(style.get(element, 'width'));
+  }
+  if (offset.height <= 0) {
+    offset.height = parseFloat(style.get(element, 'height'));
+  }
+
+  if (prop) {
+    return offset[prop]
+  } else {
+    return offset
+  }
+}
+
+'use strict';
+
+const defaults$1 = {
+  prefix: 'material',
+  class: 'appbar',
+  tag: 'header'
+};
+
+class AppBar {
+  /**
+   * Constructor
+   * @param  {Object} options - Component options
+   * @return {Object} Class instance
+   */
+  constructor (options) {
+    this.init(options);
+    this.build();
+    this.attach();
+    return this
+  }
+
+  init (options) {
+    this.options = Object.assign({}, defaults$1, options || {});
+    Object.assign(this, insert$2);
+
+    /// console.log('waterfALL', this.options.waterfall)
+
+    this.waterfall = this.options.waterfall;
+  }
+
+  /**
+   * Build Method
+   * @return {Object} This class instance
+   */
+  build () {
+    this.root = create(this.options);
+
+    // console.log(this.options.height, this.options.fixed)
+
+    if (this.options.height) {
+      this.root.style.height = this.options.height + 'px';
+    }
+
+    if (this.options.fixed) {
+      // console.log('is-fixed')
+      this.root.classList.add('is-fixed');
+    }
+
+    if (this.options.flexible) {
+      this.root.classList.add('is-flexible');
+    }
+
+    // if (this.options.container) {
+    //   this.insert(this.options.container)
+    // }
+
+    return this
+  }
+
+  attach () {
+    this.root.addEventListener('DOMNodeInserted', (e) => {
+      var textNode = e.target;
+      if (textNode !== this.root) return
+
+      var size = this.size = offset(this.root, 'height');
+
+      var view = this.view = this.root.parentNode;
+
+      // console.log('view', view)
+
+      var p = 'top';
+
+      if (this.options.type == 'bottom') p = 'bottom';
+
+      var padding = window.getComputedStyle(view)['padding-' + p];
+      // console.log('paddingTop', padding)
+      // if (!padding) padding = window.getComputedStyle(this.root.parentNode, 'padding')
+      // console.log('padding', padding)
+
+      padding = parseInt(padding, 10);
+      // size = parseInt(size, 10)
+
+      this.padding = padding;
+
+      // console.log(' toolbar inserted in', size, 'padding', padding)
+      var ptop = this.ptop = size + padding;
+
+      // console.log('ptop', ptop)
+
+      if (document.body == view) {
+        // console.log('toolbar container body')
+        this.root.classList.add('toolbar-body');
+      }
+
+      // console.log('p', p)
+
+      view.setAttribute('style', 'padding-' + p + ': ' + ptop + 'px');
+      this.scroll(view);
+    });
+  }
+
+  /**
+   * Setter
+   * @param {string} prop
+   * @param {string} value
+   * @return {Object} The class instance
+   */
+  set (prop, value) {
+    switch (prop) {
+      case 'minimize':
+        this.root.setAttribute('style', 'height: 64px');
+        break
+      case 'value':
+        this.setValue(value);
+        break
+      case 'label':
+        this.setLabel(value);
+        break
+      default:
+        this.check(prop);
+    }
+
+    return this
+  }
+
+  scroll (view) {
+    // console.log('initScroll')
+
+    var isBody = false;
+
+    var element = view;
+
+    this.scrolling = view;
+
+    if (view === document.body) {
+      isBody = true;
+      element = document;
+      this.scrolling = document.body;
+    }
+
+    view.classList.add();
+
+    element.addEventListener('scroll', (e) => {
+      var scrollTop;
+      if (isBody) {
+        scrollTop = (document.documentElement ||
+       document.body.parentNode ||
+       document.body).scrollTop;
+      } else {
+        scrollTop = view.scrollTop;
+      }
+
+      if (scrollTop > 0) {
+        this.root.classList.add('is-scrolled');
+      } else {
+        this.root.classList.remove('is-scrolled');
+      }
+
+      // console.log('scroll', scrollTop)
+
+      this.update(e, scrollTop);
+    });
+  }
+
+  update (e, scrollTop) {
+    if (this.options.fixed) { this.fixed(e, scrollTop); }
+    if (this.options.flexible) { this.flexible(e, scrollTop); }
+  }
+
+  flexible (e, scrollTop) {
+    var size = offset(this.root, 'height');
+    // console.log('flexible', size, this.root.offsetHeight, scrollTop)
+    // if (scrollTop < this.size) {
+    //
+    var height = '64';
+    if (size < height) {
+      this.root.style.height = height + 'px';
+    } else {
+      height = this.size - scrollTop;
+      if (height < 64) height = 64;
+      this.root.style.height = height + 'px';
+    }
+
+    // console.log('scroll', this.root.style.top, scrollTop)
+
+    // if (scrollTop > 50) {
+    //   this.root.style.trans = scrollTop + 'px'
+    // } else {
+    //   this.root.style.top = scrollTop + 'px'
+    // }
+    // }
+      // this.root.style.top = scrollTop + 'px'
+      // this.root.style.height = this.size - scrollTop
+    // } else {
+    //   console.log('size scroll', this.size, scrollTop)
+
+    //   this.root.style.height = this.size - scrollTop + 'px'
+    //   // this.root.style.top = scrollTop + 'px'
+    // }
+  }
+
+  fixed (e, scrollTop) {
+    if (scrollTop > 0) {
+      this.root.style.transform = 'translateY(' + scrollTop + 'px)';
+    } else {
+      this.root.style.transform = 'translateY(' + scrollTop + 'px)';
+    }
+  }
+
+  waterfall$ (e) {}
+}
+
 function create$2 (tag, className) {
   tag = tag || 'div';
 
@@ -754,168 +1199,7 @@ var control = {
   }
 };
 
-'use strict';
-
-/**
- * Utility functions
- * @module module/utils
- */
-
-/**
- * Checks if given value is an array
- * @param {*} object
- * @returns {boolean}
- * @private
- */
-function _isArray (object) {
-  return Object.prototype.toString.call(object) === '[object Array]'
-}
-
-/**
- * Checks if javascript object is plain object
- * @param {Object} object
- * @returns {*|boolean}
- * @private
- */
-function _isLiteralObject (object) {
-  return object && typeof object === 'object' && Object.getPrototypeOf(object) === Object.getPrototypeOf({})
-}
-
-/**
- * Checks if object is iterable
- * @param {Object} object
- * @returns {boolean}
- * @private
- */
-function _isIterable (object) {
-  var r = _isLiteralObject(object) ||
-    _isArray(object) ||
-    (typeof object === 'object' &&
-      object !== null &&
-      object.length !== undefined);
-
-  return r
-}
-
-/**
- *
- * @param {Object} object
- * @param {Function} callback
- * @private
- */
-function _each (object, callback) {
-  if (_isArray(object) || (typeof object === 'object' && object.length !== undefined)) {
-    for (var i = 0, l = object.length; i < l; i++) {
-      callback.apply(object[i], [object[i], i]);
-    }
-    return
-  }
-
-  if (_isLiteralObject(object)) {
-    for (var key in object) {
-      callback.apply(object[key], [object[key], key]);
-    }
-  }
-}
-
-/**
- * Element style related methods
- * @module component/style
- */
-/**
- * Gets element's computed style
- * @param {string} prop
- * @returns {*}
- * @private
- */
-function get (element, style) {
-  // console.log('get', element, style);
-  // get array of elements
-  if (_isArray(style)) {
-    var css = {};
-    for (var i in list) {
-      css[list[i]] = this.get(element, list[i]);
-    }
-    return css
-  } else {
-    var computedStyle;
-
-    if (typeof window.getComputedStyle === 'function') { // normal browsers
-      computedStyle = window.getComputedStyle(element);
-    } else if (typeof document.currentStyle !== undefined) { // other browsers
-      computedStyle = element.currentStyle;
-    } else {
-      computedStyle = element.style;
-    }
-
-    if (style) {
-      return computedStyle[style]
-    } else {
-      return computedStyle
-    }
-  }
-}
-
-/**
- * set element style
- * @param { ? } element [description]
- * @param {?} style   [description]
- */
-function set$1 (element, style) {
-  if (_isIterable(element) && _isLiteralObject(style)) {
-    _each(element, function (e) {
-      set$1(e, style);
-    });
-    return element
-  }
-
-  if (_isLiteralObject(style)) {
-    // console.log('style', element, style);
-    for (var i in style) {
-      element.style[i] = style[i];
-    }
-    return style
-  }
-
-  return false
-}
-
-var style = { get, set: set$1 };
-
-'use strict';
-
-/**
- * Element style related methods
- * @module component/style
- */
-function offset (element, prop) {
-  var rect = element.getBoundingClientRect();
-
-  var offset = {
-    top: Math.round(rect.top),
-    right: Math.round(rect.right),
-    bottom: Math.round(rect.bottom),
-    left: Math.round(rect.left),
-    width: rect.width ? Math.round(rect.width) : Math.round(element.offsetWidth),
-    height: rect.height ? Math.round(rect.height) : Math.round(element.offsetHeight)
-  };
-
-  // css width and height
-  if (offset.width <= 0) {
-    offset.width = parseFloat(style.get(element, 'width'));
-  }
-  if (offset.height <= 0) {
-    offset.height = parseFloat(style.get(element, 'height'));
-  }
-
-  if (prop) {
-    return offset[prop]
-  } else {
-    return offset
-  }
-}
-
-const defaults$2 = {
+const defaults$3 = {
   transition: '.5s cubic-bezier(0.4, 0.0, 0.2, 1)',
   opacity: ['1', '.3']
 };
@@ -925,9 +1209,9 @@ const defaults$2 = {
  * @param  {?} container [description]
  * @return {?}           [description]
  */
-function init (instance) {
+function init$1 (instance) {
   instance.on('built', (container) => {
-    set(container);
+    set$1(container);
   });
 }
 
@@ -935,7 +1219,7 @@ function init (instance) {
  * this function set the event listener
  * @param {HTMLElement} container [description]
  */
-function set (container) {
+function set$1 (container) {
   container.addEventListener('mousedown', (e) => {
     show(e);
   });
@@ -962,7 +1246,7 @@ function show (e) {
   ripple.style.left = initial.left;
   ripple.style.top = initial.top;
   //ripple.style.opacity = defaults.opacity[1]
-  ripple.style.transition = defaults$2.transition;
+  ripple.style.transition = defaults$3.transition;
 
   insert(ripple, container, 'top');
 
@@ -1104,7 +1388,7 @@ var attach = {
 
 'use strict';
 
-const defaults$1 = {
+const defaults$2 = {
   prefix: 'material',
   class: 'button',
   tag: 'button',
@@ -1150,13 +1434,13 @@ class Button {
    * @return {?}         [description]
    */
   init (options) {
-    this.options = Object.assign({}, defaults$1, options || {});
-    Object.assign(this, control, emitter, attach, init);
+    this.options = Object.assign({}, defaults$2, options || {});
+    Object.assign(this, control, emitter, attach, init$1);
 
     this.element = this.element || {};
 
     // init module
-    init(this);
+    init$1(this);
 
     this.emit('init');
   }
@@ -1200,7 +1484,7 @@ class Button {
   }
 
   /**
-   * [setup description]
+   * Setup method
    * @return {?} [description]
    */
   setup () {
@@ -1244,7 +1528,7 @@ class Button {
   }
 
   /**
-   * [_onElementMouseDown description]
+   * method handleClick
    * @param  {event} e
    * @return {void}
    */
@@ -1261,9 +1545,294 @@ class Button {
   }
 }
 
+var event = {
+
+  /**
+   * cross browser addEvent
+   * @param {string}   event The event to add
+   * @param {Function} fn    [description]
+   */
+  add (element, event, fn) {
+    // check if element is a compoenent
+    element = element.root || element;
+
+    // avoid memory overhead of new anonymous functions for every event handler that's installed
+    // by using local functions
+    function listenHandler (e) {
+      var ret = fn.apply(this, arguments);
+      if (ret === false) {
+        e.stopPropagation();
+        e.preventDefault();
+      }
+      return (ret)
+    }
+
+    function attachHandler () {
+      // set the this pointer same as addEventListener when fn is called
+      // and make sure the event is passed to the fn also so that works the same too
+      var ret = fn.call(element, window.event);
+      if (ret === false) {
+        window.event.returnValue = false;
+        window.event.cancelBubble = true;
+      }
+      return (ret)
+    }
+
+    if (element.addEventListener) {
+      element.addEventListener(event, listenHandler, false);
+    } else {
+      element.attachEvent('on' + event, attachHandler);
+    }
+
+    return this
+  },
+
+  /**
+   * cross browser removeEvent
+   * @param  {string}   event The event to remove
+   * @param  {Function} fn    [description]
+   * @return {Object}         [description]
+   */
+  remove (element, event, fn) {
+    element = element.root || element;
+
+    if (element.removeEventListener) {
+      element.removeEventListener(event, fn, false);
+    } else if (element.detachEvent) {
+      element.detachEvent('on' + event, element[fn.toString() + event]);
+      element[fn.toString() + event] = null;
+    } else {
+      element['on' + event] = function () {};
+    }
+
+    return this
+  }
+};
+
 'use strict';
 
 const defaults$4 = {
+  prefix: 'material',
+  class: 'banner',
+  tag: 'div'
+};
+
+/**
+ * Class representing a UI Container. Can add components.
+ *
+ * @extends Component
+ * @return {parent} The class instance
+ * @example new Container({
+ *   container: document.body
+ * });
+ */
+class Banner {
+  /**
+   * Constructor
+   * @param  {Object} options - Component options
+   * @return {Object} Class instance
+   */
+  constructor (options) {
+    // init and build
+    this.init(options);
+    this.build();
+    this.attach();
+
+    return this
+  }
+
+  /**
+   * Init class
+   * @params {Object} options The instance options
+   * @return {Object} This class instance
+   */
+  init (options) {
+    this.options = Object.assign({}, defaults$4, options || {});
+    Object.assign(this, emitter);
+
+    return this
+  }
+
+  /**
+   * [build description]
+   * @return {Object} This class  instance
+   */
+  build () {
+    this.root = create(this.options);
+
+    if (this.options.container) {
+      insert(this.root, this.options.container);
+    }
+
+    return this
+  }
+
+  attach () {
+    event.add(this.root, 'click', (ev) => {
+      // console.log('click', ev.target)
+
+      if (ev.target && ev.target.classList.contains('material-button')) {
+        var name = ev.target.getAttribute('data-name');
+        // console.log('name', name)
+        this.emit('select', name);
+        this.dismiss(ev.target);
+      }
+
+      ev.stopPropagation();
+    });
+
+    this.root.addEventListener('DOMNodeInserted', (e) => {
+      // console.log('DOMNodeInserted', e.target)
+      var textNode = e.target;
+
+      if (textNode == this.root) {
+        // console.log('banner root inserted', e.target)
+        if (!this.wrapper) { this.wrap(); }
+        this.scroll(this.view);
+      }
+      this.updatePaddingView();
+
+      // if (textNode !== this.root) return
+    });
+  }
+
+  dismiss () {
+    this.wrapper.classList.add('is-closed');
+    this.wrapper.style.height = '0';
+    this.updatePaddingView();
+  }
+
+  show () {
+    console.log('this.height', this.height);
+    this.wrapper.classList.remove('is-closed');
+    this.wrapper.style.height = this.height + 'px';
+    this.updatePaddingView();
+    this.updatePosition();
+  }
+
+  wrap () {
+    this.view = this.root.parentNode;
+
+    // console.log('wrap', this.root, this.view)
+    this.wrapper = document.createElement('div');
+
+    this.wrapper.classList.add('banner-wrapper');
+
+    this.view.insertBefore(this.wrapper, this.root);
+
+    this.wrapper.appendChild(this.root);
+
+    // insert(this.wrapper, this.root, 'before')
+
+    // insert(this.root, this.wrapper)
+  }
+
+  updatePaddingView () {
+    // console.log('updatePaddingView', this.view)
+
+    this.height = offset(this.root, 'height');
+    if (!this.paddingview) {
+      this.paddingview = window.getComputedStyle(this.view)['padding-top'];
+    }
+
+      // this.root.style.top = 'top: ' + this.paddingview
+
+        // console.log('paddingTop', padding)
+        // if (!padding) padding = window.getComputedStyle(this.root.parentNode, 'padding')
+        // console.log('padding', padding)
+
+    var padding = parseInt(this.paddingview, 10);
+    var size = parseInt(this.height, 10);
+
+    this.padding = padding;
+
+      // console.log(' banner inserted in', size, 'padding', padding)
+      //
+      //
+
+    var ptop = this.ptop = padding;
+
+    if (this.wrapper.classList.contains('is-fixed') && !this.wrapper.classList.contains('is-closed')) {
+      var ptop = this.ptop = size + padding;
+    }
+
+    this.view.setAttribute('style', 'padding-top: ' + ptop + 'px');
+  }
+
+  scroll (view) {
+    // console.log('initScroll', offset(this.root, 'top'), offset(view, 'top'))
+
+    var element = view;
+
+    this.scrolling = view;
+
+    if (view === document.body) {
+      element = document;
+      this.scrolling = document.body;
+    }
+
+    // view.classList.add()
+
+    element.addEventListener('scroll', (e) => {
+      // console.log('scroll', this.view)
+      this.updatePosition();
+    });
+  }
+
+  updatePosition () {
+    var view = this.view;
+    var scrollTop;
+    if (view === document.body) {
+      scrollTop = (document.documentElement ||
+       document.body.parentNode ||
+       document.body).scrollTop;
+    } else {
+      scrollTop = view.scrollTop;
+    }
+
+      // var o = offset(this.root, 'top') - offset(view, 'top')
+      // console.log('o', this.root.offsetTop)
+
+    var padding = this.paddingview;
+    padding = parseInt(padding, 10);
+
+    // console.log('scroll', scrollTop, padding)
+
+    if (scrollTop > padding) {
+      var y = scrollTop - padding;
+      // console.log('fixed', y)
+      this.wrapper.classList.add('is-fixed');
+      this.wrapper.style.transform = 'translateY(' + y + 'px)';
+
+      // this.update(scrollTop, padding)
+      // this.wrapper.setAttribute('style', 'top: ' + this.paddingview)
+      this.wrapper.style.top = this.paddingview;
+    } else {
+      // console.log('relative')
+      this.wrapper.classList.remove('is-fixed');
+      this.wrapper.style.transform = 'translateY(' + 0 + 'px)';
+      this.wrapper.style.top = '0';
+      // this.wrapper.setAttribute('style', 'top: ' + this.paddingview)
+      // this.wrapper.setAttribute('style', 'top: 0')
+    }
+
+    this.updatePaddingView();
+  }
+
+  update (scrollTop, padding) {
+
+  }
+
+  insert (container, context) {
+    insert(this.root, container, context);
+
+    return this
+  }
+}
+
+'use strict';
+
+const defaults$6 = {
   prefix: 'material',
   class: 'button',
   tag: 'button',
@@ -1309,13 +1878,13 @@ class Button$2 {
    * @return {?}         [description]
    */
   init (options) {
-    this.options = Object.assign({}, defaults$4, options || {});
-    Object.assign(this, control, emitter, attach, init);
+    this.options = Object.assign({}, defaults$6, options || {});
+    Object.assign(this, control, emitter, attach, init$1);
 
     this.element = this.element || {};
 
     // init module
-    init(this);
+    init$1(this);
 
     this.emit('init');
   }
@@ -1359,7 +1928,7 @@ class Button$2 {
   }
 
   /**
-   * [setup description]
+   * Setup method
    * @return {?} [description]
    */
   setup () {
@@ -1403,7 +1972,7 @@ class Button$2 {
   }
 
   /**
-   * [_onElementMouseDown description]
+   * method handleClick
    * @param  {event} e
    * @return {void}
    */
@@ -1434,7 +2003,7 @@ var iconForward = `
 
 'use strict';
 
-const defaults$3 = {
+const defaults$5 = {
   prefix: 'material',
   class: 'calendar',
   target: '.week-day',
@@ -1467,7 +2036,7 @@ class Calendar {
    * @return {Object} The class options
    */
   constructor (options) {
-    this.options = Object.assign({}, defaults$3, options || {});
+    this.options = Object.assign({}, defaults$5, options || {});
 
     this.init();
     this.build();
@@ -1889,79 +2458,9 @@ class Calendar {
 
 'use strict';
 
-/**
- * Inject method insert element to the domtree using Dom methods
- * @param {HTMLElement} container [description]
- * @param  {string} context - Injection context
- * @return {Object} This class intance
- */
-var insert$2 = {
-
-  /**
-   * [insert description]
-   * @param  {?} container [description]
-   * @param  {?} context   [description]
-   * @param  {?} debug     [description]
-   * @return {?}           [description]
-   */
-  insert (container, context) {
-    var element = this.root;
-
-    this.insertElement(element, container, context);
-
-    return this
-  },
-
-  /**
-   * [insertElement description]
-
-   * @param  {?} element   [description]
-   * @param  {?} container [description]
-   * @param  {?} context   [description]
-   * @param  {?} debug     [description]
-   * @return {?}           [description]
-   */
-  insertElement (element, container, context) {
-    if (container && container.root) {
-      container = container.root;
-    }
-
-    this.container = container;
-
-    // if (debug) {
-    // console.log('insert', container);
-    // }
-
-    // this.emit('insert');
-
-    context = context || 'bottom';
-
-    var contexts = ['top', 'bottom', 'after', 'before'];
-    var methods = ['prepend', 'append', 'after', 'before'];
-
-    var index = contexts.indexOf(context);
-    if (index === -1) {
-      return
-    }
-
-    var method = methods[index];
-
-    // this.emit('insert');
-
-    // insert component element to the dom tree using Dom
-    // console.log('dom', method, element);
-    dom[method](container, element);
-    // this.emit('injected');
-    //
-    return element
-  }
-};
-
-'use strict';
-
 // import modules
 // import components
-let defaults$5 = {
+let defaults$7 = {
   prefix: 'material',
   class: 'card',
   tag: 'div'
@@ -1979,7 +2478,7 @@ class Card {
   }
 
   init (options) {
-    this.options = Object.assign({}, defaults$5, options || {});
+    this.options = Object.assign({}, defaults$7, options || {});
     Object.assign(this, insert$2);
   }
 
@@ -2060,7 +2559,7 @@ var events = {
 
 'use strict';
 
-const defaults$6 = {
+const defaults$8 = {
   prefix: 'material',
   class: 'component',
   tag: 'span'
@@ -2101,7 +2600,7 @@ class Component {
    * @return {Object} Instance
    */
   init (options) {
-    this.options = Object.assign({}, defaults$6, options || {});
+    this.options = Object.assign({}, defaults$8, options || {});
 
     Object.assign(this, emitter, events, insert$2);
 
@@ -2125,7 +2624,7 @@ class Component {
 
 'use strict';
 
-const defaults$7 = {
+const defaults$9 = {
   prefix: 'material',
   class: 'container',
   tag: 'div'
@@ -2160,7 +2659,7 @@ class Container {
    * @return {Object} This class instance
    */
   init (options) {
-    this.options = Object.assign({}, defaults$7, options || {});
+    this.options = Object.assign({}, defaults$9, options || {});
     Object.assign(this, emitter);
 
     return this
@@ -2205,7 +2704,7 @@ function label (root, text, options) {
 
 'use strict';
 
-function init$1 (element, attribute) {
+function init$2 (element, attribute) {
   for (var key in attribute) {
     if (attribute.hasOwnProperty(key)) {
       element.setAttribute(key, attribute[key]);
@@ -2227,7 +2726,7 @@ function remove$2 (element, name) {
   return element.removeAttribute(name)
 }
 
-var attribute = { init: init$1, set: set$2, get: get$1, remove: remove$2 };
+var attribute = { init: init$2, set: set$2, get: get$1, remove: remove$2 };
 
 function isObject (object) {
   return object &&
@@ -2287,7 +2786,7 @@ var icon = `
 
 // element related modules
 
-let defaults$8 = {
+let defaults$10 = {
   prefix: 'material',
   class: 'checkbox',
   type: 'control',
@@ -2340,7 +2839,7 @@ class Checkbox {
    * @return {Object} This class instance
    */
   init (options) {
-    this.options = Object.assign({}, defaults$8, options || {});
+    this.options = Object.assign({}, defaults$10, options || {});
     Object.assign(this, events, control, emitter, attach);
 
     return this
@@ -2596,74 +3095,10 @@ class Controller {
 
 var controller = new Controller();
 
-var event = {
-
-  /**
-   * cross browser addEvent
-   * @param {string}   event The event to add
-   * @param {Function} fn    [description]
-   */
-  add (element, event, fn) {
-    // check if element is a compoenent
-    element = element.root || element;
-
-    // avoid memory overhead of new anonymous functions for every event handler that's installed
-    // by using local functions
-    function listenHandler (e) {
-      var ret = fn.apply(this, arguments);
-      if (ret === false) {
-        e.stopPropagation();
-        e.preventDefault();
-      }
-      return (ret)
-    }
-
-    function attachHandler () {
-      // set the this pointer same as addEventListener when fn is called
-      // and make sure the event is passed to the fn also so that works the same too
-      var ret = fn.call(element, window.event);
-      if (ret === false) {
-        window.event.returnValue = false;
-        window.event.cancelBubble = true;
-      }
-      return (ret)
-    }
-
-    if (element.addEventListener) {
-      element.addEventListener(event, listenHandler, false);
-    } else {
-      element.attachEvent('on' + event, attachHandler);
-    }
-
-    return this
-  },
-
-  /**
-   * cross browser removeEvent
-   * @param  {string}   event The event to remove
-   * @param  {Function} fn    [description]
-   * @return {Object}         [description]
-   */
-  remove (element, event, fn) {
-    element = element.root || element;
-
-    if (element.removeEventListener) {
-      element.removeEventListener(event, fn, false);
-    } else if (element.detachEvent) {
-      element.detachEvent('on' + event, element[fn.toString() + event]);
-      element[fn.toString() + event] = null;
-    } else {
-      element['on' + event] = function () {};
-    }
-
-    return this
-  }
-};
-
 'use strict';
 
 // dialog related modules
-let defaults$9 = {
+let defaults$11 = {
   prefix: 'material',
   class: 'dialog',
   tag: 'div',
@@ -2695,7 +3130,7 @@ class Dialog {
    */
   init (options) {
     // init options
-    this.options = Object.assign({}, defaults$9, options || {});
+    this.options = Object.assign({}, defaults$11, options || {});
 
     // implement modules
     Object.assign(this, events, emitter, attach, insert$2);
@@ -2839,7 +3274,7 @@ class Dialog {
 
 'use strict';
 
-var defaults$10 = {
+var defaults$12 = {
   prefix: 'material',
   class: 'divider',
   tag: 'span'
@@ -2871,7 +3306,7 @@ class Divider {
    * @return {?}         [description]
    */
   init (options) {
-    this.options = Object.assign({}, defaults$10, options || {});
+    this.options = Object.assign({}, defaults$12, options || {});
 
     Object.assign(this, insert$2);
   }
@@ -2893,7 +3328,7 @@ class Divider {
   }
 }
 
-function init$2 (instance) {
+function init$3 (instance) {
   // assign modules
   modules(instance);
 
@@ -2916,7 +3351,7 @@ function modules (instance) {
 
 'use strict';
 
-const defaults$11 = {
+const defaults$13 = {
   prefix: 'material',
   class: 'drawer',
   modifier: 'width',
@@ -2943,9 +3378,9 @@ class Drawer {
    * @return {Object} Class instance
    */
   constructor (options) {
-    this.options = Object.assign({}, defaults$11, options || {});
+    this.options = Object.assign({}, defaults$13, options || {});
 
-    init$2(this);
+    init$3(this);
 
     this.build();
     this.attach();
@@ -3053,7 +3488,7 @@ class Drawer {
 'use strict';
 
 // import component
-const defaults$12 = {
+const defaults$14 = {
   prefix: 'material',
   class: 'form',
   tag: 'div',
@@ -3073,7 +3508,7 @@ class Form {
    * @return {Object} Class instance
    */
   constructor (options) {
-    this.options = Object.assign({}, defaults$12, options || {});
+    this.options = Object.assign({}, defaults$14, options || {});
 
     this.init();
     this.build();
@@ -3317,7 +3752,7 @@ class Form {
 'use strict';
 
 // import insert from './component/insert'
-var defaults$14 = {
+var defaults$16 = {
   prefix: 'material',
   class: 'image',
   tag: 'div'
@@ -3349,7 +3784,7 @@ class Image {
    * @return {?}         [description]
    */
   init (options) {
-    this.options = Object.assign({}, defaults$14, options || {});
+    this.options = Object.assign({}, defaults$16, options || {});
     Object.assign(this, control);
   }
 
@@ -3436,7 +3871,7 @@ class Image {
 
 'use strict';
 
-var defaults$15 = {
+var defaults$17 = {
   prefix: 'material',
   class: 'item',
   type: 'default',
@@ -3483,7 +3918,7 @@ class Item {
    */
   init (options) {
     // merge options
-    this.options = Object.assign({}, defaults$15, options || {});
+    this.options = Object.assign({}, defaults$17, options || {});
 
     // define class
 
@@ -3538,7 +3973,7 @@ class Item {
 
 'use strict';
 
-const defaults$16 = {
+const defaults$18 = {
   prefix: 'material',
   class: 'list',
   tag: 'ul',
@@ -3565,7 +4000,7 @@ class List {
    * @return {Object} The class options
    */
   constructor (options) {
-    this.options = Object.assign({}, defaults$16, options || {});
+    this.options = Object.assign({}, defaults$18, options || {});
 
     this.init(this.options);
     this.build(this.options);
@@ -3764,7 +4199,7 @@ class List {
 
 'use strict';
 
-const defaults$17 = {
+const defaults$19 = {
   prefix: 'material',
   class: 'menu',
   tag: 'div',
@@ -3805,7 +4240,7 @@ class Menu {
    * @return {[type]} [description]
    */
   init (options) {
-    this.options = Object.assign({}, defaults$17, options || {});
+    this.options = Object.assign({}, defaults$19, options || {});
 
     Object.assign(this, emitter, events, attach, insert);
   }
@@ -3890,7 +4325,7 @@ class Menu {
 'use strict';
 
 // import Component from './component';
-var defaults$18 = {
+var defaults$20 = {
   prefix: 'material',
   class: 'progress',
   tag: 'div',
@@ -3926,7 +4361,7 @@ class Spinner {
    */
   init (options) {
     // merge options
-    this.options = Object.assign({}, defaults$18, options || {});
+    this.options = Object.assign({}, defaults$20, options || {});
 
     // define class
 
@@ -3974,7 +4409,7 @@ var icon$1 = `
 'use strict';
 
 // import control from './control';
-let defaults$19 = {
+let defaults$21 = {
   prefix: 'material',
   class: 'slider',
   type: 'control',
@@ -4017,7 +4452,7 @@ class Slider {
    * @return {Object} The class options
    */
   constructor (options) {
-    this.options = Object.assign({}, defaults$19, options || {});
+    this.options = Object.assign({}, defaults$21, options || {});
 
     this.init(this.options);
     this.build(this.options);
@@ -4032,7 +4467,7 @@ class Slider {
    * @return {Object} This class instance
    */
   init (options) {
-    init$2(this);
+    init$3(this);
 
     return this
   }
@@ -4323,7 +4758,7 @@ class Slider {
 
 // import modules
 // import components
-let defaults$20 = {
+let defaults$22 = {
   prefix: 'material',
   class: 'snackbar',
   delay: 2000,
@@ -4337,7 +4772,7 @@ class Snackbar {
    * @return {Object} Class instance
    */
   constructor (options) {
-    this.options = Object.assign({}, defaults$20, options || {});
+    this.options = Object.assign({}, defaults$22, options || {});
 
     this.init();
     this.build();
@@ -4385,7 +4820,7 @@ class Snackbar {
 'use strict';
 
 // import control from '../control';
-let defaults$21 = {
+let defaults$23 = {
   prefix: 'material',
   class: 'switch',
   type: 'control',
@@ -4440,7 +4875,7 @@ class Switch {
    * @return {Object} This class instance
    */
   init (options) {
-    this.options = Object.assign({}, defaults$21, options || {});
+    this.options = Object.assign({}, defaults$23, options || {});
     Object.assign(this, emitter, control, attach, insert$2);
 
     this.value = this.options.value;
@@ -4533,7 +4968,7 @@ class Switch {
 
 'use strict';
 
-const defaults$22 = {
+const defaults$24 = {
   prefix: 'material',
   class: 'tabs',
   tag: 'div',
@@ -4558,7 +4993,7 @@ class Tabs {
   }
 
   init (options) {
-    this.options = Object.assign({}, defaults$22, options || {});
+    this.options = Object.assign({}, defaults$24, options || {});
     Object.assign(this, insert$2, emitter);
   }
 
@@ -4615,7 +5050,7 @@ class Tabs {
 
 'use strict';
 
-var defaults$23 = {
+var defaults$25 = {
   prefix: 'material',
   class: 'text',
   type: 'default',
@@ -4666,7 +5101,7 @@ class Text {
   }
 
   init (options) {
-    this.options = Object.assign({}, defaults$23, options || {});
+    this.options = Object.assign({}, defaults$25, options || {});
 
     Object.assign(this, insert$2);
   }
@@ -4735,7 +5170,7 @@ var focus = {
 
 'use strict';
 
-var defaults$24 = {
+var defaults$26 = {
   prefix: 'material',
   class: 'textfield',
   type: 'control',
@@ -4763,7 +5198,7 @@ class Textfield {
    * @return {Object} Class instance
    */
   constructor (options) {
-    this.options = Object.assign({}, defaults$24, options || {});
+    this.options = Object.assign({}, defaults$26, options || {});
 
     this.init();
     this.build();
@@ -5029,10 +5464,10 @@ class Textfield {
 
 'use strict';
 
-const defaults$25 = {
+const defaults$27 = {
   prefix: 'material',
   class: 'toolbar',
-  tag: 'header'
+  tag: 'div'
 };
 
 class Toolbar {
@@ -5049,10 +5484,10 @@ class Toolbar {
   }
 
   init (options) {
-    this.options = Object.assign({}, defaults$25, options || {});
+    this.options = Object.assign({}, defaults$27, options || {});
     Object.assign(this, insert$2);
 
-    console.log('waterfALL', this.options.waterfall);
+    // console.log('waterfALL', this.options.waterfall)
 
     this.waterfall = this.options.waterfall;
   }
@@ -5064,14 +5499,14 @@ class Toolbar {
   build () {
     this.root = create(this.options);
 
-    console.log(this.options.height, this.options.fixed);
+    // console.log(this.options.height, this.options.fixed)
 
     if (this.options.height) {
       this.root.style.height = this.options.height + 'px';
     }
 
     if (this.options.fixed) {
-      console.log('is-fixed');
+      // console.log('is-fixed')
       this.root.classList.add('is-fixed');
     }
 
@@ -5095,7 +5530,7 @@ class Toolbar {
 
       var view = this.view = this.root.parentNode;
 
-      console.log('view', view);
+      // console.log('view', view)
 
       var padding = window.getComputedStyle(view)['padding-top'];
       // console.log('paddingTop', padding)
@@ -5113,11 +5548,11 @@ class Toolbar {
       // console.log('ptop', ptop)
 
       if (document.body == view) {
-        console.log('toolbar container body');
+        // console.log('toolbar container body')
         this.root.classList.add('toolbar-body');
       }
 
-      view.setAttribute('style', 'padding-top: ' + ptop + 'px');
+      // view.setAttribute('style', 'padding-top: ' + ptop + 'px')
 
       this.scroll(view);
     });
@@ -5236,7 +5671,7 @@ class Toolbar {
 
 'use strict';
 
-const defaults$26 = {
+const defaults$28 = {
   prefix: 'material',
   class: 'view',
   type: null,
@@ -5262,7 +5697,7 @@ class View {
    * @return {Object} Class instance
    */
   constructor (options) {
-    this.options = Object.assign({}, defaults$26, options || {});
+    this.options = Object.assign({}, defaults$28, options || {});
     // init and build
     this.init(options);
     this.build();
@@ -5345,23 +5780,23 @@ console.log('layout --', document.body);
  * Application Layout
  */
 var layout = [
-  [Toolbar, 'head', { type: 'app', display: 'flex', direction: 'horizontal', color: 'primary' },
+  [AppBar, 'head', { type: 'app', display: 'flex', direction: 'horizontal', color: 'primary' },
     [Button, 'menu-navi', { icon: iconNavi, type: 'action' }],
     [Text, 'title', { css: 'pin-bottom', text: TITLE }],
     [Button, 'menu-more', { icon: iconMore, type: 'action' }]
   ],
   [Drawer, 'navi', { fixed: 1, css: 'drawer-temporary', display: 'flex', direction: 'horizontal', type: 'temporary' },
-    [Toolbar, 'navi-head', { fixed: 1, flexible: 1 },
+    [AppBar, 'navi-head', { fixed: 1, flexible: 1 },
       [Button, 'menu-navi-head', { icon: iconNavi, type: 'action' }],
       [Text, 'title', { text: TITLE }]
     ],
     [List, 'navi-list', { flex: '1' }]
   ],
+  [View, 'main', { position: 'fixed' }],
   [Menu, 'more-menu', { position: 'fixed' },
     [Checkbox, 'darktheme', { text: 'Dark theme' }],
     [Checkbox, 'rtl', { text: 'RTL' }]
-  ],
-  [View, 'main', { position: 'fixed' }]
+  ]
 ];
 
 var cookies = createCommonjsModule(function (module, exports) {
@@ -5581,6 +6016,304 @@ var typography = function (body) {
   var layout = [View, 'typography', {}, typography];
 
   new Layout(layout, body);
+};
+
+var iconApps = `
+<svg height="24" viewBox="0 0 24 24" width="24" xmlns="http://www.w3.org/2000/svg">
+  <path d="M4 8h4V4H4v4zm6 12h4v-4h-4v4zm-6 0h4v-4H4v4zm0-6h4v-4H4v4zm6 0h4v-4h-4v4zm6-10v4h4V4h-4zm-6 4h4V4h-4v4zm6 6h4v-4h-4v4zm0 6h4v-4h-4v4z" />
+  <path d="M0 0h24v24H0z" fill="none" />
+</svg>`;
+
+'use strict';
+
+/**
+ * [initTest description]
+ * @return {[type]} [description]
+ */
+
+const TITLE$1 = 'Material';
+const CONTENT = 'Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas. Vestibulum tortor quam, feugiat vitae, ultricies eget, tempor sit amet, ante. Donec eu libero sit amet quam egestas semper. Aenean ultricies mi vitae est. Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas. Vestibulum tortor quam, feugiat vitae, ultricies eget, tempor sit amet, ante. Donec eu libero sit amet quam egestas semper. Aenean ultricies mi vitae est.';
+
+var appbar = function (body) {
+  var layout = new Layout([View, 'appbar', {},
+    [Container, 'top', {},
+      [Text, 'title', { type: 'title', text: 'AppBar' }],
+      [Text, 'title', { text: 'The app bar displays information and actions relating to the current screen.' }]
+    ],
+    [Container, 'hero', {},
+      [AppBar, 'head', { display: 'flex', direction: 'horizontal', color: 'primary' },
+        [Button, 'menu-navi', { icon: iconNavi, type: 'action' }],
+        [Text, 'title', { text: TITLE$1 }],
+        [Button, 'menu-more', { icon: iconMore, type: 'action' }]
+      ]
+    ],
+    [Container, 'sample', {},
+      [Container, 'top', {},
+        [Text, 'title', { type: 'title', text: 'Normal' }]
+      ],
+      [Container, 'screen', {},
+        [AppBar, 'head', { display: 'flex', direction: 'horizontal', color: 'primary' },
+          [Button, 'menu-navi', { icon: iconNavi, type: 'action' }],
+          [Text, 'title', { text: 'Title' }],
+          [Button, 'menu-more', { icon: iconMore, type: 'action' }]
+        ],
+        [Text, '', { text: CONTENT }],
+        [Text, '', { text: CONTENT }],
+        [Text, '', { text: CONTENT }],
+        [Text, '', { text: CONTENT }],
+        [Text, '', { text: CONTENT }],
+        [Text, '', { text: CONTENT }],
+        [Text, '', { text: CONTENT }]
+      ]
+    ],
+
+    [Container, 'sample', {},
+      [Container, 'top', {},
+        [Text, 'title', { type: 'title', text: 'Fixed' }]
+      ],
+      [Container, 'screen', { css: 'fixed-screen' },
+        [AppBar, 'head', { fixed: 'fixed', color: 'primary' },
+          [Button, 'menu-navi', { icon: iconNavi, type: 'action' }],
+          [Text, 'title', { text: 'Title' }],
+          [Button, 'menu-more', { icon: iconMore, type: 'action' }]
+        ],
+        [Text, '', { text: CONTENT }],
+        [Text, '', { text: CONTENT }],
+        [Text, '', { text: CONTENT }],
+        [Text, '', { text: CONTENT }],
+        [Text, '', { text: CONTENT }],
+        [Text, '', { text: CONTENT }],
+        [Text, '', { text: CONTENT }]
+      ]
+    ],
+    [Container, 'sample', {},
+      [Container, 'top', {},
+        [Text, 'title', { type: 'title', text: 'Flexile' }]
+      ],
+      [Container, 'screen', { css: 'flexile-screen' },
+        [AppBar, 'head', { type: 'flexible', height: 224, display: 'flex', direction: 'vertical', color: 'primary' },
+          [Container, 'section', { css: 'menu', display: 'flex', direction: 'horizontal' },
+            [Button, 'menu-navi', { icon: iconNavi, type: 'action' }],
+            [Divider, 'section', { flex: 1 }],
+            [Button, 'menu-apps', { icon: iconApps, type: 'action' }],
+            [Button, 'menu-more', { icon: iconMore, type: 'action' }]
+          ],
+          [Container, 'section', { },
+            [Text, 'title', { css: 'pin-bottom', type: 'title', text: 'Title' }]
+          ]
+        ],
+        [Text, '', { text: CONTENT }],
+        [Text, '', { text: CONTENT }],
+        [Text, '', { text: CONTENT }],
+        [Text, '', { text: CONTENT }],
+        [Text, '', { text: CONTENT }],
+        [Text, '', { text: CONTENT }],
+        [Text, '', { text: CONTENT }]
+
+      ]
+    ],
+    [Container, 'sample', {},
+      [Container, 'top', {},
+        [Text, 'title', { type: 'title', text: 'Flexible' }]
+      ],
+      [Container, 'screen', { css: 'screen-waterfall' },
+        [AppBar, 'waterfalltollbar', { waterfall: 1, height: 224, flexible: 1, fixed: 1, display: 'flex', direction: 'vertical', color: 'primary' },
+          [Container, 'section', { css: 'menu', flex: 'none', display: 'flex', direction: 'horizontal' },
+            [Button, 'menu-water', { icon: iconNavi, type: 'action' }],
+            [Divider, 'section', { flex: 1 }],
+            [Button, 'menu-apps', { icon: iconApps, type: 'action' }],
+            [Button, 'menu-more', { icon: iconMore, type: 'action' }]
+          ],
+          [Container, 'section', { flex: 'none', position: 'absolute', bottom: '1px' },
+            [Text, 'title', { css: 'pin-bottom', type: 'title', text: 'Title' }]
+          ]
+        ],
+        [Drawer, 'navi-water', { display: 'flex', direction: 'vertical', css: 'drawer-temporary', type: 'temporary' },
+          [AppBar,
+            'navi-head', { },
+            [Button, 'menu-navi-head', { icon: iconNavi, type: 'action' }],
+            [Text, 'title', { text: TITLE$1 }]
+          ],
+          [List, 'navi-list', { flex: '1' }]
+        ],
+        [Text, '', { text: CONTENT }],
+        [Text, '', { text: CONTENT }],
+        [Text, '', { text: CONTENT }],
+        [Text, '', { text: CONTENT }],
+        [Text, '', { text: CONTENT }],
+        [Text, '', { text: CONTENT }],
+        [Text, '', { text: CONTENT }]
+
+      ]
+    ],
+    [Container, 'sample', {},
+      [Container, 'top', {},
+        [Text, 'title', { type: 'title', text: 'Fixed bottom' }]
+      ],
+      [Container, 'screen', {},
+        [AppBar, 'foot', { fixed: 'fixed', type: 'bottom', display: 'flex', direction: 'horizontal', color: 'primary' },
+          [Button, 'menu-navi', { icon: iconNavi, type: 'action' }],
+          [Text, 'title', { text: 'Title' }],
+          [Button, 'menu-more', { icon: iconMore, type: 'action' }]
+        ],
+        [Text, '', { text: CONTENT }],
+        [Text, '', { text: CONTENT }],
+        [Text, '', { text: CONTENT }],
+        [Text, '', { text: CONTENT }],
+        [Text, '', { text: CONTENT }],
+        [Text, '', { text: CONTENT }],
+        [Text, '', { text: CONTENT }]
+      ]
+    ]
+  ], body);
+
+  var navi = layout.get('navi-water');
+
+  layout.get('menu-water').on('click', function (e) {
+    navi.toggle(e);
+  });
+};
+
+'use strict';
+
+/**
+ * [initTest description]
+ * @return {[type]} [description]
+ */
+
+const CONTENT$1 = 'Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas. Vestibulum tortor quam, feugiat vitae, ultricies eget, tempor sit amet, ante. Donec eu libero sit amet quam egestas semper. Aenean ultricies mi vitae est. Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas. Vestibulum tortor quam, feugiat vitae, ultricies eget, tempor sit amet, ante. Donec eu libero sit amet quam egestas semper. Aenean ultricies mi vitae est. \n\n';
+
+var banner = function (body) {
+  var layout = new Layout([View, 'banner', {},
+    [Container, 'top', {},
+      [Text, 'title', { tag: 'p', type: 'title', text: 'Banner' }],
+      [Text, 'title', { text: '...' }]
+    ],
+    [Container, 'hero', {}
+      // [Banner, '', { },
+      //   [Text, 'title', { text: 'There was a problem processing the transaction' }],
+      //   [Toolbar, 'banner', { display: 'flex', direction: 'horizontal' },
+      //     [Component, 'space', { flex: 1 }],
+      //     [Button, 'default', { text: 'Fix it', color: 'primary' }],
+      //     [Button, 'default', { text: 'Learn more', color: 'primary' }]
+      //   ]
+      // ]
+    ],
+    [Container, 'sample', {},
+      [Container, 'top', {},
+        [Text, 'title', { type: 'title', text: 'Normal' }],
+        [Button, 'showBanner1', { label: 'show banner' }]
+      ],
+      [Container, 'screen', {},
+        [AppBar, 'head', { display: 'flex', direction: 'horizontal', color: 'primary' },
+          [Button, 'menu-navi', { icon: iconNavi, type: 'action' }],
+          [Text, 'title', { text: 'Title' }],
+          [Button, 'menu-more', { icon: iconMore, type: 'action' }]
+        ],
+        [Banner, 'banner1', { },
+          [Text, 'title', { text: 'There was a problem processing the transaction' }],
+          [Toolbar, 'banner', { display: 'flex', direction: 'horizontal' },
+            [Component, 'space', { flex: 1 }],
+            [Button, 'fixit', { text: 'Fix it', color: 'primary' }],
+            [Button, 'learn', { text: 'Learn more', color: 'primary' }]
+          ]
+        ],
+        [Container, 'content', {},
+          [Text, '', { tag: 'p', text: CONTENT$1 }],
+          [Text, '', { tag: 'p', text: CONTENT$1 }],
+          [Text, '', { tag: 'p', text: CONTENT$1 }],
+          [Text, '', { tag: 'p', text: CONTENT$1 }],
+          [Text, '', { tag: 'p', text: CONTENT$1 }],
+          [Text, '', { tag: 'p', text: CONTENT$1 }],
+          [Text, '', { tag: 'p', text: CONTENT$1 }]
+        ]
+      ]
+    ],
+    [Container, 'sample', {},
+      [Container, 'top', {},
+        [Text, 'title', { type: 'title', text: 'banner with appbar bottom' }],
+        [Button, 'showBanner2', { label: 'show banner' }]
+      ],
+      [Container, 'screen', {},
+        [AppBar, 'head', { type: 'bottom', fixed: '1', display: 'flex', direction: 'horizontal', color: 'primary' },
+          [Button, 'menu-navi', { icon: iconNavi, type: 'action' }],
+          [Text, 'title', { text: 'Title' }],
+          [Button, 'menu-more', { icon: iconMore, type: 'action' }]
+        ],
+        [Banner, 'banner2', { },
+          [Text, 'title', { text: 'There was a problem processing the transaction' }],
+          [Toolbar, 'banner', { display: 'flex', direction: 'horizontal' },
+            [Component, 'space', { flex: 1 }],
+            [Button, 'default', { text: 'Fix it', color: 'primary' }],
+            [Button, 'default', { text: 'Learn more', color: 'primary' }]
+          ]
+        ],
+        [Container, 'content', {},
+          [Text, '', { text: CONTENT$1 }],
+          [Text, '', { text: CONTENT$1 }],
+          [Text, '', { text: CONTENT$1 }],
+          [Text, '', { text: CONTENT$1 }],
+          [Text, '', { text: CONTENT$1 }],
+          [Text, '', { text: CONTENT$1 }],
+          [Text, '', { text: CONTENT$1 }]
+        ]
+      ]
+    ],
+    [Container, 'sample', {},
+      [Container, 'top', {},
+        [Text, 'title', { type: 'title', text: 'Normal' }],
+        [Button, 'showBanner3', { label: 'show banner' }]
+      ],
+      [Container, 'screen', {},
+        [AppBar, 'head', { fixed: '1', display: 'flex', direction: 'horizontal', color: 'primary' },
+          [Button, 'menu-navi', { icon: iconNavi, type: 'action' }],
+          [Text, 'title', { text: 'Title' }],
+          [Button, 'menu-more', { icon: iconMore, type: 'action' }]
+        ],
+        [Banner, 'banner3', { },
+          [Text, 'title', { text: 'There was a problem processing the transaction' }],
+          [Toolbar, 'banner', { display: 'flex', direction: 'horizontal' },
+            [Component, 'space', { flex: 1 }],
+            [Button, 'default', { text: 'Fix it', color: 'primary' }],
+            [Button, 'default', { text: 'Learn more', color: 'primary' }]
+          ]
+        ],
+        [Container, 'content', {},
+          [Text, '', { text: CONTENT$1 }],
+          [Text, '', { text: CONTENT$1 }],
+          [Text, '', { text: CONTENT$1 }],
+          [Text, '', { text: CONTENT$1 }],
+          [Text, '', { text: CONTENT$1 }],
+          [Text, '', { text: CONTENT$1 }],
+          [Text, '', { text: CONTENT$1 }]
+        ]
+      ]
+    ]
+  ], body);
+
+  layout.get('showBanner1').on('click', () => {
+    layout.get('banner1').show();
+  });
+
+  layout.get('banner1').on('select', (ev) => {
+    console.log('select', ev);
+  });
+
+  layout.get('showBanner2').on('click', () => {
+    layout.get('banner2').show();
+  });
+
+  layout.get('banner2').on('select', (ev) => {
+    console.log('select', ev);
+  });
+
+  layout.get('showBanner3').on('click', () => {
+    layout.get('banner3').show();
+  });
+
+  layout.get('banner3').on('select', (ev) => {
+    console.log('select', ev);
+  });
 };
 
 var iconStar = `
@@ -5840,35 +6573,9 @@ var calendar = function (body) {
 
 'use strict';
 
-// import Card from 'material/src/card.js'
-
-// import Component from 'material/src/component.js'
-// import Container from 'material/src/container.js'
-// import Toolbar from 'material/src/container.js'
-// import View from 'material/src/view.js'
-// import Button from 'material/src/button.js'
-// import Text from 'material/src/text.js'
-// controls
-
-/**
- * [initTest description]
- * @return {[type]} [description]
- */
-  // var view = new View({
-  //   name: 'card'
-  // }).insert(body)
-
-  // var hero = new Container({
-  //   name: 'hero'
-  // }).insert(view)
-
-  // var container = new Container({
-  //   name: 'card'
-  // }).insert(view)
-
 var card = function (body) {
-  var layout = new Layout([View, 'checkbox', {},
-    [Container, 'top', {},
+  var layout = new Layout([View, 'card', {},
+    [Container, 'top', { tag: 'p' },
       [Text, 'title', { type: 'title', text: 'Card' }],
       [Text, 'title', { text: 'A card is a sheet of material that serves as an entry point to more detailed information.' }]
     ],
@@ -5884,81 +6591,74 @@ var card = function (body) {
         ]
       ]
     ],
-    [Container, 'card', {},
-      [Card, 'simple-avatar', {},
-        [Container, 'simple-card-avatar', { display: 'flex', direction: 'vertical' },
-          [Component, 'visual', { display: 'flex' }],
-          [Component, 'body', { display: 'flex', direction: 'vertical' },
-            [Text, 'title', { text: 'title', type: 'title' }],
-            [Text, 'subtitle', { text: 'Subtitle here', type: 'subheading2' }]
-          ],
-          [Component, 'action', { },
-            [Button, 'action1', { text: 'action 1' }],
-            [Button, 'action2', { text: 'action 2' }]
-          ]
-        ]
-      ],
-      [Card, 'simple-avatar', {},
-        [Component, 'simple-card-avatar', { display: 'flex', direction: 'vertical' },
-          [Component, 'head', { display: 'flex', direction: 'horizontal' },
-          [Component, 'avatar', { flex: 'none' }],
-            [Component, 'info', { css: 'text-adjust', display: 'flex', direction: 'vertical' },
-            [Text, 'firstname', { text: 'Nicolas', css: 'text-adjust' }],
-            [Text, 'lastname', { text: 'Tesla', css: 'text-adjust' }]
+    [Container, 'body', {},
+      [Container, 'card', {},
+        [Card, 'simple-avatar', {},
+          [Container, 'simple-card-avatar', { display: 'flex', direction: 'vertical' },
+            [Component, 'visual', { display: 'flex' }],
+            [Component, 'body', { display: 'flex', direction: 'vertical' },
+              [Text, 'title', { text: 'title', type: 'title' }],
+              [Text, 'subtitle', { text: 'Subtitle here', type: 'subheading2' }]
+            ],
+            [Component, 'action', { },
+              [Button, 'action1', { text: 'action 1' }],
+              [Button, 'action2', { text: 'action 2' }]
             ]
-          ],
-        [Component, 'visual', { display: 'flex' }],
-          [Component, 'body', { display: 'flex', direction: 'vertical' },
-          [Text, 'title', { text: 'title', type: 'title' }],
-          [Text, 'subtitle', { text: 'Subtitle here', type: 'subheading2' }]
-          ],
-          [Component, 'action', { },
-          [Button, 'action1', { text: 'action 1' }],
-          [Button, 'action2', { text: 'action 2' }]
           ]
-        ]
-      ],
-      [Card, 'simple-avatar', {},
-        [Component, 'simple-card-avatar', { display: 'flex', direction: 'vertical' },
-          [Component, 'head', { display: 'flex', direction: 'horizontal' },
+        ],
+        [Card, 'simple-avatar', {},
+          [Component, 'simple-card-avatar', { display: 'flex', direction: 'vertical' },
+            [Component, 'head', { display: 'flex', direction: 'horizontal' },
             [Component, 'avatar', { flex: 'none' }],
-            [Component, 'info', { css: 'text-adjust', display: 'flex', direction: 'vertical' },
+              [Component, 'info', { css: 'text-adjust', display: 'flex', direction: 'vertical' },
               [Text, 'firstname', { text: 'Nicolas', css: 'text-adjust' }],
               [Text, 'lastname', { text: 'Tesla', css: 'text-adjust' }]
-            ]
-          ],
-          [Component, 'body', { display: 'flex', direction: 'vertical' },
+              ]
+            ],
+          [Component, 'visual', { display: 'flex' }],
+            [Component, 'body', { display: 'flex', direction: 'vertical' },
             [Text, 'title', { text: 'title', type: 'title' }],
             [Text, 'subtitle', { text: 'Subtitle here', type: 'subheading2' }]
-          ],
-          [Component, 'action', { },
-            [Button, 'action1', { text: 'action 1' }],
-            [Button, 'action2', { text: 'action 2' }]
-          ]
-        ]
-      ],
-      [Card, 'simple-avatar', {},
-        [Component, 'simple-card-square', { display: 'flex', direction: 'vertical' },
-          [Component, 'head', { display: 'flex', direction: 'horizontal' },
-            [Component, 'info', { flex: '1', display: 'flex', direction: 'vertical' },
-              [Text, 'title', { text: 'title', type: 'title' }],
-            [Text, 'subtitle', { text: 'Subtitle here', type: 'subheading2' }]
             ],
-            [Component, 'square', { flex: 'none' }]
-          ],
-          [Component, 'action', { },
+            [Component, 'action', { },
             [Button, 'action1', { text: 'action 1' }],
             [Button, 'action2', { text: 'action 2' }]
+            ]
           ]
-        ]
-      ]
-    ],
-    [Card, 'simple-avatar', {},
-      [Component, 'simple-big-square', { display: 'flex', direction: 'horizontal' },
-        [Component, 'square', { flex: 'none' }],
-        [Component, 'action', { },
-          [Button, 'action1', { text: 'action 1' }],
-          [Button, 'action2', { text: 'action 2' }]
+        ],
+        [Card, 'simple-avatar', {},
+          [Component, 'simple-card-avatar', { display: 'flex', direction: 'vertical' },
+            [Component, 'head', { display: 'flex', direction: 'horizontal' },
+              [Component, 'avatar', { flex: 'none' }],
+              [Component, 'info', { css: 'text-adjust', display: 'flex', direction: 'vertical' },
+                [Text, 'firstname', { text: 'Nicolas', css: 'text-adjust' }],
+                [Text, 'lastname', { text: 'Tesla', css: 'text-adjust' }]
+              ]
+            ],
+            [Component, 'body', { display: 'flex', direction: 'vertical' },
+              [Text, 'title', { text: 'title', type: 'title' }],
+              [Text, 'subtitle', { text: 'Subtitle here', type: 'subheading2' }]
+            ],
+            [Component, 'action', { },
+              [Button, 'action1', { text: 'action 1' }],
+              [Button, 'action2', { text: 'action 2' }]
+            ]
+          ]
+        ],
+        [Card, 'simple-avatar', {},
+          [Component, 'simple-card-square', { display: 'flex', direction: 'vertical' },
+            [Component, 'head', { display: 'flex', direction: 'horizontal' },
+              [Component, 'info', { flex: '1', display: 'flex', direction: 'vertical' },
+                [Text, 'title', { text: 'title', type: 'title' }],
+              [Text, 'subtitle', { text: 'Subtitle here', type: 'subheading2' }]
+              ],
+              [Component, 'square', { flex: 'none' }]
+            ],
+            [Component, 'action', { },
+              [Button, 'action1', { text: 'action 1' }],
+              [Button, 'action2', { text: 'action 2' }]
+            ]
+          ]
         ]
       ]
     ]
@@ -5966,57 +6666,6 @@ var card = function (body) {
 
     // ]
   ], body);
-
-  // var card3 = new Card({
-  //   layout: [Component, 'simple-card-avatar', { display: 'flex', direction: 'vertical' },
-  //     [Component, 'head', { display: 'flex', direction: 'horizontal'},
-  //       [Component, 'avatar', { flex: 'none' }],
-  //       [Component, 'info', { css: 'text-adjust', display: 'flex', direction: 'vertical'},
-  //         [Text, 'firstname', { text: 'Nicolas', css: 'text-adjust'}],
-  //         [Text, 'lastname', { text: 'Tesla', css: 'text-adjust' }]
-  //       ]
-  //     ],
-  //     [Component, 'visual', { display: 'flex'}],
-  //     [Component, 'body', { display: 'flex', direction: 'vertical'},
-  //       [Text, 'title', { text: 'title', type: 'title' }],
-  //       [Text, 'subtitle', { text: 'Subtitle here', type: 'subheading2' }]
-  //     ],
-  //     [Component, 'action', { },
-  //       [Button, 'action1', { text: 'action 1' }],
-  //       [Button, 'action2', { text: 'action 2' }]
-  //     ]
-  //   ]
-  // }).insert(container)
-
-  // var card4 = new Card({
-  //   layout:
-  // }).insert(container)
-
-  // var card5 = new Card({
-  //   layout: [Component, 'simple-card-square', { display: 'flex', direction: 'vertical' },
-  //     [Component, 'head', { display: 'flex', direction: 'horizontal'},
-  //       [Component, 'info', { flex: '1', display: 'flex', direction: 'vertical'},
-  //         [Text, 'title', { text: 'title', type: 'title' }],
-  //       [Text, 'subtitle', { text: 'Subtitle here', type: 'subheading2' }]
-  //       ],
-  //       [Component, 'square', { flex: 'none' }]
-  //     ],
-  //     [Component, 'action', { },
-  //       [Button, 'action1', { text: 'action 1' }],
-  //       [Button, 'action2', { text: 'action 2' }]
-  //     ]
-  //   ]
-  // }).insert(container)
-
-  // var card6 = new Card({
-  //   layout: [Component, 'simple-big-square', { display: 'flex', direction: 'horizontal' },
-  //     [Component, 'square', { flex: 'none' }],
-  //     [Component, 'action', { },
-  //       [Button, 'action1', { text: 'action 1' }],
-  //       [Button, 'action2', { text: 'action 2' }]
-  //     ]
-  //   ]
-  // }).insert(container)
 };
 
 var countries = [
@@ -6197,12 +6846,6 @@ var dialog = function (body) {
   });
 };
 
-var iconApps = `
-<svg height="24" viewBox="0 0 24 24" width="24" xmlns="http://www.w3.org/2000/svg">
-  <path d="M4 8h4V4H4v4zm6 12h4v-4h-4v4zm-6 0h4v-4H4v4zm0-6h4v-4H4v4zm6 0h4v-4h-4v4zm6-10v4h4V4h-4zm-6 4h4V4h-4v4zm6 6h4v-4h-4v4zm0 6h4v-4h-4v4z" />
-  <path d="M0 0h24v24H0z" fill="none" />
-</svg>`;
-
 'use strict';
 
 /**
@@ -6210,39 +6853,39 @@ var iconApps = `
  * @return {[type]} [description]
  */
 
-const TITLE$1 = 'Material';
-const CONTENT = 'Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas. Vestibulum tortor quam, feugiat vitae, ultricies eget, tempor sit amet, ante. Donec eu libero sit amet quam egestas semper. Aenean ultricies mi vitae est. Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas. Vestibulum tortor quam, feugiat vitae, ultricies eget, tempor sit amet, ante. Donec eu libero sit amet quam egestas semper. Aenean ultricies mi vitae est.';
+const TITLE$3 = 'Material';
+const CONTENT$2 = 'Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas. Vestibulum tortor quam, feugiat vitae, ultricies eget, tempor sit amet, ante. Donec eu libero sit amet quam egestas semper. Aenean ultricies mi vitae est. Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas. Vestibulum tortor quam, feugiat vitae, ultricies eget, tempor sit amet, ante. Donec eu libero sit amet quam egestas semper. Aenean ultricies mi vitae est.';
 
 var drawer = function (body) {
   var layout = new Layout([View, 'drawer', {},
     [Container, 'top', {},
-      [Text, 'title', { type: 'title', text: 'Buttons' }],
-      [Text, 'title', { text: 'Buttons communicate the action that will occur when the user touches them.' }]
+      [Text, 'title', { type: 'title', text: 'Drawer' }],
+      [Text, 'title', { text: 'Navigation drawers provide access to destinations in your app.' }]
     ],
     [Container, 'sample', {},
       [Container, 'top', {},
         [Text, 'title', { type: 'title', text: 'Temporary' }]
       ],
       [Container, 'screen', { css: 'screen-waterfall' },
-        [Toolbar, 'head', { fixed: 'fixed', color: 'primary' },
+        [AppBar, 'head', { fixed: 'fixed', color: 'primary' },
           [Button, 'navi-temporary', { icon: iconNavi, type: 'action' }],
           [Text, 'title', { text: 'Title' }],
           [Button, 'menu-more', { icon: iconMore, type: 'action' }]
         ],
         [Drawer, 'drawer-temporary', { display: 'flex', direction: 'vertical', css: 'drawer-temporary', type: 'temporary' },
-          [Toolbar, 'navi-head', { type: 'app' },
+          [AppBar, 'navi-head', { },
             [Button, 'menu-navi-head', { icon: iconNavi, type: 'action' }],
-            [Text, 'title', { text: TITLE$1 }]
+            [Text, 'title', { text: TITLE$3 }]
           ],
           [List, 'navi-list', { flex: '1' }]
         ],
-        [Text, '', { text: CONTENT }],
-        [Text, '', { text: CONTENT }],
-        [Text, '', { text: CONTENT }],
-        [Text, '', { text: CONTENT }],
-        [Text, '', { text: CONTENT }],
-        [Text, '', { text: CONTENT }],
-        [Text, '', { text: CONTENT }]
+        [Text, '', { text: CONTENT$2 }],
+        [Text, '', { text: CONTENT$2 }],
+        [Text, '', { text: CONTENT$2 }],
+        [Text, '', { text: CONTENT$2 }],
+        [Text, '', { text: CONTENT$2 }],
+        [Text, '', { text: CONTENT$2 }],
+        [Text, '', { text: CONTENT$2 }]
 
       ]
     ],
@@ -6253,26 +6896,26 @@ var drawer = function (body) {
       [Container, 'screen', { css: 'screen-persistent' },
 
         [Drawer, 'drawer-persistent', { display: 'flex', direction: 'vertical', css: 'drawer-persistent', type: 'persistent' },
-          [Toolbar, 'navi-head', { },
+          [AppBar, 'navi-head', { },
             [Button, 'menu-navi-head', { icon: iconNavi, type: 'action' }],
-            [Text, 'title', { text: TITLE$1 }]
+            [Text, 'title', { text: TITLE$3 }]
           ],
           [List, 'navi-list', { flex: '1' }]
         ],
         [Container, 'content', { css: 'content-persistent' },
-          [Toolbar, 'head', { display: 'flex', direction: 'horizontal', color: 'primary' },
+          [AppBar, 'head', { display: 'flex', direction: 'horizontal', color: 'primary' },
             [Button, 'navi-persistent', { icon: iconNavi, type: 'action' }],
             [Text, 'title', { text: 'Title' }],
             [Button, 'menu-more', { icon: iconMore, type: 'action' }]
           ],
           [Container, 'text-content', { css: 'content-text' },
-            [Text, '', { text: CONTENT }],
-            [Text, '', { text: CONTENT }],
-            [Text, '', { text: CONTENT }],
-            [Text, '', { text: CONTENT }],
-            [Text, '', { text: CONTENT }],
-            [Text, '', { text: CONTENT }],
-            [Text, '', { text: CONTENT }]
+            [Text, '', { text: CONTENT$2 }],
+            [Text, '', { text: CONTENT$2 }],
+            [Text, '', { text: CONTENT$2 }],
+            [Text, '', { text: CONTENT$2 }],
+            [Text, '', { text: CONTENT$2 }],
+            [Text, '', { text: CONTENT$2 }],
+            [Text, '', { text: CONTENT$2 }]
           ]
         ]
       ]
@@ -6283,26 +6926,26 @@ var drawer = function (body) {
       ],
       [Container, 'screen', { css: 'screen-permanent' },
         [Drawer, 'drawer-permanent', { display: 'flex', direction: 'vertical', css: 'drawer-permanent', type: 'permanent' },
-          [Toolbar, 'navi-head', { },
-            [Text, 'title', { text: TITLE$1 }]
+          [AppBar, 'navi-head', { },
+            [Text, 'title', { text: TITLE$3 }]
           ],
           [List, 'navi-list', { flex: '1' }]
         ],
         [Container, 'main', { css: 'container-main' },
-          [Toolbar, 'head', { display: 'flex', direction: 'horizontal', color: 'primary' },
+          [AppBar, 'head', { display: 'flex', direction: 'horizontal', color: 'primary' },
             [Button, 'navi-permanent', { icon: iconNavi, type: 'action' }],
             [Text, 'title', { text: 'Title' }],
             [Button, 'menu-more', { icon: iconMore, type: 'action' }]
           ],
           [Container, 'content', { css: 'content-permanent' },
             [Container, 'text-content', { css: 'content-text' },
-              [Text, '', { text: CONTENT }],
-              [Text, '', { text: CONTENT }],
-              [Text, '', { text: CONTENT }],
-              [Text, '', { text: CONTENT }],
-              [Text, '', { text: CONTENT }],
-              [Text, '', { text: CONTENT }],
-              [Text, '', { text: CONTENT }]
+              [Text, '', { text: CONTENT$2 }],
+              [Text, '', { text: CONTENT$2 }],
+              [Text, '', { text: CONTENT$2 }],
+              [Text, '', { text: CONTENT$2 }],
+              [Text, '', { text: CONTENT$2 }],
+              [Text, '', { text: CONTENT$2 }],
+              [Text, '', { text: CONTENT$2 }]
             ]
           ]
         ]
@@ -6313,7 +6956,7 @@ var drawer = function (body) {
         [Text, 'title', { type: 'title', text: 'permanent' }]
       ],
       [Container, 'screen', { css: 'screen-permanent' },
-        [Toolbar, 'head', { display: 'flex', direction: 'horizontal', color: 'primary' },
+        [AppBar, 'head', { display: 'flex', direction: 'horizontal', color: 'primary' },
           [Text, 'title', { text: 'Title' }],
           [Button, 'menu-more', { icon: iconMore, type: 'action' }]
         ],
@@ -6323,13 +6966,13 @@ var drawer = function (body) {
           ],
           [Container, 'content', { css: 'content-permanent' },
             [Container, 'text-content', { css: 'content-text' },
-              [Text, '', { text: CONTENT }],
-              [Text, '', { text: CONTENT }],
-              [Text, '', { text: CONTENT }],
-              [Text, '', { text: CONTENT }],
-              [Text, '', { text: CONTENT }],
-              [Text, '', { text: CONTENT }],
-              [Text, '', { text: CONTENT }]
+              [Text, '', { text: CONTENT$2 }],
+              [Text, '', { text: CONTENT$2 }],
+              [Text, '', { text: CONTENT$2 }],
+              [Text, '', { text: CONTENT$2 }],
+              [Text, '', { text: CONTENT$2 }],
+              [Text, '', { text: CONTENT$2 }],
+              [Text, '', { text: CONTENT$2 }]
             ]
           ]
         ]
@@ -6518,10 +7161,18 @@ var list$1 = function (body) {
           [Text, 'title', { type: 'title', text: 'Standard' }]
         ],
         [Container, 'screen', { css: '' },
-          [Toolbar, 'head', { fixed: 'fixed', color: 'primary' },
+          [AppBar, 'head', { fixed: 'fixed', color: 'primary' },
             [Button, 'menu-navi', { icon: iconNavi, type: 'action' }],
             [Text, 'title', { text: 'Image List' }],
             [Button, 'menu-more', { icon: iconMore, type: 'action' }]
+          ],
+          [Banner, '', { },
+            [Text, 'title', { text: 'There was a problem processing the transaction' }],
+            [Toolbar, 'banner', { display: 'flex', direction: 'horizontal' },
+              [Component, 'space', { flex: 1 }],
+              [Button, 'default', { text: 'Fix it', color: 'primary' }],
+              [Button, 'default', { text: 'Learn more', color: 'primary' }]
+            ]
           ],
           [List, 'standard', { type: 'image' }]
         ]
@@ -6531,7 +7182,7 @@ var list$1 = function (body) {
           [Text, 'title', { type: 'title', text: 'Masonnery' }]
         ],
         [Container, 'screen', { css: '' },
-          [Toolbar, 'head', { fixed: 'fixed', color: 'primary' },
+          [AppBar, 'head', { fixed: 'fixed', color: 'primary' },
             [Button, 'menu-navi', { icon: iconNavi, type: 'action' }],
             [Text, 'title', { text: 'Image List' }],
             [Button, 'menu-more', { icon: iconMore, type: 'action' }]
@@ -6541,7 +7192,7 @@ var list$1 = function (body) {
       ],
       [Container, 'default', { css: 'container-list', display: 'flex', direction: 'vertical'},
         [Container, 'screen', { css: '' },
-          [Toolbar, 'head', { fixed: 'fixed', color: 'primary' },
+          [AppBar, 'head', { fixed: 'fixed', color: 'primary' },
             [Button, 'menu-navi', { icon: iconNavi, type: 'action' }],
             [Text, 'title', { text: 'Image List' }],
             [Button, 'menu-more', { icon: iconMore, type: 'action' }]
@@ -6551,7 +7202,7 @@ var list$1 = function (body) {
       ],
       [Container, 'default', { css: 'container-list', display: 'flex', direction: 'vertical'},
         [Container, 'screen', { css: '' },
-          [Toolbar, 'head', { fixed: 'fixed', color: 'primary' },
+          [AppBar, 'head', { fixed: 'fixed', color: 'primary' },
             [Button, 'menu-navi', { icon: iconNavi, type: 'action' }],
             [Text, 'title', { text: 'Image List' }],
             [Button, 'menu-more', { icon: iconMore, type: 'action' }]
@@ -6815,19 +7466,19 @@ var tree = function (body) {
  * @return {[type]} [description]
  */
 
-const TITLE$2 = 'Material';
-const CONTENT$1 = 'Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas. Vestibulum tortor quam, feugiat vitae, ultricies eget, tempor sit amet, ante. Donec eu libero sit amet quam egestas semper. Aenean ultricies mi vitae est. Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas. Vestibulum tortor quam, feugiat vitae, ultricies eget, tempor sit amet, ante. Donec eu libero sit amet quam egestas semper. Aenean ultricies mi vitae est.';
+const TITLE$4 = 'Material';
+const CONTENT$3 = 'Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas. Vestibulum tortor quam, feugiat vitae, ultricies eget, tempor sit amet, ante. Donec eu libero sit amet quam egestas semper. Aenean ultricies mi vitae est. Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas. Vestibulum tortor quam, feugiat vitae, ultricies eget, tempor sit amet, ante. Donec eu libero sit amet quam egestas semper. Aenean ultricies mi vitae est.';
 
 var toolbar = function (body) {
   var layout = new Layout([View, 'toolbar', {},
     [Container, 'top', {},
-      [Text, 'title', { type: 'title', text: 'Buttons' }],
-      [Text, 'title', { text: 'Buttons communicate the action that will occur when the user touches them.' }]
+      [Text, 'title', { type: 'title', text: 'Toolbar' }],
+      [Text, 'title', { text: '...' }]
     ],
     [Container, 'hero', {},
       [Toolbar, 'head', { display: 'flex', direction: 'horizontal', color: 'primary' },
         [Button, 'menu-navi', { icon: iconNavi, type: 'action' }],
-        [Text, 'title', { text: TITLE$2 }],
+        [Text, 'title', { text: TITLE$4 }],
         [Button, 'menu-more', { icon: iconMore, type: 'action' }]
       ]
     ],
@@ -6841,13 +7492,13 @@ var toolbar = function (body) {
           [Text, 'title', { text: 'Title' }],
           [Button, 'menu-more', { icon: iconMore, type: 'action' }]
         ],
-        [Text, '', { text: CONTENT$1 }],
-        [Text, '', { text: CONTENT$1 }],
-        [Text, '', { text: CONTENT$1 }],
-        [Text, '', { text: CONTENT$1 }],
-        [Text, '', { text: CONTENT$1 }],
-        [Text, '', { text: CONTENT$1 }],
-        [Text, '', { text: CONTENT$1 }]
+        [Text, '', { text: CONTENT$3 }],
+        [Text, '', { text: CONTENT$3 }],
+        [Text, '', { text: CONTENT$3 }],
+        [Text, '', { text: CONTENT$3 }],
+        [Text, '', { text: CONTENT$3 }],
+        [Text, '', { text: CONTENT$3 }],
+        [Text, '', { text: CONTENT$3 }]
       ]
     ],
     [Container, 'sample', {},
@@ -6860,13 +7511,13 @@ var toolbar = function (body) {
           [Text, 'title', { text: 'Title' }],
           [Button, 'menu-more', { icon: iconMore, type: 'action' }]
         ],
-        [Text, '', { text: CONTENT$1 }],
-        [Text, '', { text: CONTENT$1 }],
-        [Text, '', { text: CONTENT$1 }],
-        [Text, '', { text: CONTENT$1 }],
-        [Text, '', { text: CONTENT$1 }],
-        [Text, '', { text: CONTENT$1 }],
-        [Text, '', { text: CONTENT$1 }]
+        [Text, '', { text: CONTENT$3 }],
+        [Text, '', { text: CONTENT$3 }],
+        [Text, '', { text: CONTENT$3 }],
+        [Text, '', { text: CONTENT$3 }],
+        [Text, '', { text: CONTENT$3 }],
+        [Text, '', { text: CONTENT$3 }],
+        [Text, '', { text: CONTENT$3 }]
       ]
     ],
     [Container, 'sample', {},
@@ -6885,13 +7536,13 @@ var toolbar = function (body) {
             [Text, 'title', { css: 'pin-bottom', type: 'title', text: 'Title' }]
           ]
         ],
-        [Text, '', { text: CONTENT$1 }],
-        [Text, '', { text: CONTENT$1 }],
-        [Text, '', { text: CONTENT$1 }],
-        [Text, '', { text: CONTENT$1 }],
-        [Text, '', { text: CONTENT$1 }],
-        [Text, '', { text: CONTENT$1 }],
-        [Text, '', { text: CONTENT$1 }]
+        [Text, '', { text: CONTENT$3 }],
+        [Text, '', { text: CONTENT$3 }],
+        [Text, '', { text: CONTENT$3 }],
+        [Text, '', { text: CONTENT$3 }],
+        [Text, '', { text: CONTENT$3 }],
+        [Text, '', { text: CONTENT$3 }],
+        [Text, '', { text: CONTENT$3 }]
 
       ]
     ],
@@ -6914,17 +7565,17 @@ var toolbar = function (body) {
         [Drawer, 'navi-water', { display: 'flex', direction: 'vertical', css: 'drawer-temporary', type: 'temporary' },
           [Toolbar, 'navi-head', { type: 'app' },
             [Button, 'menu-navi-head', { icon: iconNavi, type: 'action' }],
-            [Text, 'title', { text: TITLE$2 }]
+            [Text, 'title', { text: TITLE$4 }]
           ],
           [List, 'navi-list', { flex: '1' }]
         ],
-        [Text, '', { text: CONTENT$1 }],
-        [Text, '', { text: CONTENT$1 }],
-        [Text, '', { text: CONTENT$1 }],
-        [Text, '', { text: CONTENT$1 }],
-        [Text, '', { text: CONTENT$1 }],
-        [Text, '', { text: CONTENT$1 }],
-        [Text, '', { text: CONTENT$1 }]
+        [Text, '', { text: CONTENT$3 }],
+        [Text, '', { text: CONTENT$3 }],
+        [Text, '', { text: CONTENT$3 }],
+        [Text, '', { text: CONTENT$3 }],
+        [Text, '', { text: CONTENT$3 }],
+        [Text, '', { text: CONTENT$3 }],
+        [Text, '', { text: CONTENT$3 }]
 
       ]
     ]
@@ -7201,6 +7852,8 @@ var elevation = function (body) {
 
 var view = {
   typography,
+  appbar,
+  banner,
   button: button$1,
   calendar,
   card,
