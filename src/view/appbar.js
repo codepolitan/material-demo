@@ -125,7 +125,8 @@ export default function (body) {
           ]
         ],
         [Drawer, 'navi-water', { display: 'flex', direction: 'vertical', css: 'drawer-temporary', type: 'temporary' },
-          [AppBar, 'navi-head', { },
+          [AppBar,
+            'navi-head', { },
             [Button, 'menu-navi-head', { icon: iconNavi, type: 'action' }],
             [Text, 'title', { text: TITLE }]
           ],
